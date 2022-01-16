@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\NeoCortexApi.Parallel\NeoCortexApi.Parallel.csproj" />
     <ProjectReference Include="..\..\..\source\NeoCortexApi\NeoCortexApi.csproj" />

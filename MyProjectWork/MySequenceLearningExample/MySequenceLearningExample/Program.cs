@@ -15,14 +15,15 @@ namespace SequenceLearningExperiment
     {
         static void Main(string[] args)
         {
-            MusicNotesExperiment();
+            MysequenceLearn();
         }
 
-        public static void MusicNotesExperiment()
+        public static void MysequenceLearn()
         {
             int inputBits = 100;
             int numColumns = 2048;
-            List<double> inputValues = inputValues = new List<double>(new double[] { });
+            //List<double> inputValues = inputValues = new List<double>(new double[] { });
+
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 Random = new ThreadSafeRandom(42),
@@ -67,7 +68,7 @@ namespace SequenceLearningExperiment
             EncoderBase encoder = new ScalarEncoder(settings);
 
             // Stable and reached 100% accuracy with 2577 cycles
-            // List<double> inputValues = new List<double>(new double[] { 0.0, 1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 7.0, 1.0, 9.0, 12.0, 11.0, 12.0, 13.0, 14.0, 11.0, 12.0, 14.0, 5.0, 7.0, 6.0, 9.0, 3.0, 4.0, 3.0, 4.0, 3.0, 4.0 });
+            //List<double> inputValues = new List<double>(new double[] { 0.0, 1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 7.0, 1.0, 9.0, 12.0, 11.0, 12.0, 13.0, 14.0, 11.0, 12.0, 14.0, 5.0, 7.0, 6.0, 9.0, 3.0, 4.0, 3.0, 4.0, 3.0, 4.0 });
 
             // Stable and reached 100% accuracy with 2554 cycles
             // List<double> inputValues = new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 0.0, 1.0});
@@ -99,6 +100,7 @@ namespace SequenceLearningExperiment
             // var inputValues = new List<double>(new double[] {0.0, 1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 7.0, 1.0, 9.0, 12.0, 11.0}
 
             // Calling Method to input values
+            var inputValues = new List<double>(new double[] {1.0,2.0,3.0,1.0,5.0,1.0,6.0});
             inputValues = InputSequence(inputValues);
 
             // Sequence with multiple possibilties
