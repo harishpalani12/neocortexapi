@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\NeocortexApi\source\NeoCortexApi.Parallel\NeoCortexApi.Parallel.csproj" />
     <ProjectReference Include="..\..\..\..\NeocortexApi\source\NeoCortexApi\NeoCortexApi.csproj" />
     <ProjectReference Include="..\..\..\..\NeocortexApi\source\NeoCortexArrayLib\NeoCortexArrayLib.csproj" />
     <ProjectReference Include="..\..\..\..\NeocortexApi\source\NeoCortexEntities\NeoCortexEntities.csproj" />
