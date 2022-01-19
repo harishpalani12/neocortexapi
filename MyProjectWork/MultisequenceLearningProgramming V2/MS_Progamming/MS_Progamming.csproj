@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NeoCortexApi" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\CNTKUtil\CNTKUtil.csproj" />
+    <ProjectReference Include="..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\NeoCortexUtils\NeoCortexUtils.csproj" />
+  </ItemGroup>
+
+</Project>
