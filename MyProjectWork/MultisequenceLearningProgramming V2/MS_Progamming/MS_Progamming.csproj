@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\NeoCortexApi\source\NeoCortexUtils\NeoCortexUtils.csproj" />
     <ProjectReference Include="..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\CNTKUtil\CNTKUtil.csproj" />
-    <ProjectReference Include="..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\NeoCortexUtils\NeoCortexUtils.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS_Progamming", "MS_Progamming.csproj", "{DB400A39-A3EC-4AB9-862A-AC0F22F16888}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\NeoCortexUtils\NeoCortexUtils.csproj", "{59F18F34-86A9-45EF-9585-38D0CB1CD979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MS_Progamming", "MS_Progamming.csproj", "{DB400A39-A3EC-4AB9-862A-AC0F22F16888}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CNTKUtil", "..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\CNTKUtil\CNTKUtil.csproj", "{2B80E091-324C-4E18-8349-AE5D7122889B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "..\..\..\..\NeoCortexApi\source\NeoCortexUtils\NeoCortexUtils.csproj", "{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,6 @@ Global
 		{DB400A39-A3EC-4AB9-862A-AC0F22F16888}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB400A39-A3EC-4AB9-862A-AC0F22F16888}.Release|x64.ActiveCfg = Release|Any CPU
 		{DB400A39-A3EC-4AB9-862A-AC0F22F16888}.Release|x64.Build.0 = Release|Any CPU
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Debug|x64.ActiveCfg = Debug|x64
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Debug|x64.Build.0 = Debug|x64
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Release|x64.ActiveCfg = Release|x64
-		{59F18F34-86A9-45EF-9585-38D0CB1CD979}.Release|x64.Build.0 = Release|x64
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Debug|x64.ActiveCfg = Debug|x64
@@ -41,6 +33,14 @@ Global
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Release|x64.ActiveCfg = Release|x64
 		{2B80E091-324C-4E18-8349-AE5D7122889B}.Release|x64.Build.0 = Release|x64
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Debug|x64.Build.0 = Debug|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Release|x64.ActiveCfg = Release|Any CPU
+		{B18E1E03-BED0-4D2C-97A0-3860AC5FBB05}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
