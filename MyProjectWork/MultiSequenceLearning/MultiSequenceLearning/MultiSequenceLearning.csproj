@@ -11,4 +11,9 @@
     <PackageReference Include="NeoCortexApi" Version="1.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\source\CNTKUtil\CNTKUtil.csproj" />
+    <ProjectReference Include="..\..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
+  </ItemGroup>
+
 </Project>
