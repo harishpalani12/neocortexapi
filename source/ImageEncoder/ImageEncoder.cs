@@ -12,7 +12,7 @@ using SkiaSharp;
 namespace NeoCortexApi.Encoders
 {
     /// <summary>
-    /// It encodes the image by using the binarization algorithm. The SDR produced by this encoder is a set of binary bits that represent pixels in the image.
+    /// Binarize an Image
     /// </summary>
     public class ImageEncoder : EncoderBase
     {
@@ -79,11 +79,12 @@ namespace NeoCortexApi.Encoders
         }
 
         /// <summary>
-        /// 
+        /// <br>Encode the Input file Image, binarize it and save to an output file image</br>
+        /// <br>Default image format: Png</br>
         /// </summary>
-        /// <param name="inputFile"></param>
-        /// <param name="outputFile"></param>
-        /// <param name="encodingFormat">One of following formats is supported: Bmp, Gif, Ico, JpegPng, WbmpWebpPkm, Ktx, AstcDng, Heif </param>
+        /// <param name="inputFile">Input image path</param>
+        /// <param name="outputFile">Output image path</param>
+        /// <param name="encodingFormat">One of following formats is supported: Bmp, Gif, Ico, Jpeg, Png, Wbmp, Webp, Pkm, Ktx, Astc, Dng, Heif </param>
         public void EncodeAndSaveAsImage(string inputFile, string outputFile, string encodingFormat = "Png")
         {
             //
@@ -110,7 +111,7 @@ namespace NeoCortexApi.Encoders
             // 3. Reading a Picture file in pixels
             using (var image = SKImage.FromBitmap(outputBitmap))
             {
-                SKEncodedImageFormat frm = (SKEncodedImageFormat)Enum.Parse(typeof(SKEncodedImageFormat), "");
+                SKEncodedImageFormat frm = (SKEncodedImageFormat)Enum.Parse(typeof(SKEncodedImageFormat), encodingFormat);
 
                 using (var data = image.Encode(frm, 80))
                 {
@@ -126,7 +127,7 @@ namespace NeoCortexApi.Encoders
         /// <summary>
         /// Gets the image pixels.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>double 3D array of greyscale value</returns>
         public double[,,] GetPixels()
         {
             return imageBinarizer.GetArrayBinary();
