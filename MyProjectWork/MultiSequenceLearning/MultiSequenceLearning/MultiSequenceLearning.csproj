@@ -16,4 +16,9 @@
     <ProjectReference Include="..\..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TrainingLogs\" />
+    <Folder Include="TestingLogs\" />
+  </ItemGroup>
+
 </Project>
