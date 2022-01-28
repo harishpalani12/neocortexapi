@@ -1,17 +1,19 @@
-﻿using NeoCortexApi.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+
+using NeoCortexApi.Entities;
 using NeoCortexApi;
 using NeoCortexApi.Encoders;
-using NeoCortex;
 using NeoCortexApi.Utility;
-using System.Text.RegularExpressions;
 using NeoCortexApi.Classifiers;
 using NeoCortexApi.Network;
+//using NeoCortex;  ::TODO
 
 namespace ThesisExperiments
 {
@@ -20,12 +22,13 @@ namespace ThesisExperiments
         static readonly string[] CancerSequenceClasses = new string[] { "inactive - exp", "mod. active", "very active", "inactive - virtual" };
         static readonly float[][] CancerSequenceClassesOneHotEncoding = new float[][] { new float[] { 0, 0, 0, 1 }, new float[] { 0, 0, 1, 0 }, new float[] { 0, 1, 0, 0 }, new float[] { 1, 0, 0, 0 } };
 
-       
         /// <summary>
         ///     Fetch Cancer Peptides data from file
         /// </summary>
         /// <param name="dataFilePath"></param>
         /// <returns></returns>
+        /// 
+
         public static List<Dictionary<string, string>> ReadCancerSequencesDataFromFile(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
@@ -34,41 +37,32 @@ namespace ThesisExperiments
 
             if (File.Exists(dataFilePath))
             {
-
                 using (StreamReader sr = new StreamReader(dataFilePath))
                 {
-                    while (sr.Peek() >= 0)
+                    var line = sr.ReadLine();
+                    string[] values = line.Split(",");
+
+                    Dictionary<string, string> Sequence = new Dictionary<string, string>();
+
+                    string label = values[1];
+                    string sequenceString = values[0];
+
+                    foreach (var alphabet in sequenceString)
                     {
-                        var line = sr.ReadLine();
-                        string[] values = line.Split(",");
-
-
-
-                        Dictionary<string, string> Sequence = new Dictionary<string, string>();
-
-                        string label = values[1];
-                        string sequenceString = values[0];
-
-
-                        foreach (var alphabet in sequenceString)
+                        keyForUniqueIndexes++;
+                        if (Sequence.ContainsKey(alphabet.ToString()))
                         {
-                            keyForUniqueIndexes++;
-                            if (Sequence.ContainsKey(alphabet.ToString()))
-                            {
-                                var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
-                                Sequence.Add(newKey, label);
-                            }
-                            else
-                            {
-                                Sequence.Add(alphabet.ToString(), label);
-                            }
+                            var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
+                            Sequence.Add(newKey, label);
                         }
-
-                        SequencesCollection.Add(Sequence);
+                        else
+                        {
+                            Sequence.Add(alphabet.ToString(), label);
+                        }
                     }
 
+                    SequencesCollection.Add(Sequence);
                 }
-
                 return SequencesCollection;
             }
             else
@@ -76,7 +70,99 @@ namespace ThesisExperiments
                 return null;
             }
         }
-       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataFilePath"></param>
+        /// <returns></returns>
+        /// 
+        public static Dictionary<float[][], float[][]> ReadCancerSequencesDataFromFile_LSTM_v2(string dataFilePath)
+        {
+            List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
+
+            if (File.Exists(dataFilePath))
+            {
+                using (StreamReader sr = new StreamReader(dataFilePath))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        var line = sr.ReadLine();
+                        string[] values = line.Split(",");
+
+                        Dictionary<string, string> Sequence = new Dictionary<string, string>();
+
+                        string label = values[1];
+                        string sequenceString = values[0];
+
+                        if (sequenceString.Length < 33)
+                        {
+                            int remainingLength = 33 - sequenceString.Length;
+                            for (int i = 0; i < remainingLength; i++)
+                            {
+                                sequenceString = sequenceString + "Z";
+                            }
+                        }
+
+                        Sequence.Add(sequenceString, label);
+                        SequencesCollection.Add(Sequence);
+                    }
+                }
+                float[][] processedDataSet = new float[SequencesCollection.Count][];
+                float[][] processedLabel = new float[SequencesCollection.Count][];
+
+                int index = 0;
+
+                foreach (var sequence in SequencesCollection)
+                {
+                    var sequenceDict = sequence;
+                    var sequenceString = sequenceDict.Keys.ElementAt(0);
+                    var sequenceLabel = sequenceDict.Values.ElementAt(0).Split("_")[0];
+
+                    float[] sequenceProcessed = new float[0];
+
+                    foreach (var element in sequenceString)
+                    {
+                        var numericval = char.ToUpper(element) - 64;
+                        sequenceProcessed = sequenceProcessed.Concat(new float[] { numericval }).ToArray();
+                    }
+
+                    processedDataSet[index] = sequenceProcessed;
+                    var label_encoded = new float[0];
+
+                    if (sequenceLabel == CancerSequenceClasses[0])
+                    {
+                        label_encoded = CancerSequenceClassesOneHotEncoding[0];
+                    }
+
+                    else if (sequenceLabel == CancerSequenceClasses[1])
+                    {
+                        label_encoded = CancerSequenceClassesOneHotEncoding[1];
+                    }
+
+                    else if (sequenceLabel == CancerSequenceClasses[2])
+                    {
+                        label_encoded = CancerSequenceClassesOneHotEncoding[2];
+                    }
+
+                    else if (sequenceLabel == CancerSequenceClasses[3])
+                    {
+                        label_encoded = CancerSequenceClassesOneHotEncoding[3];
+                    }
+                    processedLabel[index] = label_encoded;
+                    index++;
+                }
+                var returnDict = new Dictionary<float[][], float[][]>();
+                returnDict.Add(processedDataSet, processedLabel);
+
+                return returnDict;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -86,7 +172,6 @@ namespace ThesisExperiments
         {
             List<Dictionary<string, int[]>> SequencesCollection = new List<Dictionary<string, int[]>>();
             ScalarEncoder encoder_Alphabets = FetchAlphabetEncoder();
-            int keyForUniqueIndexes = 0;
 
             if (File.Exists(dataFilePath))
             {
@@ -128,7 +213,8 @@ namespace ThesisExperiments
             return null;
         }
 
-       
+
+        // ENCODING TRAINING DATA
         /// <summary>
         ///     Encoding Amino Alphabetic Sequences
         /// </summary>
@@ -174,7 +260,6 @@ namespace ThesisExperiments
             }
             return ListOfEncodedTrainingSDR;
         }
-
 
         public static Dictionary<string, int[]> EncodeCancerSequencesApproach2(List<Dictionary<string, string>> trainingData)
         {
@@ -262,8 +347,6 @@ namespace ThesisExperiments
             return null;
         }
 
-       
-
         //*********************************************************************************************
         // HTM HELPER METHODS
 
@@ -305,6 +388,7 @@ namespace ThesisExperiments
             };
             return cfg;
         }
+
         public static string GetKey(List<string> prevInputs)
         {
             string key = String.Empty;
@@ -319,6 +403,7 @@ namespace ThesisExperiments
 
             return key;
         }
+
         //**********************************************************************************************
 
         //*****************************ENCODE USERINPUT FOR TES*****************************************
@@ -326,7 +411,6 @@ namespace ThesisExperiments
         /// <summary>
         ///         ENCODE USER INPUT 
         /// </summary>
-       
         public static List<int[]> EncodeSingleInput_testingExperiment_2(string userInput, Boolean EncodeSingleAlphabet)
         {
 
@@ -356,6 +440,7 @@ namespace ThesisExperiments
 
             return Encoded_Alphabet_SDRs;
         }
+
         public static int[] EncodeSingleInput_testingExperiment_3(string userInput)
         {
             var alphabetEncoder = FetchAlphabetEncoder();
@@ -368,6 +453,7 @@ namespace ThesisExperiments
             }
             return encodedSDR;
         }
+
         //***********************************************************************************************
 
         //**********************************FETCHING ENCODERS SECTION****************************************
@@ -376,7 +462,6 @@ namespace ThesisExperiments
         ///         FETCH ENCODERS 
         /// </summary>
         /// <returns> SCALAR ENCODERS</returns>
-        
         public static ScalarEncoder FetchAlphabetEncoder()
         {
             ScalarEncoder AlphabetEncoder = new ScalarEncoder(new Dictionary<string, object>()
@@ -392,9 +477,6 @@ namespace ThesisExperiments
                 });
             return AlphabetEncoder;
         }
-        //************************************************************************************************
-
-        //*************************TESTING METHODS*******************************************
 
         /// <summary>
         ///  CANCER SEQUENCE CLASSIFICATION EXPERIMENT V1
@@ -468,7 +550,6 @@ namespace ThesisExperiments
                     correctPrediction++;
                 }
             }
-
             //************************************PREDICTION ACCURACY************************************************************
             double accuracy = ((double)correctPrediction / numberOfDataPoints) * 100;
 
@@ -478,4 +559,3 @@ namespace ThesisExperiments
         }
     }
 }
-
