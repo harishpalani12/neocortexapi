@@ -14,27 +14,25 @@ namespace ThesisExperiments
     {
         static readonly int numColumns = 2048;
 
-        /// <summary>
-        /// TRAINING FILE PATH
-        /// </summary>
-       // static readonly string PassengerCountDataFile_MINI = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\TaxiPassengerCountPrediction\TrainingFile_MINI.csv");
-        //static readonly string PassengerCountDataFile_FULL = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\TaxiPassengerCountPrediction\TrainingFile_FULL.csv");
+        /*string basePath;*/
 
-        static readonly string CancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\CancerSequenceClassification\BreastCancer_trainingFile_MINI.csv");
-        static readonly string CancerSequenceDataFile2 = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\CancerSequenceClassification\LungCancer_trainingFile.csv");
+        //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
 
-        
+        //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
 
-        /// <summary>
-        /// Cancer Sequence Classification Experiment EntryPoint
-        /// V1:- In the following version we are learining sequence element by element and while prediction trying to predict next element,
-        ///      label of element will be used to classify sequence.
-        /// </summary>
-        public void InitiateCancerSequenceClassificationExperiment()
+        // static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName);
+
+       //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\ACPs_Lung_cancer.csv");
+       static readonly string LungCancerSequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\MultisequenceLearningProgramming V2\MS_Progamming\TrainingFiles\CancerSequenceClassification\ACPs_Lung_cancer.csv";
+        //static readonly string BreastCancerSequenceDataFile = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Breast_cancer.csv";
+
+        public void InitiateCancerSequenceClassification()
         {
+
             int inputBits = 31;
             int maxCycles = 30;
-            var trainingData = HelperMethods.ReadCancerSequencesDataFromFile(CancerSequenceDataFile2);
+
+            var trainingData = HelperMethods.ReadCancerSequencesDataFromFile(LungCancerSequenceDataFile);
             var trainingDataProcessed = HelperMethods.EncodeCancerSequences(trainingData);
             var trained_HTM_model = Run(inputBits, maxCycles, numColumns, trainingDataProcessed, true);
             var trained_CortexLayer = trained_HTM_model.Keys.ElementAt(0);
@@ -45,7 +43,6 @@ namespace ThesisExperiments
 
             Debug.WriteLine("PLEASE SELECT MODE OF TESTING 1) MANUAL 2) AUTOMATED :");
             Console.WriteLine("PLEASE SELECT MODE OF TESTING 1) MANUAL 2) AUTOMATED :");
-
 
             var testChoice = Console.ReadLine();
             if (testChoice == "1")
@@ -118,15 +115,20 @@ namespace ThesisExperiments
                 HelperMethods.BeginAutomatedTestingExperiment_2(trainingData, trained_CortexLayer, trained_Classifier);
             }
         }
+
         /// <summary>
         /// Cancer Sequence Classification Experiment EntryPoint
         /// V2 :- In the following version we are learning sequence as a whole i.e we are taking as single element.
         /// </summary>
+        /// 
+
         public void InitiateCancerSequenceClassificationExperimentV2()
         {
             int inputBits = 1023;
             int maxCycles = 30;
-            var trainingData = HelperMethods.ReadAndEncodeCancerSequencesDataFromFileV2(CancerSequenceDataFile);
+
+
+            var trainingData = HelperMethods.ReadAndEncodeCancerSequencesDataFromFileV2(LungCancerSequenceDataFile);
 
             var trained_HTM_model = Run(inputBits, maxCycles, numColumns, trainingData, false);
             var trained_CortexLayer = trained_HTM_model.Keys.ElementAt(0);
@@ -138,69 +140,67 @@ namespace ThesisExperiments
             Debug.WriteLine("PLEASE SELECT MODE OF TESTING 1) MANUAL 2) AUTOMATED :");
             Console.WriteLine("PLEASE SELECT MODE OF TESTING 1) MANUAL 2) AUTOMATED :");
 
-
             var testChoice = Console.ReadLine();
+
             if (testChoice == "1")
             {
-                Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
-                Console.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
+                Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE:             *note format->AAAAVVV {AlphabeticSequence}");
+                Console.WriteLine("PLEASE ENTER CANCER SEQUENCE:            *note format->AAAAVVV {AlphabeticSequence}");
                 var userInput = Console.ReadLine();
                 while (!userInput.Equals("q") && userInput != "Q")
                 {
-                    var sdr = HelperMethods.EncodeSingleInput_testingExperiment_2(userInput, false);
-                    int[] concatedSDR = new int[0];
-                    foreach (var elementSDR in sdr)
-                    {
-                        concatedSDR = concatedSDR.Concat(elementSDR).ToArray();
-                    }
-                    var predictionList = new List<List<string>>();
-                    var sequence = userInput;
-                    Dictionary<string, List<string>> predictedInput = new Dictionary<string, List<string>>();
-
+                    var ElementSDRs = HelperMethods.EncodeSingleInput_testingExperiment_2(userInput, false);
                     List<string> possibleClasses = new List<string>();
 
-                    var lyr_Output = trained_CortexLayer.Compute(concatedSDR, false) as ComputeCycle;
-                    var classifierPrediction = trained_Classifier.GetPredictedInputValues(lyr_Output.PredictiveCells.ToArray(), 5);
-
-                    if (classifierPrediction.Count > 0)
+                    for (int i = 0; i < userInput.Length; i++)
                     {
-                        foreach (var prediction in classifierPrediction)
+
+                        var element = userInput.ElementAt(i);
+                        var elementSDR = HelperMethods.EncodeSingleInput_testingExperiment_2(element.ToString(), true);
+
+                        var lyr_Output = trained_CortexLayer.Compute(elementSDR[0], false) as ComputeCycle;
+                        var classifierPrediction = trained_Classifier.GetPredictedInputValues(lyr_Output.PredictiveCells.ToArray(), 5);
+
+                        if (classifierPrediction.Count > 0)
                         {
-                            Console.WriteLine($"Predicted Input :{prediction.PredictedInput} \t ");
+
+                            foreach (var prediction in classifierPrediction)
+                            {
+                                if (i < userInput.Length - 1)
+                                {
+                                    var nextElement = userInput.ElementAt(i + 1).ToString();
+                                    var nextElementString = nextElement.Split(",")[0];
+                                    if (prediction.PredictedInput.Split(",")[0] == nextElementString)
+                                    {
+                                        if (prediction.PredictedInput.Split(",").Length == 3)
+                                        {
+                                            {
+                                                possibleClasses.Add(prediction.PredictedInput.Split(",")[2]);
+                                            }
+                                        }
+                                        else if (prediction.PredictedInput.Split(",")[0] == nextElementString)
+                                        {
+                                            possibleClasses.Add(prediction.PredictedInput.Split(",")[1]);
+                                        }
+                                    }
+                                }
+                            }
+
                         }
+
                     }
 
-                    //    // CHECK IF INPUT HAS PRODUCED ANY OUTPUTS
-                    //    if (classifierPrediction.Count > 0)
-                    //    {
-                    //        foreach (var prediction in classifierPrediction)
-                    //        {
-                    //            if (j < sequence.Length - 1)
-                    //            {
-                    //                var nextElement = sequence.ElementAt(j + 1);
-                    //                if (prediction.PredictedInput.Split(",")[0] == nextElement.ToString())
-                    //                {
-                    //                    possibleClasses.Add(prediction.PredictedInput);
-                    //                }
-                    //            }
-                    //        }
-
-                    //    }
-                    //}
-
-                    //var Classcounts = possibleClasses.GroupBy(x => x)
-                    //    .Select(g => new { possibleClass = g.Key, Count = g.Count() })
-                    //    .ToList();
-                    //var possibleClass = "";
+                    var Classcounts = possibleClasses.GroupBy(x => x.Split("_")[0])
+                   .Select(g => new { possibleClass = g.Key, Count = g.Count() })
+                   .ToList();
+                    var possibleClass = "";
                     //if (Classcounts.Count > 0)
                     //    possibleClass = Classcounts.Max().possibleClass;
+                    foreach (var class_ in Classcounts)
+                    {
+                        Console.WriteLine($"Predicted Class : {class_.possibleClass.Split("_")[0]} \t votes: {class_.Count}");
+                    }
 
-                    ////var elmentClass = sequence.ElementAt(0).Value;
-                    ////testingResults.Add($"ELEMENT CLASS :{elmentClass} \t PREDICTED CLASS:{possibleClass}");
-                    ////if (possibleClass.Split("_")[0] == elmentClass.Split("_")[0])
-                    ////{
-                    ////    correctPrediction++;
-                    ////}
 
                     Console.WriteLine("PLEASE ENTER NEXT SEQUENCE :");
                     userInput = Console.ReadLine();
@@ -209,9 +209,11 @@ namespace ThesisExperiments
             }
             else if (testChoice == "2")
             {
-                //HelperMethods.BeginAutomatedTestingExperimentV2(trainingData, trained_CortexLayer, trained_Classifier);
+                //HelperMethods.BeginAutomatedTestingExperiment_2(trainingData, trained_CortexLayer, trained_Classifier);
             }
+
         }
+
 
         /// <summary>
         ///     Run Experiment
@@ -219,6 +221,7 @@ namespace ThesisExperiments
         /// <param name="inputBits">InputBits Data</param>
         /// <param name="numColumns">NumColumns in Network</param>
         /// <param name="Sequences">Data Sequences</param>
+        /// 
         public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> Run(int inputBits, int maxCycles, int numColumns, List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
         {
             //-----------HTM CONFG
@@ -243,6 +246,7 @@ namespace ThesisExperiments
             var OUTPUT_LOG = new Dictionary<int, string>();
             var OUTPUT_trainingAccuracy_graph = new List<Dictionary<int, double>>();
             // HOMOSTATICPLASTICITY CONTROLLER
+
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
             {
                 if (isStable)
@@ -257,8 +261,8 @@ namespace ThesisExperiments
 
                 // Clear all learned patterns in the classifier.
                 //cls.ClearState();
-
             }, numOfCyclesToWaitOnChange: 30);
+
 
             // SPATIAL POOLER initialization with HomoPlassiticityController using connections.
             SpatialPoolerMT sp = new SpatialPoolerMT(hpa);
@@ -283,7 +287,6 @@ namespace ThesisExperiments
             {
                 newbornCycle++;
                 Console.WriteLine($"-------------- Newborn Cycle {newbornCycle} ---------------");
-
                 foreach (var sequence in Sequences) // FOR EACH SEQUENCE IN SEQUNECS LOOP ::: LOOP - 1
                 {
                     foreach (var Element in sequence) // FOR EACH dictionary containing single sequence Details LOOP ::: LOOP - 2
@@ -299,14 +302,11 @@ namespace ThesisExperiments
                         // IF STABLE STATE ACHIEVED BREAK LOOP - 3
                         if (isInStableState)
                             break;
-
                     }
-
                 }
                 if (isInStableState)
                     break;
             }
-
             // ADDING TEMPORAL MEMEORY to CORTEX LAYER
             layer1.HtmModules.Add("tm", tm);
 
@@ -324,7 +324,6 @@ namespace ThesisExperiments
                 var tempLOGGRAPH = new Dictionary<int, double>();
                 double SaturatedAccuracyCount = 0;
 
-
                 for (int i = 0; i < maxCycles; i++) // MAXCYCLE LOOP 
                 {
                     var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>.ClassifierResult>>();
@@ -335,7 +334,6 @@ namespace ThesisExperiments
 
                     foreach (var Elements in sequence) // SEQUENCE DICTIONARY LOOP
                     {
-
                         // OBSERVATION LABEl
                         var observationLabel = Elements.Key;
                         // ELEMENT SDR LIST FOR A SINGLE SEQUENCE
@@ -418,10 +416,10 @@ namespace ThesisExperiments
                         }
 
                     }
-
                     accuracy = ((double)ElementMatches / (sequence.Count)) * 100;
                     Debug.WriteLine($"Cycle : {i} \t Accuracy:{accuracy}");
                     tempLOGGRAPH.Add(i, accuracy);
+
                     if (accuracy == 100)
                     {
                         SequencesMatchCount++;
@@ -449,6 +447,7 @@ namespace ThesisExperiments
                             tempLOGFILE.Add(i, $"Cycle: { i} \t Saturated Accuracy : {lastCycleAccuracy} \t Number of times repeated {SaturatedAccuracyCount}");
                         }
                     }
+
                     else
                     {
                         SaturatedAccuracyCount = 0;
@@ -457,14 +456,13 @@ namespace ThesisExperiments
                         tempLOGFILE.Add(i, $"cycle : {i} \t Accuracy :{accuracy} \t ");
                     }
                     lastPredictedValueList.Clear();
+
                 }
                 tm.Reset(mem);
                 learn = true;
                 OUTPUT_LOG_LIST.Add(tempLOGFILE);
             }
-
             sw.Stop();
-
             //****************DISPLAY STATUS OF EXPERIMENT
             Debug.WriteLine("-------------------TRAINING END------------------------");
             Console.WriteLine("-----------------TRAINING END------------------------");
@@ -474,15 +472,20 @@ namespace ThesisExperiments
 
             DateTime now = DateTime.Now;
             string filename = now.ToString("g");
+
             if (classVotingEnabled)
             {
-                filename = "CancerClassificationExperiment" + filename.Split(" ")[0]+"_" + now.Ticks.ToString() + ".txt";
+                filename = "CancerClassificationExperiment" + filename.Split(" ")[0] + "_" + now.Ticks.ToString() + ".txt";
             }
-            else
-            {
-                filename = "PassengeCountPredictionExperiment" + filename.Split(" ")[0]+"_"+now.Ticks.ToString() + ".txt";
-            }
-            string path = System.AppDomain.CurrentDomain.BaseDirectory+"\\TrainingLogs\\" + filename;
+            /*            else
+                        {
+                            filename = "PassengeCountPredictionExperiment" + filename.Split(" ")[0] + "_" + now.Ticks.ToString() + ".txt";
+                        }*/
+
+
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\TrainingLogs\\" + filename;
+
+
             using (StreamWriter swOutput = File.CreateText(path))
             {
                 swOutput.WriteLine($"{filename}");
@@ -504,6 +507,7 @@ namespace ThesisExperiments
             var returnDictionary = new Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>>();
             returnDictionary.Add(layer1, cls);
             return returnDictionary;
+
         }
 
 
