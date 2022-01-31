@@ -17,13 +17,16 @@ namespace MultiSequenceLearning
     {
         static readonly int numColumns = 2048;
 
-       // static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"Final Project\Sequence\Anticancer_Peptides\ACPs_Lung_cancer.csv");
-        static readonly string LungCancerSequenceDataFile = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Lung_cancer.csv";
-        // @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Lung_cancer.csv";
+        /*string basePath;*/
+        
+        //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
 
+        //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
+
+       // static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName);
+
+        static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\ACPs_Lung_cancer.csv");
         static readonly string BreastCancerSequenceDataFile = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Breast_cancer.csv";
-
-       // static readonly string BreastCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"Final Project\Sequence\Anticancer_Peptides\ACPs_Breast_cancer.csv");
 
         public void InitiateCancerSequenceClassification()
         {
@@ -476,14 +479,14 @@ namespace MultiSequenceLearning
             {
                 filename = "CancerClassificationExperiment" + filename.Split(" ")[0] + "_" + now.Ticks.ToString() + ".txt";
             }
-            else
+/*            else
             {
                 filename = "PassengeCountPredictionExperiment" + filename.Split(" ")[0] + "_" + now.Ticks.ToString() + ".txt";
-            }
-            //string path = System.AppDomain.CurrentDomain.BaseDirectory + "\\TrainingLogs\\" + filename;
+            }*/
 
-            string path = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\MyProjectWork\MultiSequenceLearning\MultiSequenceLearning\TestingLogs" + "\\TrainingLogs\\" + filename;
-                                                                                                 
+
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\TrainingLogs\\" + filename;
+     
 
             using (StreamWriter swOutput = File.CreateText(path))
             {

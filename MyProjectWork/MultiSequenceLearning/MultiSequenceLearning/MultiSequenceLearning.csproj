@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +18,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="TrainingFiles\" />
     <Folder Include="TrainingLogs\" />
     <Folder Include="TestingLogs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="HelperMethods.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="SequenceLearning_HTM.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>

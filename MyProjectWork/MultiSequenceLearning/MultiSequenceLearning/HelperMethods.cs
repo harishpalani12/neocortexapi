@@ -39,53 +39,7 @@ namespace MultiSequenceLearning
             {
                 using (StreamReader sr = new StreamReader(dataFilePath))
                 {
-                    var line = sr.ReadLine();
-                    string[] values = line.Split(",");
-
-                    Dictionary<string, string> Sequence = new Dictionary<string, string>();
-
-                    string label = values[1];
-                    string sequenceString = values[0];
-
-                    foreach (var alphabet in sequenceString)
-                    {
-                        keyForUniqueIndexes++;
-                        if (Sequence.ContainsKey(alphabet.ToString()))
-                        {
-                            var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
-                            Sequence.Add(newKey, label);
-                        }
-                        else
-                        {
-                            Sequence.Add(alphabet.ToString(), label);
-                        }
-                    }
-
-                    SequencesCollection.Add(Sequence);
-                }
-                return SequencesCollection;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataFilePath"></param>
-        /// <returns></returns>
-        /// 
-        public static Dictionary<float[][], float[][]> ReadCancerSequencesDataFromFile_LSTM_v2(string dataFilePath)
-        {
-            List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
-
-            if (File.Exists(dataFilePath))
-            {
-                using (StreamReader sr = new StreamReader(dataFilePath))
-                {
-                    while (sr.Peek() >= 0)
+                   // while (sr.Peek() >= 0)
                     {
                         var line = sr.ReadLine();
                         string[] values = line.Split(",");
@@ -95,67 +49,24 @@ namespace MultiSequenceLearning
                         string label = values[1];
                         string sequenceString = values[0];
 
-                        if (sequenceString.Length < 33)
+                        foreach (var alphabet in sequenceString)
                         {
-                            int remainingLength = 33 - sequenceString.Length;
-                            for (int i = 0; i < remainingLength; i++)
+                            keyForUniqueIndexes++;
+                            if (Sequence.ContainsKey(alphabet.ToString()))
                             {
-                                sequenceString = sequenceString + "Z";
+                                var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
+                                Sequence.Add(newKey, label);
+                            }
+                            else
+                            {
+                                Sequence.Add(alphabet.ToString(), label);
                             }
                         }
 
-                        Sequence.Add(sequenceString, label);
                         SequencesCollection.Add(Sequence);
                     }
                 }
-                float[][] processedDataSet = new float[SequencesCollection.Count][];
-                float[][] processedLabel = new float[SequencesCollection.Count][];
-
-                int index = 0;
-
-                foreach (var sequence in SequencesCollection)
-                {
-                    var sequenceDict = sequence;
-                    var sequenceString = sequenceDict.Keys.ElementAt(0);
-                    var sequenceLabel = sequenceDict.Values.ElementAt(0).Split("_")[0];
-
-                    float[] sequenceProcessed = new float[0];
-
-                    foreach (var element in sequenceString)
-                    {
-                        var numericval = char.ToUpper(element) - 64;
-                        sequenceProcessed = sequenceProcessed.Concat(new float[] { numericval }).ToArray();
-                    }
-
-                    processedDataSet[index] = sequenceProcessed;
-                    var label_encoded = new float[0];
-
-                    if (sequenceLabel == CancerSequenceClasses[0])
-                    {
-                        label_encoded = CancerSequenceClassesOneHotEncoding[0];
-                    }
-
-                    else if (sequenceLabel == CancerSequenceClasses[1])
-                    {
-                        label_encoded = CancerSequenceClassesOneHotEncoding[1];
-                    }
-
-                    else if (sequenceLabel == CancerSequenceClasses[2])
-                    {
-                        label_encoded = CancerSequenceClassesOneHotEncoding[2];
-                    }
-
-                    else if (sequenceLabel == CancerSequenceClasses[3])
-                    {
-                        label_encoded = CancerSequenceClassesOneHotEncoding[3];
-                    }
-                    processedLabel[index] = label_encoded;
-                    index++;
-                }
-                var returnDict = new Dictionary<float[][], float[][]>();
-                returnDict.Add(processedDataSet, processedLabel);
-
-                return returnDict;
+                return SequencesCollection;
             }
             else
             {
