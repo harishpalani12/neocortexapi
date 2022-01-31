@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\..\..\Thesis-LSTM0\ThesisExperiments\neocortexapi-master\NeoCortexApi\CNTKUtil\CNTKUtil.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Folder Include ="..\TrainingFiles" />
+		<Folder Include="..\TestingLogs"/>
+	</ItemGroup>
 </Project>

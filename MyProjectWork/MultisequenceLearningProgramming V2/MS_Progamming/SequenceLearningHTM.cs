@@ -34,7 +34,7 @@ namespace ThesisExperiments
         {
             int inputBits = 31;
             int maxCycles = 30;
-            var trainingData = HelperMethods.ReadCancerSequencesDataFromFile(CancerSequenceDataFile);
+            var trainingData = HelperMethods.ReadCancerSequencesDataFromFile(CancerSequenceDataFile2);
             var trainingDataProcessed = HelperMethods.EncodeCancerSequences(trainingData);
             var trained_HTM_model = Run(inputBits, maxCycles, numColumns, trainingDataProcessed, true);
             var trained_CortexLayer = trained_HTM_model.Keys.ElementAt(0);
