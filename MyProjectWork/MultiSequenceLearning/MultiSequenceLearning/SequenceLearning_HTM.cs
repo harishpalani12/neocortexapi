@@ -19,14 +19,14 @@ namespace MultiSequenceLearning
 
         /*string basePath;*/
         
-        //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
+       static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
 
         //static readonly string LungCancerSequenceDataFile = Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + @"\TrainingFiles\ACPs_Lung_cancer.csv");
 
        // static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName);
 
-        static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\ACPs_Lung_cancer.csv");
-        static readonly string BreastCancerSequenceDataFile = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Breast_cancer.csv";
+       // static readonly string LungCancerSequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\ACPs_Lung_cancer.csv");
+       // static readonly string BreastCancerSequenceDataFile = @"F:\Frankfurt University Of Applied Sciences\Software Engineering(VS)\Final Project\Sequence\Anticancer_Peptides\ACPs_Breast_cancer.csv";
 
         public void InitiateCancerSequenceClassification()
         {

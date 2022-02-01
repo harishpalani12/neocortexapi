@@ -42,7 +42,8 @@ namespace ThesisExperiments
             
             //**************************************************************************
             //                               HTM
-            if (selectedExperiment == "1") {
+            if (selectedExperiment == "1") 
+            {
 
                 Console.WriteLine("-------------INITIATING PREDICT PASSENGER COUNT PREDICTION EXPERIMENT || ***HTM***-------------");
                 experimentHTM.InitiatePassengerCountPredictionExperiment();  
