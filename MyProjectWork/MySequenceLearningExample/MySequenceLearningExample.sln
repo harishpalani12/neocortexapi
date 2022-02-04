@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySequenceLearningExample", "MySequenceLearningExample\MySequenceLearningExample.csproj", "{9FB5D4B0-17BE-4A41-ADD2-3A97FADC47E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "..\..\source\NeoCortexApi\NeoCortexApi.csproj", "{A9ED4F6C-46B8-4DA6-8C83-FF36FB6F51C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi.Parallel", "..\..\source\NeoCortexApi.Parallel\NeoCortexApi.Parallel.csproj", "{2379BE20-7073-415E-9C25-81D85FE4344F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "..\..\source\NeoCortexEntities\NeoCortexEntities.csproj", "{BC9F91D3-D86C-43A7-A9E5-60F6A075DC59}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexArrayLib", "..\..\source\NeoCortexArrayLib\NeoCortexArrayLib.csproj", "{9CBE84A0-1978-41F0-AE41-AC432821B3A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FB5D4B0-17BE-4A41-ADD2-3A97FADC47E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB5D4B0-17BE-4A41-ADD2-3A97FADC47E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB5D4B0-17BE-4A41-ADD2-3A97FADC47E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB5D4B0-17BE-4A41-ADD2-3A97FADC47E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9ED4F6C-46B8-4DA6-8C83-FF36FB6F51C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9ED4F6C-46B8-4DA6-8C83-FF36FB6F51C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9ED4F6C-46B8-4DA6-8C83-FF36FB6F51C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9ED4F6C-46B8-4DA6-8C83-FF36FB6F51C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2379BE20-7073-415E-9C25-81D85FE4344F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2379BE20-7073-415E-9C25-81D85FE4344F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2379BE20-7073-415E-9C25-81D85FE4344F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2379BE20-7073-415E-9C25-81D85FE4344F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC9F91D3-D86C-43A7-A9E5-60F6A075DC59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC9F91D3-D86C-43A7-A9E5-60F6A075DC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC9F91D3-D86C-43A7-A9E5-60F6A075DC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC9F91D3-D86C-43A7-A9E5-60F6A075DC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CBE84A0-1978-41F0-AE41-AC432821B3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBE84A0-1978-41F0-AE41-AC432821B3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBE84A0-1978-41F0-AE41-AC432821B3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBE84A0-1978-41F0-AE41-AC432821B3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E20E394-ED55-457C-AA7B-9037D99B93C1}
+	EndGlobalSection
+EndGlobal
