@@ -34,7 +34,8 @@ namespace NeoCortexApiSample
                 NumActiveColumnsPerInhArea = 0.02 * numColumns,
                 PotentialRadius = (int)(0.15 * inputBits),
                 StimulusThreshold = 5.0,
-                
+                //InhibitionRadius = 15,
+
                 MaxBoost = 10.0,
                 DutyCyclePeriod = 25,
                 MinPctOverlapDutyCycles = 0.75,
