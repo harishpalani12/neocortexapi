@@ -33,19 +33,19 @@ namespace SimpleMultiSequenceLearning
 
         private static void RunMultiSimpleSequenceLearningExperiment()
         {
-            Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
-            //Dictionary<string, List<string>> sequences = new Dictionary<string, List<string>>();
+            //Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
+            Dictionary<string, List<string>> sequences = new Dictionary<string, List<string>>();
 
 
             //sequences.Add("S1", new List<double>(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, }));
             //sequences.Add("S2", new List<double>(new double[] { 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 }));
-            //sequences.Add("S1", new List<string>(new string[] { "AIGKFLHSAKKFGKAFVGEIMNS", "FAKALAKLAKKLL","FAKALKALLKALKAL"  }));
-            //sequences.Add("S2", new List<string>(new string[] { "FAKKLAKKLAKAAL","FAKKLAKKLAKAL","FAKKLAKKLAKLAL" }));
-            sequences.Add("S1", new List<double>(new string[] { "AIGKFLHSAKKFGKAFVGEIMNS", "FAKALAKLAKKLL", "FAKALKALLKALKAL" }));
-            sequences.Add("S2", new List<double>(new string[] { "FAKKLAKKLAKAAL", "FAKKLAKKLAKAL", "FAKKLAKKLAKLAL" }));
-            //
-            // Prototype for building the prediction engine.
-            MultiSequenceLearning experiment = new MultiSequenceLearning();
+            sequences.Add("S1", new List<string>(new string[] { "F","A","K","A","L","A","A","L","A","K","K","L","L"  }));
+            sequences.Add("S2", new List<string>(new string[] { "F","A","K","K","L","A","K","K","L","A","K","A","A","L" }));
+             //sequences.Add("S1", new List<double>(new string[] { "AIGKFLHSAKKFGKAFVGEIMNS", "FAKALAKLAKKLL", "FAKALKALLKALKAL" }));
+             //sequences.Add("S2", new List<double>(new string[] { "FAKKLAKKLAKAAL", "FAKKLAKKLAKAL", "FAKKLAKKLAKLAL" }));
+             //
+             // Prototype for building the prediction engine.
+             MultiSequenceLearning experiment = new MultiSequenceLearning();
             var predictor = experiment.Run(sequences);
          
         }
@@ -80,8 +80,8 @@ namespace SimpleMultiSequenceLearning
             PredictNextElement(predictor, list3);
         }*/
 
-        private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
-        //private static void PredictNextElement(HtmPredictionEngine predictor, string[] list)
+        //private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
+        private static void PredictNextElement(HtmPredictionEngine predictor, string[] list)
         {
             Debug.WriteLine("------------------------------");
 

@@ -19,8 +19,8 @@ namespace SimpleMultiSequenceLearning
         /// Runs the learning of sequences.
         /// </summary>
         /// <param name="sequences">Dictionary of sequences. KEY is the sewuence name, the VALUE is th elist of element of the sequence.</param>
-        public HtmPredictionEngine Run(Dictionary<string, List<double>> sequences)
-        //public HtmPredictionEngine Run(Dictionary<string, List<string>> sequences)
+        //public HtmPredictionEngine Run(Dictionary<string, List<double>> sequences)
+        public HtmPredictionEngine Run(Dictionary<string, List<string>> sequences)
         {
             Console.WriteLine($"Hello NeocortexApi! Experiment {nameof(MultiSequenceLearning)}");
 
@@ -76,8 +76,8 @@ namespace SimpleMultiSequenceLearning
         /// <summary>
         ///
         /// </summary>
-        private HtmPredictionEngine RunExperiment(int inputBits, HtmConfig cfg, EncoderBase encoder, Dictionary<string, List<double>> sequences)
-        //private HtmPredictionEngine RunExperiment(int inputBits, HtmConfig cfg, EncoderBase encoder, Dictionary<string, List<string>> sequences)
+        //private HtmPredictionEngine RunExperiment(int inputBits, HtmConfig cfg, EncoderBase encoder, Dictionary<string, List<double>> sequences)
+        private HtmPredictionEngine RunExperiment(int inputBits, HtmConfig cfg, EncoderBase encoder, Dictionary<string, List<string>> sequences)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -330,8 +330,8 @@ namespace SimpleMultiSequenceLearning
         /// </summary>
         /// <param name="sequences">Alle sequences.</param>
         /// <returns></returns>
-        private int GetNumberOfInputs(Dictionary<string, List<double>> sequences)
-        //private int GetNumberOfInputs(Dictionary<string, List<string>> sequences)
+        //private int GetNumberOfInputs(Dictionary<string, List<double>> sequences)
+        private int GetNumberOfInputs(Dictionary<string, List<string>> sequences)
         {
             int num = 0;
 
@@ -353,8 +353,8 @@ namespace SimpleMultiSequenceLearning
         /// <param name="input"></param>
         /// <param name="sequence"></param>
         /// <returns></returns>
-        private static string GetKey(List<string> prevInputs, double input, string sequence)
-        //private static string GetKey(List<string> prevInputs, string input, string sequence)
+        //private static string GetKey(List<string> prevInputs, double input, string sequence)
+        private static string GetKey(List<string> prevInputs, string input, string sequence)
         {
             string key = String.Empty;
 
