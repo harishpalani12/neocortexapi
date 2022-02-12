@@ -29,6 +29,8 @@ namespace SimpleMultiSequenceLearning
         {
             Console.WriteLine($"Hello NeocortexApi! Experiment {nameof(MultiSequenceLearning)}");
 
+            Console.WriteLine("Training Model In Progress.....");
+
             int inputBits = 100;
             int numColumns = 1024;
 
@@ -59,7 +61,7 @@ namespace SimpleMultiSequenceLearning
                 PredictedSegmentDecrement = 0.1
             };
 
-            double max = 20;
+            double max = 100;
 
             Dictionary<string, object> settings = new Dictionary<string, object>()
             {
