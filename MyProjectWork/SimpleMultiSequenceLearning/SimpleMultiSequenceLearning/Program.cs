@@ -29,6 +29,49 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("\n");
             Console.WriteLine("\n");
 
+            Console.WriteLine("             :::::::::::::::::::...:~!777!!~^:....:::::::::::::");
+            Console.WriteLine("             :::::::::::::::::..^?G##########BPJ~:..:::::::::::");
+            Console.WriteLine("             ::::::::::::::::.:J&&BGPPPPPPPPGGB#&BJ^.::::::::::");
+            Console.WriteLine("             :::::::::::::::.~B@BPPPPPPPPPPPPPPPPB&#?..::::::::");
+            Console.WriteLine("             ::::::::::::::.~#@GPPPPPPGBB##########@@5:..::::::");
+            Console.WriteLine("             :::::::::::::.^#@BPPPPG#&#GP5YYJ?????JYG##P~.:::::");
+            Console.WriteLine("             ::::::::......P@#PPPPP&@G5!~~~~:       .^?#@?.::::");
+            Console.WriteLine("             ::::::.::~!7?Y@&GPPPPG@#55Y!~~~~~^:::.::^~!&&^.:::");
+            Console.WriteLine("             :::::.?B##&##@@BGPPPPG@&555Y?!!!!!!!!!!!7?J#@7.:::");
+            Console.WriteLine("             ::::.7@&GPPPP&@GGPPPPP#@BP55555YYYYYY55555P@&^.:::");
+            Console.WriteLine("             :::.^#@GGGGGB@&GGPPPPPPB&&#BGGGPPPPPPPPPGB@#!.::::");
+            Console.WriteLine("             :::.?@&GGGGGB@#GGGPPPPPPPGBB##&&&&&&&&&&#@@~.:::::");
+            Console.WriteLine("             :::.5@BGGGGG#@#GGGPPPPPPPPPPPPPPPPPPPPPPP&&^.:::::");
+            Console.WriteLine("             :::.P@BGGGGG#@#GGGGPPPPPPPPPPPPPPPPPPPPPG@#:.:::::");
+            Console.WriteLine("             :::.P@BGGGGG#@#GGGGPPPPPPPPPPPPPPPPPPPPPG@G.::::::");
+            Console.WriteLine("             :::.5@#GGGGG#@#GGGGGPPPPPPPPPPPPPPPPPPPPB@5.::::::");
+            Console.WriteLine("             :::.?@#GGGGGB@#GGGGGGGGPPPPPPPPPPPPPPPPG#@?.::::::");
+            Console.WriteLine("             :::.~@&GGGGGB@&GGGGGGGGGGGGGPPPPPPPGGGGG&@~.::::::");
+            Console.WriteLine("             ::::.G@BGGGGG@&GGGGGGGGGGGGGGGGGGGGGGGGB@B:.::::::");
+            Console.WriteLine("             ::::.~G&&###&@@BGGGGGGGGGB########BGGGG#@Y.:::::::");
+            Console.WriteLine("             :::::.:~7???7G@BGGGGGGGGB@&YYP@&BBGGGGG&@!.:::::::");
+            Console.WriteLine("             :::::::......7@&GGGGGGGGB@G..~@&GGGGGGB@#:.:::::::");
+            Console.WriteLine("             ::::::::::::.^&@GGGGGGGGB@5..:#@BGGGGG#@Y.::::::::");
+            Console.WriteLine("             :::::::::::::.Y@&&######&@J.:.5@&&&&&&&#~.::::::::");
+            Console.WriteLine("             :::::::::::::::~!?JJYJJ?7~:::.^!!!!!!!~:.:::::::::");
+
+
+            Console.WriteLine("\n\n");
+            Console.WriteLine("\n\n");
+
+            Console.WriteLine("*********************************************************************************************");
+            Console.WriteLine("***********************************   MACHINE LEARNING     **********************************");
+            Console.WriteLine("***********************************   NEO - CORTEX API     **********************************");
+            Console.WriteLine("***********************************   MULTI - SEQUENCE     **********************************");
+            Console.WriteLine("***********************************       LEARNING         **********************************");
+            Console.WriteLine("*********************************************************************************************");
+            Console.WriteLine("*********************************************************************************************");
+
+            Console.WriteLine("\n\n");
+            Console.WriteLine("\n\n");
+            Console.WriteLine("Variables are being trained Please Wait....");
+
+            Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
             RunMultiSequenceLearningExperiment();
         }
@@ -55,8 +98,8 @@ namespace SimpleMultiSequenceLearning
             //sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 7.0, 1.0, 9.0, 12.0, 11.0, 12.0, 13.0, 14.0, 11.0, 12.0, 14.0, 5.0, 7.0, 6.0, 9.0, 3.0, 4.0, 3.0, 4.0, 3.0, 4.0 }));
             //sequences.Add("S2", new List<double>(new double[] { 0.8, 2.0, 0.0, 3.0, 3.0, 4.0, 5.0, 6.0, 5.0, 7.0, 2.0, 7.0, 1.0, 9.0, 11.0, 11.0, 10.0, 13.0, 14.0, 11.0, 7.0, 6.0, 5.0, 7.0, 6.0, 5.0, 3.0, 2.0, 3.0, 4.0, 3.0, 4.0 }));
 
-            sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
-            sequences.Add("S2", new List<double>(new double[] { 8.0, 1.0, 2.0, 9.0, 10.0, 7.0, 11.00 }));
+            //sequences.Add("S1", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0,  10.0, 12.0}));
+            //sequences.Add("S2", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0}));
 
             //sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 3.0, 5.0, 7.0 }));
             //sequences.Add("S2", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0, 10.00 }));
@@ -64,7 +107,7 @@ namespace SimpleMultiSequenceLearning
             // List of Prime Numbers from 0 to 100
             //sequences.Add("S1", new List<double>(new double[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}));
 
-            // sequences.Add("S3", new List<double>(new double[] { 4, 6, 8, 9, 10, 12, 14, 15, 16 }));
+            //sequences.Add("S3", new List<double>(new double[] { 4, 6, 8, 9, 10, 12, 14, 15, 16 }));
             //sequences.Add("S2", new List<double>(new double[] { 41, 43, 47,  53, 59, 61, 67, 71,73, 79, 83, 89, 97 }));
 
 
@@ -78,9 +121,15 @@ namespace SimpleMultiSequenceLearning
             // sequences.Add("S9", new List<double>(new double[] {77, 78, 80, 81, 82, 84, 85, 86, 87 }));
             // sequences.Add("S10", new List<double>(new double[] {88, 90, 91, 92, 93, 94, 95, 96, 98, 99, 100 }));
 
-            //sequences.Add("TwoMultiple", new List<double>(new double[] { 2.0 ,4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0 }));
-            //sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
+            sequences.Add("TwoMultiple", new List<double>(new double[]   { 2.0 ,4.0,  6.0,  8.0, 10.0, 12.0, 14.0, 16.0 }));
 
+            sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
+
+            sequences.Add("FiveMultiple", new List<double>(new double[] { 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0 }));
+
+            sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0}));
+
+            sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));
             //sequences.Add("Seq1", new List<double>(new double[] { 1,2,3,4,5,6,7,8,9 }));
             //sequences.Add("Seq2", new List<double>(new double[] { 9,7,1,6,8,3,4,5,2 }));
 
@@ -102,11 +151,37 @@ namespace SimpleMultiSequenceLearning
             // note : can use ascii value
 
             // var list2 = new double[] { 2.0, 3.0, 5.0, 11.0 };
-            var list2 = new double[] { 1.0, 2.0, 3.0 };
-            predictor.Reset();
-            PredictNextElement(predictor, list2);
+            //var list2 = new double[] { 4.0, 6.0, 9.0, 15.0, 21.0, 7.0 , 30.0};
 
-  /*          PredictNextElement(predictor, list4);
+            int BufferSize;
+
+            Console.WriteLine("Enter Total number of sequences you want to give..");
+
+            BufferSize = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine($"Array Size is : {BufferSize}");
+
+            Console.WriteLine("Enter Sequence of Numbers to be Predicted....");
+
+            double[] buffer = new double[BufferSize];
+
+            for (int i = 0; i < BufferSize; i++)
+            {
+                buffer[i] = Convert.ToDouble(Console.ReadLine());
+            }
+
+            Console.WriteLine($"Entered Number are : ");
+            for (int i = 0; i < BufferSize; i++)
+            {
+                Console.Write("{0}", buffer[i]);
+                Console.Write("\t");
+            }
+
+            Console.WriteLine("\n");
+            predictor.Reset();
+            PredictNextElement(predictor, buffer);
+
+         /* PredictNextElement(predictor, list4);
 
             predictor.Reset();
             PredictNextElement(predictor, list1);
@@ -116,7 +191,8 @@ namespace SimpleMultiSequenceLearning
 
             predictor.Reset();
             PredictNextElement(predictor, list3);
-  */      }
+            */      
+        }
 
         private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
         {
@@ -130,7 +206,10 @@ namespace SimpleMultiSequenceLearning
                 {
                     foreach (var pred in res)
                     {
-                        Console.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
+                        //Console.WriteLine($"PredictedInput = {pred.PredictedInput}");
+                        //Console.WriteLine($"Similarity     = {pred.Similarity}");
+
+                        Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
                     }
                     //Token   -->  tokens[0] S1
                     //             tokens[1] 3-4-2-5-0-1-2
@@ -147,7 +226,7 @@ namespace SimpleMultiSequenceLearning
                     Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}\n");
                 }
                 else    
-                    Console.WriteLine("Nothing predicted :(\n");
+                    Console.WriteLine("Invalid Match..... \n");
             }
 
             Console.WriteLine("------------------------End of PredictNextElement ------------------------");
