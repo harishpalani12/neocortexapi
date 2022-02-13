@@ -27,9 +27,11 @@ namespace SimpleMultiSequenceLearning
         /// <param name="sequences">Dictionary of sequences. KEY is the sewuence name, the VALUE is th elist of element of the sequence.</param>
         public HtmPredictionEngine Run(Dictionary<string, List<double>> sequences)
         {
-            Console.WriteLine($"Hello NeocortexApi! Experiment {nameof(MultiSequenceLearning)}");
+            Console.WriteLine($"NeocortexApi --> Experiment {nameof(MultiSequenceLearning)}");
 
-            Console.WriteLine("Training Model In Progress.....");
+            Console.WriteLine("Input Variables Updated from Program....");
+
+            Console.WriteLine("\nTraining Model In Progress.....");
 
             int inputBits = 100;
             int numColumns = 1024;
@@ -61,7 +63,7 @@ namespace SimpleMultiSequenceLearning
                 PredictedSegmentDecrement = 0.1
             };
 
-            double max = 100;
+            double max = 20;
 
             Dictionary<string, object> settings = new Dictionary<string, object>()
             {
