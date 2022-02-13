@@ -9,12 +9,21 @@ namespace SimpleMultiSequenceLearning
 {
     class Program
     {
+
+
+        /// <summary>
+        /// TRAINING FILE PATH
+        /// </summary>
+        /// 
+        static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
+
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
         /// You must start this code in debugger to follow the trace.
         /// and TM.
         /// </summary>
         /// <param name="args"></param>
+        /// 
         static void Main(string[] args)
         {
             Console.WriteLine("######## ########    ###    ##     ##    ##    ##  #######   #######  ########  #### ########  ######  ");
@@ -73,25 +82,11 @@ namespace SimpleMultiSequenceLearning
 
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
-            RunMultiSequenceLearningExperiment();
+
+            RunMultiSequenceLearningExperiment(SequenceDataFile);
         }
 
-        private static void RunMultiSimpleSequenceLearningExperiment()
-        {
-            Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
-
-            sequences.Add("S1", new List<double>(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0 }));
-            sequences.Add("S2", new List<double>(new double[] { 10.0, 11.0, 12.0, 13.0, 4.0, 15.0, 16.0 }));
-
-            //
-            // Prototype for building the prediction engine.
-            MultiSequenceLearning experiment = new MultiSequenceLearning();
-            var predictor = experiment.Run(sequences);
-
-        }
-
-
-        private static void RunMultiSequenceLearningExperiment()
+        private static void RunMultiSequenceLearningExperiment(string datafilepath)
         {
             Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
 
@@ -130,9 +125,14 @@ namespace SimpleMultiSequenceLearning
             sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0}));
 
             sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));
-            //sequences.Add("Seq1", new List<double>(new double[] { 1,2,3,4,5,6,7,8,9 }));
-            //sequences.Add("Seq2", new List<double>(new double[] { 9,7,1,6,8,3,4,5,2 }));
 
+
+            //Dictionary<string, List<string>> GauravSequence = new Dictionary<string, List<string>>();
+
+            //GauravSequence.Add("Sequence1", new List<string>(new string[] { "123456789"}));
+
+            var trainingData = MyHelperMethod.ReadSequencesData(datafilepath);
+            var trainingDataProcessed = MyHelperMethod.EncodeSequences(trainingData);
             //
             // Prototype for building the prediction engine.
             MultiSequenceLearning experiment = new MultiSequenceLearning();
