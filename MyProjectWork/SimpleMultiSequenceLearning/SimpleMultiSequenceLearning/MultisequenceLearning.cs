@@ -24,7 +24,7 @@ namespace SimpleMultiSequenceLearning
         /// <summary>
         /// Runs the learning of sequences.
         /// </summary>
-        /// <param name="sequences">Dictionary of sequences. KEY is the sewuence name, the VALUE is th elist of element of the sequence.</param>
+        /// <param name="sequences">Dictionary of sequences. KEY is the sequence name, the VALUE is th elist of element of the sequence.</param>
         public HtmPredictionEngine Run(Dictionary<string, List<double>> sequences)
         {
             int inputBits = 100;

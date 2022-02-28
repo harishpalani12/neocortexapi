@@ -133,10 +133,14 @@ namespace SimpleMultiSequenceLearning
 
             var trainingData = MyHelperMethod.ReadSequencesData(datafilepath);
             var trainingDataProcessed = MyHelperMethod.EncodeSequences(trainingData);
+            
+
             //
             // Prototype for building the prediction engine.
             MultiSequenceLearning experiment = new MultiSequenceLearning();
-            var predictor = experiment.Run(sequences);
+           var predictor = experiment.Run(sequences);
+
+            //var trained_HTM_model = experiment.Run(trainingDataProcessed);
 
             Console.WriteLine("Ready to Predict.....");
 
