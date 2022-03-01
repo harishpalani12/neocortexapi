@@ -76,30 +76,33 @@ namespace SimpleMultiSequenceLearning
             return RunExperiment(inputBits, cfg, encoder, sequences);
         }
 
+        /////////////////////////////////////////////////////////////////////////////////
         /// <summary>
-        ///
+        ///     Run Experiment
         /// </summary>
-        /// 
-        public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunMultiSequenceLearningForAlphabets(int inputBits, int maxCycles, int numColumns, List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
+        /// <param name="inputBits">InputBits Data</param>
+        /// <param name="numColumns">NumColumns in Network</param>
+        /// <param name="Sequences">Data Sequences</param>
+        public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(int inputBits, int maxCycles, int numColumns, List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
         {
-            int inputBits = 100;
-            int numColumns = 1024;
+            int inputBits_Alpha = 100;
+            int numColumns_Alpha = 1024;
 
-            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
                 Random = new ThreadSafeRandom(42),
 
                 CellsPerColumn = 25,
                 GlobalInhibition = true,
                 LocalAreaDensity = -1,
-                NumActiveColumnsPerInhArea = 0.02 * numColumns,
-                PotentialRadius = (int)(0.15 * inputBits),
+                NumActiveColumnsPerInhArea = 0.02 * numColumns_Alpha,
+                PotentialRadius = (int)(0.15 * inputBits_Alpha),
                 //InhibitionRadius = 15,
 
                 MaxBoost = 10.0,
                 DutyCyclePeriod = 25,
                 MinPctOverlapDutyCycles = 0.75,
-                MaxSynapsesPerSegment = (int)(0.02 * numColumns),
+                MaxSynapsesPerSegment = (int)(0.02 * numColumns_Alpha),
 
                 ActivationThreshold = 15,
                 ConnectedPermanence = 0.5,
@@ -120,6 +123,7 @@ namespace SimpleMultiSequenceLearning
             // CORTEX LAYER
             CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
 
+
             // HPA IS_IN_STABLE STATE FLAG
             bool isInStableState = false;
             // LEARNING ACTIVATION FLAG
@@ -127,7 +131,6 @@ namespace SimpleMultiSequenceLearning
 
             // NUMBER OF NEW BORN CYCLES
             int newbornCycle = 0;
-
 
             // HOMOSTATICPLASTICITY CONTROLLER
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
@@ -144,6 +147,7 @@ namespace SimpleMultiSequenceLearning
 
                 // Clear all learned patterns in the classifier.
                 //cls.ClearState();
+
             }, numOfCyclesToWaitOnChange: 30);
 
             // SPATIAL POOLER initialization with HomoPlassiticityController using connections.
@@ -160,14 +164,11 @@ namespace SimpleMultiSequenceLearning
             // CONTRAINER FOR Previous Active Columns
             int[] prevActiveCols = new int[0];
 
-
             // Starting experiment
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             // TRAINING SP till STATBLE STATE IS ACHIEVED
-
-
             while (isInStableState == false) // STABLE CONDITION LOOP ::: LOOP - 0
             {
                 newbornCycle++;
@@ -181,7 +182,6 @@ namespace SimpleMultiSequenceLearning
                         var elementSDR = Element.Value; // ALL ELEMENT IN ONE SEQUENCE 
 
                         Console.WriteLine($"-------------- {observationClass} ---------------");
-
                         // CORTEX LAYER OUTPUT with elementSDR as INPUT and LEARN = TRUE
                         var lyrOut = layer1.Compute(elementSDR, learn);
 
@@ -190,10 +190,9 @@ namespace SimpleMultiSequenceLearning
                             break;
 
                     }
-
+                    if (isInStableState)
+                        break;
                 }
-                if (isInStableState)
-                    break;
             }
 
             // ADDING TEMPORAL MEMEORY to CORTEX LAYER
@@ -206,141 +205,145 @@ namespace SimpleMultiSequenceLearning
 
             List<List<string>> possibleSequence = new List<List<string>>();
             // TRAINING SP+TM TOGETHER
-            // ELEMENT IN SEQUENCE MATCHES COUNT
-            int ElementMatches = 0;
-
-            foreach (var Elements in sequence) // SEQUENCE DICTIONARY LOOP
+            foreach (var sequence in Sequences)  // SEQUENCE LOOP
             {
+                int SequencesMatchCount = 0; // NUMBER OF MATCHES
 
-                // OBSERVATION LABEl
-                var observationLabel = Elements.Key;
-                // ELEMENT SDR LIST FOR A SINGLE SEQUENCE
-                var ElementSdr = Elements.Value;
+                double SaturatedAccuracyCount = 0;
 
-                List<Cell> actCells = new List<Cell>();
-                var lyrOut = new ComputeCycle();
-
-                lyrOut = layer1.Compute(ElementSdr, learn) as ComputeCycle;
-                Debug.WriteLine(string.Join(',', lyrOut.ActivColumnIndicies));
-
-                // Active Cells
-                actCells = (lyrOut.ActiveCells.Count == lyrOut.WinnerCells.Count) ? lyrOut.ActiveCells : lyrOut.WinnerCells;
-
-                cls.Learn(observationLabel, actCells.ToArray());
-
-
-                // CLASS VOTING IS USED FOR SEQUENCE CLASSIFICATION EXPERIMENT i.e CANCER SEQUENCE CLASSIFICATION EXPERIMENT
-                if (!classVotingEnabled)
+                for (int i = 0; i < maxCycles; i++) // MAXCYCLE LOOP 
                 {
+                    var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>.ClassifierResult>>();
+                    List<string> ElementWiseClasses = new List<string>();
 
-                    if (lastPredictedValue == observationLabel && lastPredictedValue != "")
+                    // ELEMENT IN SEQUENCE MATCHES COUNT
+                    int ElementMatches = 0;
+
+                    foreach (var Elements in sequence) // SEQUENCE DICTIONARY LOOP
                     {
-                        ElementMatches++;
-                        Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
+                        // OBSERVATION LABEl
+                        var observationLabel = Elements.Key;
+                        // ELEMENT SDR LIST FOR A SINGLE SEQUENCE
+                        var ElementSdr = Elements.Value;
+
+                        List<Cell> actCells = new List<Cell>();
+                        var lyrOut = new ComputeCycle();
+
+                        lyrOut = layer1.Compute(ElementSdr, learn) as ComputeCycle;
+                        Debug.WriteLine(string.Join(',', lyrOut.ActivColumnIndicies));
+
+                        // Active Cells
+                        actCells = (lyrOut.ActiveCells.Count == lyrOut.WinnerCells.Count) ? lyrOut.ActiveCells : lyrOut.WinnerCells;
+
+                        cls.Learn(observationLabel, actCells.ToArray());
+
+                        // CLASS VOTING IS USED FOR SEQUENCE CLASSIFICATION EXPERIMENT i.e CANCER SEQUENCE CLASSIFICATION EXPERIMENT
+                        if (!classVotingEnabled)
+                        {
+
+                            if (lastPredictedValue == observationLabel && lastPredictedValue != "")
+                            {
+                                ElementMatches++;
+                                Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
+                            }
+                        }
+                        else
+                        {
+                            if (lastPredictedValueList.Contains(observationLabel))
+                            {
+                                ElementMatches++;
+                                lastPredictedValueList.Clear();
+                                Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
+                            }
+                        }
+                        Debug.WriteLine($"Col  SDR: {Helpers.StringifyVector(lyrOut.ActivColumnIndicies)}");
+                        Debug.WriteLine($"Cell SDR: {Helpers.StringifyVector(actCells.Select(c => c.Index).ToArray())}");
+
+                        if (learn == false)
+                            Debug.WriteLine($"Inference mode");
+                        if (lyrOut.PredictiveCells.Count > 0)
+                        {
+                            var predictedInputValue = cls.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
+
+                            Debug.WriteLine($"Current Input: {observationLabel}");
+                            Debug.WriteLine("The predictions with similarity greater than 50% are");
+
+                            foreach (var t in predictedInputValue)
+                            {
+
+
+                                if (t.Similarity >= (double)50.00)
+                                {
+                                    Debug.WriteLine($"Predicted Input: {string.Join(", ", t.PredictedInput)},\tSimilarity Percentage: {string.Join(", ", t.Similarity)}, \tNumber of Same Bits: {string.Join(", ", t.NumOfSameBits)}");
+                                }
+
+                                if (classVotingEnabled)
+                                {
+                                    lastPredictedValueList.Add(t.PredictedInput);
+                                }
+
+                            }
+
+                            if (!classVotingEnabled)
+                            {
+                                lastPredictedValue = predictedInputValue.First().PredictedInput;
+                            }
+                        }
+                    }
+                    accuracy = ((double)ElementMatches / (sequence.Count)) * 100;
+                    Debug.WriteLine($"Cycle : {i} \t Accuracy:{accuracy}");
+
+                    if (accuracy == 100)
+                    {
+                        SequencesMatchCount++;
+                        if (SequencesMatchCount >= 30)
+                        {
+                            break;
+                        }
+                    }
+                    else if (lastCycleAccuracy == accuracy && accuracy != 0)
+                    {
+                        SaturatedAccuracyCount++;
+                        if (SaturatedAccuracyCount >= 20 && lastCycleAccuracy > 70)
+                        {
+                            Debug.WriteLine($"NO FURTHER ACCURACY CAN BE ACHIEVED");
+                            Debug.WriteLine($"Saturated Accuracy : {lastCycleAccuracy} \t Number of times repeated {SaturatedAccuracyCount}");
+                            break;
+                        }
                     }
                     else
                     {
-                        Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
+                        SaturatedAccuracyCount = 0;
+                        SequencesMatchCount = 0;
+                        lastCycleAccuracy = accuracy;
                     }
-                }
-                else
-                {
-                    if (lastPredictedValueList.Contains(observationLabel))
-                    {
-                        ElementMatches++;
-                        lastPredictedValueList.Clear();
-                        Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
-                    }
+                    lastPredictedValueList.Clear();
                 }
 
-                Debug.WriteLine($"Col  SDR: {Helpers.StringifyVector(lyrOut.ActivColumnIndicies)}");
-                Debug.WriteLine($"Cell SDR: {Helpers.StringifyVector(actCells.Select(c => c.Index).ToArray())}");
-
-                if (learn == false)
-                    Debug.WriteLine($"Inference mode");
-
-
-                if (lyrOut.PredictiveCells.Count > 0)
-                {
-                    var predictedInputValue = cls.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
-
-                    Debug.WriteLine($"Current Input: {observationLabel}");
-                    Debug.WriteLine("The predictions with similarity greater than 50% are");
-
-                    foreach (var t in predictedInputValue)
-                    {
-
-
-                        if (t.Similarity >= (double)50.00)
-                        {
-                            Debug.WriteLine($"Predicted Input: {string.Join(", ", t.PredictedInput)},\tSimilarity Percentage: {string.Join(", ", t.Similarity)}, \tNumber of Same Bits: {string.Join(", ", t.NumOfSameBits)}");
-                        }
-
-                        if (classVotingEnabled)
-                        {
-                            lastPredictedValueList.Add(t.PredictedInput);
-                        }
-
-                    }
-
-                    if (!classVotingEnabled)
-                    {
-                        lastPredictedValue = predictedInputValue.First().PredictedInput;
-                    }
-                }
-
-            }
-
-            accuracy = ((double)ElementMatches / (sequence.Count)) * 100;
-            Debug.WriteLine($"Cycle : {i} \t Accuracy:{accuracy}");
-            tempLOGGRAPH.Add(i, accuracy);
-            if (accuracy == 100)
-            {
-                SequencesMatchCount++;
-                if (SequencesMatchCount >= 30)
-                {
-                    tempLOGFILE.Add(i, $"Cycle : {i} \t  Accuracy:{accuracy} \t Number of times repeated {SequencesMatchCount}");
-                    break;
-                }
-                tempLOGFILE.Add(i, $"Cycle : {i} \t  Accuracy:{accuracy} \t Number of times repeated {SequencesMatchCount}");
-
-            }
-
-            else if (lastCycleAccuracy == accuracy && accuracy != 0)
-            {
-                SaturatedAccuracyCount++;
-                if (SaturatedAccuracyCount >= 20 && lastCycleAccuracy > 70)
-                {
-                    Debug.WriteLine($"NO FURTHER ACCURACY CAN BE ACHIEVED");
-                    Debug.WriteLine($"Saturated Accuracy : {lastCycleAccuracy} \t Number of times repeated {SaturatedAccuracyCount}");
-                    tempLOGFILE.Add(i, $"Cycle: { i} \t Accuracy:{accuracy} \t Number of times repeated {SaturatedAccuracyCount}");
-                    break;
-                }
-                else
-                {
-                    tempLOGFILE.Add(i, $"Cycle: { i} \t Saturated Accuracy : {lastCycleAccuracy} \t Number of times repeated {SaturatedAccuracyCount}");
-                }
-            }
-            else
-            {
-                SaturatedAccuracyCount = 0;
-                SequencesMatchCount = 0;
-                lastCycleAccuracy = accuracy;
-                tempLOGFILE.Add(i, $"cycle : {i} \t Accuracy :{accuracy} \t ");
-            }
-            lastPredictedValueList.Clear();
-        }
-        tm.Reset(mem);
+                tm.Reset(mem);
                 learn = true;
-                OUTPUT_LOG_LIST.Add(tempLOGFILE);
+
+
             }
+            sw.Stop();
 
+            //****************DISPLAY STATUS OF EXPERIMENT
+            Debug.WriteLine("-------------------TRAINING END------------------------");
+            Console.WriteLine("-----------------TRAINING END------------------------");
+            var returnDictionary = new Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>>();
+            returnDictionary.Add(layer1, cls);
+            return returnDictionary;
+        }
 
-}
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         ///
