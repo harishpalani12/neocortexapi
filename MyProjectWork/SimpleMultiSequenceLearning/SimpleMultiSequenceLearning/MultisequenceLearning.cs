@@ -14,6 +14,7 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 
 
+
 namespace SimpleMultiSequenceLearning
 {
     /// <summary>
@@ -83,10 +84,11 @@ namespace SimpleMultiSequenceLearning
         /// <param name="inputBits">InputBits Data</param>
         /// <param name="numColumns">NumColumns in Network</param>
         /// <param name="Sequences">Data Sequences</param>
-        public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(int inputBits, int maxCycles, int numColumns, List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
+        public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
         {
-            int inputBits_Alpha = 100;
-            int numColumns_Alpha = 1024;
+            int inputBits_Alpha = 31;
+            int maxCycles = 30;
+            int numColumns_Alpha = 2048/*1024*/;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
@@ -213,7 +215,12 @@ namespace SimpleMultiSequenceLearning
 
                 for (int i = 0; i < maxCycles; i++) // MAXCYCLE LOOP 
                 {
-                    var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>.ClassifierResult>>();
+                    /*var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>.ClassifierResult>>();*/
+                    
+                    
+                    //:TODO .Classifier
+
+                    var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>>>();
                     List<string> ElementWiseClasses = new List<string>();
 
                     // ELEMENT IN SEQUENCE MATCHES COUNT
