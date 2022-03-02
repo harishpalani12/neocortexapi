@@ -15,7 +15,8 @@ namespace SimpleMultiSequenceLearning
         /// TRAINING FILE PATH
         /// </summary>
         /// 
-        static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
+        static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
+        //static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -136,6 +137,9 @@ namespace SimpleMultiSequenceLearning
             //
             // Prototype for building the prediction engine.
             MultiSequenceLearning experiment = new MultiSequenceLearning();
+
+            var trained_HTM_model = experiment.RunAlphabetsLearning(trainingDataProcessed, true);
+
             var predictor = experiment.Run(sequences);
 
             Console.WriteLine("Ready to Predict.....");
