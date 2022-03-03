@@ -28,7 +28,7 @@ namespace SimpleMultiSequenceLearning
         /// <param name="sequences">Dictionary of sequences. KEY is the sequence name, the VALUE is th elist of element of the sequence.</param>
         public HtmPredictionEngine Run(Dictionary<string, List<double>> sequences)
         {
-            int inputBits = 100;
+            int inputBits = 30;
             int numColumns = 1024;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
@@ -87,8 +87,8 @@ namespace SimpleMultiSequenceLearning
         public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
         {
             int inputBits_Alpha = 31;
-            int maxCycles = 30;
-            int numColumns_Alpha = 2048/*1024*/;
+            int maxCycles = 10;
+            int numColumns_Alpha = 256/*2048*/;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
@@ -139,10 +139,12 @@ namespace SimpleMultiSequenceLearning
             {
                 if (isStable)
                     // Event should be fired when entering the stable state.
-                    Console.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                    //Console.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                    Debug.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
                 else
                     // Ideal SP should never enter unstable state after stable state.
-                    Console.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                   // Console.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                      Debug.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
 
                 // We are not learning in instable state.
                 learn = isInStableState = isStable;

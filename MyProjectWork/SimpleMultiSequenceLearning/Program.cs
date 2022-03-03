@@ -17,6 +17,8 @@ namespace SimpleMultiSequenceLearning
         /// 
         static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
         //static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
+        //static readonly string datafilepath = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
+
 
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -128,9 +130,6 @@ namespace SimpleMultiSequenceLearning
             sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));
 
 
-            //Dictionary<string, List<string>> GauravSequence = new Dictionary<string, List<string>>();
-
-            //GauravSequence.Add("Sequence1", new List<string>(new string[] { "123456789"}));
 
             var trainingData = MyHelperMethod.ReadSequencesData(datafilepath);
             var trainingDataProcessed = MyHelperMethod.EncodeSequences(trainingData);

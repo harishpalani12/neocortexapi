@@ -104,6 +104,58 @@ namespace SimpleMultiSequenceLearning
             return ListOfEncodedTrainingSDR;
         }
 
+        public static Dictionary<float[][], float[][]> CancerSequenceDataProcessing(List<Dictionary<string, string>> trainingData)
+        {
+
+            var ListOfProcessedSequenceDictionary = new List<Dictionary<float[][], float[][]>>();
+
+
+            foreach (var sequence in trainingData)
+            {
+
+                var ProcessedSequenceDictionary = new Dictionary<float[][], float[][]>();
+                var processedSequence = new float[sequence.Count][];
+                var processedLabel = new float[sequence.Count][];
+                int elementIndex = 0;
+
+                foreach (var element in sequence)
+                {
+
+                    var observationElement = char.ToUpper(element.Value.ElementAt(0)) - 64;
+                    var observationLabel = element.Key.Split("_")[0];
+                    var observationClassOneHotEncoding = new float[0];
+
+                    if (observationLabel.Equals(SequenceClasses[0]))
+                    {
+                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[0];
+                    }
+                    else if (observationLabel.Equals(SequenceClasses[1]))
+                    {
+                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[1];
+                    }
+                    else if (observationLabel.Equals(SequenceClasses[2]))
+                    {
+                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[2];
+
+                    }
+                    else if (observationLabel.Equals(SequenceClasses[3]))
+                    {
+                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[3];
+                    }
+
+                    processedSequence[elementIndex] = new float[] { observationElement };
+                    processedLabel[elementIndex] = observationClassOneHotEncoding;
+
+                    ProcessedSequenceDictionary.Add(processedLabel, processedSequence);
+                    ListOfProcessedSequenceDictionary.Add(ProcessedSequenceDictionary);
+
+                    elementIndex++;
+                }
+                return ProcessedSequenceDictionary;
+            }
+            return null;
+        }
+
         public static ScalarEncoder FetchAlphabetEncoder()
         {
             ScalarEncoder AlphabetEncoder = new ScalarEncoder(new Dictionary<string, object>()
