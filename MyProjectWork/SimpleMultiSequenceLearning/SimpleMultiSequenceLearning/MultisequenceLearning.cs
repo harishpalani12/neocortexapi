@@ -88,23 +88,23 @@ namespace SimpleMultiSequenceLearning
         {
             int inputBits_Alpha = 31;
             int maxCycles = 30;
-            int numColumns_Alpha = 2048/*1024*/;
+            int numColumns_Alpha = 1024;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
                 Random = new ThreadSafeRandom(42),
 
-                CellsPerColumn = 25,
+                CellsPerColumn = 32,
                 GlobalInhibition = true,
                 LocalAreaDensity = -1,
                 NumActiveColumnsPerInhArea = 0.02 * numColumns_Alpha,
-                PotentialRadius = (int)(0.15 * inputBits_Alpha),
-                //InhibitionRadius = 15,
+                PotentialRadius = 65/*(int)(0.15 * inputBits_Alpha)*/,
+                InhibitionRadius = 15,
 
                 MaxBoost = 10.0,
                 DutyCyclePeriod = 25,
                 MinPctOverlapDutyCycles = 0.75,
-                MaxSynapsesPerSegment = (int)(0.02 * numColumns_Alpha),
+                MaxSynapsesPerSegment = 128/*(int)(0.02 * numColumns_Alpha)*/,
 
                 ActivationThreshold = 15,
                 ConnectedPermanence = 0.5,
@@ -139,10 +139,10 @@ namespace SimpleMultiSequenceLearning
             {
                 if (isStable)
                     // Event should be fired when entering the stable state.
-                    Console.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                    Debug.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
                 else
                     // Ideal SP should never enter unstable state after stable state.
-                    Console.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                    Debug.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
 
                 // We are not learning in instable state.
                 learn = isInStableState = isStable;
@@ -174,7 +174,7 @@ namespace SimpleMultiSequenceLearning
             while (isInStableState == false) // STABLE CONDITION LOOP ::: LOOP - 0
             {
                 newbornCycle++;
-                Console.WriteLine($"-------------- Newborn Cycle {newbornCycle} ---------------");
+                Debug.WriteLine($"-------------- Newborn Cycle {newbornCycle} ---------------");
 
                 foreach (var sequence in Sequences) // FOR EACH SEQUENCE IN SEQUNECS LOOP ::: LOOP - 1
                 {
@@ -344,7 +344,7 @@ namespace SimpleMultiSequenceLearning
 
             //****************DISPLAY STATUS OF EXPERIMENT
             Debug.WriteLine("-------------------TRAINING END------------------------");
-            Console.WriteLine("-----------------TRAINING END------------------------");
+            Debug.WriteLine("-----------------TRAINING END------------------------");
             var returnDictionary = new Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>>();
             returnDictionary.Add(layer1, cls);
             return returnDictionary;
