@@ -116,13 +116,13 @@ namespace SimpleMultiSequenceLearning
             // sequences.Add("S9", new List<double>(new double[] {77, 78, 80, 81, 82, 84, 85, 86, 87 }));
             // sequences.Add("S10", new List<double>(new double[] {88, 90, 91, 92, 93, 94, 95, 96, 98, 99, 100 }));
 
-            sequences.Add("TwoMultiple", new List<double>(new double[]   { 2.0 ,4.0,  6.0,  8.0, 10.0, 12.0, 14.0, 16.0 }));
+            sequences.Add("TwoMultiple", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0 }));
 
             sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
 
             sequences.Add("FiveMultiple", new List<double>(new double[] { 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0 }));
 
-            sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0}));
+            sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0 }));
 
             sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));
 
@@ -131,20 +131,23 @@ namespace SimpleMultiSequenceLearning
 
             //GauravSequence.Add("Sequence1", new List<string>(new string[] { "123456789"}));
 
-            var trainingData = MyHelperMethod.ReadSequencesData(datafilepath);
-            var trainingDataProcessed = MyHelperMethod.EncodeSequences(trainingData);
+            var trainingData = MyHelperMethod.ReadSequencesDataFromCSV(datafilepath);
+            var trainingDataProcessed = MyHelperMethod.TrainEncodeSequencesFromCSV(trainingData);
 
-           
 
             //
             // Prototype for building the prediction engine.
             MultiSequenceLearning experiment = new MultiSequenceLearning();
-           
+
 
             var trained_HTM_model = experiment.RunAlphabetsLearning(trainingDataProcessed, true);
 
+
+            var trained_CortexLayer = trained_HTM_model.Keys.ElementAt(0);
+            var trained_Classifier = trained_HTM_model.Values.ElementAt(0);
+
+
             var predictor = experiment.Run(sequences);
-            //var trained_HTM_model = experiment.Run(trainingDataProcessed);
 
             Console.WriteLine("Ready to Predict.....");
 
@@ -189,17 +192,52 @@ namespace SimpleMultiSequenceLearning
             predictor.Reset();
             PredictNextElement(predictor, buffer);
 
-         /* PredictNextElement(predictor, list4);
+            /* PredictNextElement(predictor, list4);
 
-            predictor.Reset();
-            PredictNextElement(predictor, list1);
+               predictor.Reset();
+               PredictNextElement(predictor, list1);
 
-            predictor.Reset();
-            PredictNextElement(predictor, list2);
+               predictor.Reset();
+               PredictNextElement(predictor, list2);
 
-            predictor.Reset();
-            PredictNextElement(predictor, list3);
-            */      
+               predictor.Reset();
+               PredictNextElement(predictor, list3);
+               */
+
+            Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
+            Console.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
+            var userInput = Console.ReadLine();
+
+
+            while (!userInput.Equals("q") && userInput != "Q")
+            {
+                var sdr = MyHelperMethod.PredictInputSequence(userInput, false);
+                int[] concatedSDR = new int[0];
+                foreach (var elementSDR in sdr)
+                {
+                    concatedSDR = concatedSDR.Concat(elementSDR).ToArray();
+                }
+                var predictionList = new List<List<string>>();
+                var sequence = userInput;
+                Dictionary<string, List<string>> predictedInput = new Dictionary<string, List<string>>();
+
+                List<string> possibleClasses = new List<string>();
+
+                var lyr_Output = trained_CortexLayer.Compute(concatedSDR, false) as ComputeCycle;
+                var classifierPrediction = trained_Classifier.GetPredictedInputValues(lyr_Output.PredictiveCells.ToArray(), 5);
+
+                if (classifierPrediction.Count > 0)
+                {
+                    foreach (var prediction in classifierPrediction)
+                    {
+                        Console.WriteLine($"Predicted Input :{prediction.PredictedInput} \t ");
+                    }
+                }
+
+                Console.WriteLine("PLEASE ENTER NEXT SEQUENCE :");
+                userInput = Console.ReadLine();
+
+            }
         }
 
         private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
@@ -229,11 +267,11 @@ namespace SimpleMultiSequenceLearning
                     //             tokens2[4] = 0
                     //             tokens2[5] = 1
                     //             tokens2[6] = 2
-                    var tokens =  res.First().PredictedInput.Split('_'); 
+                    var tokens = res.First().PredictedInput.Split('_');
                     var tokens2 = res.First().PredictedInput.Split('-');
                     Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}\n");
                 }
-                else    
+                else
                     Console.WriteLine("Invalid Match..... \n");
             }
 
