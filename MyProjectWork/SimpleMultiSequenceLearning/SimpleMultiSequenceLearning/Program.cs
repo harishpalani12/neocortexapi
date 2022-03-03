@@ -1,4 +1,8 @@
-﻿using NeoCortexApi.Encoders;
+﻿using NeoCortexApi;
+using NeoCortexApi.Classifiers;
+using NeoCortexApi.Entities;
+using NeoCortexApi.Network;
+using NeoCortexApi.Encoders;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -147,7 +151,7 @@ namespace SimpleMultiSequenceLearning
             var trained_Classifier = trained_HTM_model.Values.ElementAt(0);
 
 
-            var predictor = experiment.Run(sequences);
+            //var predictor = experiment.Run(sequences);
 
             Console.WriteLine("Ready to Predict.....");
 
@@ -166,7 +170,7 @@ namespace SimpleMultiSequenceLearning
 
             int BufferSize;
 
-            Console.WriteLine("Enter Total number of sequences you want to give..");
+/*            Console.WriteLine("Enter Total number of sequences you want to give..");
 
             BufferSize = Convert.ToInt32(Console.ReadLine());
 
@@ -186,11 +190,11 @@ namespace SimpleMultiSequenceLearning
             {
                 Console.Write("{0}", buffer[i]);
                 Console.Write("\t");
-            }
+            }*/
 
             Console.WriteLine("\n");
-            predictor.Reset();
-            PredictNextElement(predictor, buffer);
+            /*predictor.Reset();
+            PredictNextElement(predictor, buffer);*/
 
             /* PredictNextElement(predictor, list4);
 
@@ -204,40 +208,71 @@ namespace SimpleMultiSequenceLearning
                PredictNextElement(predictor, list3);
                */
 
-            Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
-            Console.WriteLine("PLEASE ENTER CANCER SEQUENCE FOR CLSSIFICATION     **format->ABCSC {without spaces}");
+
+            Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE:             *note format->AAAAVVV {AlphabeticSequence}");
+            Console.WriteLine("PLEASE ENTER CANCER SEQUENCE:            *note format->AAAAVVV {AlphabeticSequence}");
             var userInput = Console.ReadLine();
-
-
             while (!userInput.Equals("q") && userInput != "Q")
             {
-                var sdr = MyHelperMethod.PredictInputSequence(userInput, false);
-                int[] concatedSDR = new int[0];
-                foreach (var elementSDR in sdr)
-                {
-                    concatedSDR = concatedSDR.Concat(elementSDR).ToArray();
-                }
-                var predictionList = new List<List<string>>();
-                var sequence = userInput;
-                Dictionary<string, List<string>> predictedInput = new Dictionary<string, List<string>>();
-
+                var ElementSDRs = MyHelperMethod.PredictInputSequence(userInput, false);
                 List<string> possibleClasses = new List<string>();
 
-                var lyr_Output = trained_CortexLayer.Compute(concatedSDR, false) as ComputeCycle;
-                var classifierPrediction = trained_Classifier.GetPredictedInputValues(lyr_Output.PredictiveCells.ToArray(), 5);
-
-                if (classifierPrediction.Count > 0)
+                for (int i = 0; i < userInput.Length; i++)
                 {
-                    foreach (var prediction in classifierPrediction)
+
+                    var element = userInput.ElementAt(i);
+                    var elementSDR = MyHelperMethod.PredictInputSequence(element.ToString(), true);
+
+                    var lyr_Output = trained_CortexLayer.Compute(elementSDR[0], false) as ComputeCycle;
+                    var classifierPrediction = trained_Classifier.GetPredictedInputValues(lyr_Output.PredictiveCells.ToArray(), 5);
+
+                    if (classifierPrediction.Count > 0)
                     {
-                        Console.WriteLine($"Predicted Input :{prediction.PredictedInput} \t ");
+
+                        foreach (var prediction in classifierPrediction)
+                        {
+                            if (i < userInput.Length - 1)
+                            {
+                                var nextElement = userInput.ElementAt(i + 1).ToString();
+                                var nextElementString = nextElement.Split(",")[0];
+                                if (prediction.PredictedInput.Split(",")[0] == nextElementString)
+                                {
+                                    if (prediction.PredictedInput.Split(",").Length == 3)
+                                    {
+                                        {
+                                            possibleClasses.Add(prediction.PredictedInput.Split(",")[2]);
+                                        }
+                                    }
+                                    else if (prediction.PredictedInput.Split(",")[0] == nextElementString)
+                                    {
+                                        possibleClasses.Add(prediction.PredictedInput.Split(",")[1]);
+                                    }
+                                }
+                            }
+                        }
+
                     }
+
                 }
+
+                var Classcounts = possibleClasses.GroupBy(x => x.Split("_")[0])
+               .Select(g => new { possibleClass = g.Key, Count = g.Count() })
+               .ToList();
+                var possibleClass = "";
+                foreach (var class_ in Classcounts)
+                {
+                    Console.WriteLine($"Predicted Class : {class_.possibleClass.Split("_")[0]} \t votes: {class_.Count}");
+                }
+
 
                 Console.WriteLine("PLEASE ENTER NEXT SEQUENCE :");
                 userInput = Console.ReadLine();
 
             }
+
+
+
+
         }
 
         private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
