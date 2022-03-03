@@ -22,7 +22,7 @@ namespace SimpleMultiSequenceLearning
         static readonly string[] SequenceClasses = new string[] { "inactive - exp", "mod. active", "very active", "inactive - virtual" };
         static readonly float[][] SequenceClassesOneHotEncoding = new float[][] { new float[] { 0, 0, 0, 1 }, new float[] { 0, 0, 1, 0 }, new float[] { 0, 1, 0, 0 }, new float[] { 1, 0, 0, 0 } };
 
-        public static List<Dictionary<string, string>> ReadSequencesData(string dataFilePath)
+        public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
 
@@ -70,7 +70,7 @@ namespace SimpleMultiSequenceLearning
         /// <param name="trainingData"></param>
         /// <returns></returns>
         /// 
-        public static List<Dictionary<string, int[]>> EncodeSequences(List<Dictionary<string, string>> trainingData)
+        public static List<Dictionary<string, int[]>> TrainEncodeSequencesFromCSV(List<Dictionary<string, string>> trainingData)
         {
             List<Dictionary<string, int[]>> ListOfEncodedTrainingSDR = new List<Dictionary<string, int[]>>();
 
@@ -104,56 +104,34 @@ namespace SimpleMultiSequenceLearning
             return ListOfEncodedTrainingSDR;
         }
 
-        public static Dictionary<float[][], float[][]> CancerSequenceDataProcessing(List<Dictionary<string, string>> trainingData)
+        public static List<int[]> PredictInputSequence(string userInput, Boolean EncodeSingleAlphabet)
         {
 
-            var ListOfProcessedSequenceDictionary = new List<Dictionary<float[][], float[][]>>();
+            var alphabetEncoder = FetchAlphabetEncoder();
 
-
-            foreach (var sequence in trainingData)
+            var Encoded_Alphabet_SDRs = new List<int[]>();
+            if (!EncodeSingleAlphabet)
             {
-
-                var ProcessedSequenceDictionary = new Dictionary<float[][], float[][]>();
-                var processedSequence = new float[sequence.Count][];
-                var processedLabel = new float[sequence.Count][];
-                int elementIndex = 0;
-
-                foreach (var element in sequence)
+                if (userInput.Length < 33)
                 {
-
-                    var observationElement = char.ToUpper(element.Value.ElementAt(0)) - 64;
-                    var observationLabel = element.Key.Split("_")[0];
-                    var observationClassOneHotEncoding = new float[0];
-
-                    if (observationLabel.Equals(SequenceClasses[0]))
+                    int remainingLength = 33 - userInput.Length;
+                    for (int i = 0; i < remainingLength; i++)
                     {
-                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[0];
+                        userInput = userInput + "Z";
                     }
-                    else if (observationLabel.Equals(SequenceClasses[1]))
-                    {
-                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[1];
-                    }
-                    else if (observationLabel.Equals(SequenceClasses[2]))
-                    {
-                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[2];
-
-                    }
-                    else if (observationLabel.Equals(SequenceClasses[3]))
-                    {
-                        observationClassOneHotEncoding = SequenceClassesOneHotEncoding[3];
-                    }
-
-                    processedSequence[elementIndex] = new float[] { observationElement };
-                    processedLabel[elementIndex] = observationClassOneHotEncoding;
-
-                    ProcessedSequenceDictionary.Add(processedLabel, processedSequence);
-                    ListOfProcessedSequenceDictionary.Add(ProcessedSequenceDictionary);
-
-                    elementIndex++;
                 }
-                return ProcessedSequenceDictionary;
+
+                foreach (var alphabet in userInput)
+                {
+                    Encoded_Alphabet_SDRs.Add(alphabetEncoder.Encode(char.ToUpper(alphabet) - 64));
+                }
             }
-            return null;
+            else
+            {
+                Encoded_Alphabet_SDRs.Add(alphabetEncoder.Encode(char.ToUpper(userInput.ElementAt(0)) - 64));
+            }
+
+            return Encoded_Alphabet_SDRs;
         }
 
         public static ScalarEncoder FetchAlphabetEncoder()
