@@ -19,8 +19,8 @@ namespace SimpleMultiSequenceLearning
         /// TRAINING FILE PATH
         /// </summary>
         /// 
-
-        static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
+        static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\Lung_cancer_TrainingFile.csv";
+        //static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
 
         //static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 

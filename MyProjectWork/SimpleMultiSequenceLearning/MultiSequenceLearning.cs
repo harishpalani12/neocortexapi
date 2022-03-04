@@ -88,7 +88,7 @@ namespace SimpleMultiSequenceLearning
         {
             int inputBits_Alpha = 31;
             int maxCycles = 30;
-            int numColumns_Alpha = 1024;
+            int numColumns_Alpha = 2048;
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
