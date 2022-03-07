@@ -1,15 +1,12 @@
-﻿using NeoCortexApi.Utility;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using Daenet.ImageBinarizerLib.Entities;
 using Daenet.ImageBinarizerLib;
-using Newtonsoft.Json;
 using System.IO;
 using SkiaSharp;
+using NeoCortexApi.Encoders;
+using System;
 
-namespace NeoCortexApi.Encoders
+namespace HtmImageEncoder
 {
     /// <summary>
     /// Binarize an Image
@@ -133,8 +130,16 @@ namespace NeoCortexApi.Encoders
             return imageBinarizer.GetArrayBinary();
         }
 
-
-
+        /// <summary>
+        /// This method enables running in the network.
+        /// </summary>
+        /// <param name="inputData"></param>
+        /// <param name="learn"></param>
+        /// <returns></returns>
+        public int[] Compute(object inputData, bool learn)
+        {
+            return Encode(inputData);
+        }
         #endregion
 
         #region Private Methods
