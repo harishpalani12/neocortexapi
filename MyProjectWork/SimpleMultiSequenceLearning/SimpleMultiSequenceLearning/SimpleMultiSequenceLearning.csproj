@@ -15,7 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BinarizedImage\Apple\" />
+    <Folder Include="InputFolder\Avocado\" />
+    <Folder Include="InputFolder\Banana\" />
     <Folder Include="TrainingFiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="InputFolder\Apple\pic1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

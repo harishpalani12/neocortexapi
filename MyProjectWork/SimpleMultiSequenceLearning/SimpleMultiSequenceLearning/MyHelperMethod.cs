@@ -149,5 +149,20 @@ namespace SimpleMultiSequenceLearning
                 });
             return AlphabetEncoder;
         }
+
+        public string EnsureFolderExist(string foldername)
+        {
+            if (!Directory.Exists(foldername))
+            {
+                Directory.CreateDirectory(foldername);
+            }
+
+            while (!Directory.Exists(foldername))
+            {
+                Thread.Sleep(250);
+            }
+
+            return foldername;
+        }
     }
 }

@@ -3,11 +3,25 @@ using NeoCortexApi.Classifiers;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using NeoCortexApi.Encoders;
+using NeoCortexApi.Utility;
+
+using Daenet.ImageBinarizerLib.Entities;
+using Daenet.ImageBinarizerLib;
+
+using Newtonsoft.Json;
+
+using SkiaSharp;
+
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Globalization;
+using System.Drawing.Imaging;
+
 using static SimpleMultiSequenceLearning.MultiSequenceLearning;
+
 
 namespace SimpleMultiSequenceLearning
 {
@@ -21,6 +35,9 @@ namespace SimpleMultiSequenceLearning
         /// 
         static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
+        static string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png"); 
+
+        static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
         /// You must start this code in debugger to follow the trace.
@@ -87,7 +104,24 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
 
-            RunMultiSequenceLearningExperiment(SequenceDataFile);
+            //RunMultiSequenceLearningExperiment(SequenceDataFile);
+
+            ImageEncoder imageEncoder = new ImageEncoder();
+            
+            string inputImage = Path.Combine("TestFiles", InputApple_1);
+
+            // int[] encodedValue = imageEncoder.Encode(inputImage);
+
+            // imageEncoder.EncodeAndSaveAsImage(inputImage,$"encodedImage_{InputApple_1}");
+
+            imageEncoder.EncodeAndSave(inputImage,$"encodedImage_{Path.GetFileNameWithoutExtension(InputApple_1)}.txt");
+
+/*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+
+            imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+*/
+
+            Console.WriteLine("EncodeAndSaveAsImage.....");
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)
@@ -209,8 +243,7 @@ namespace SimpleMultiSequenceLearning
                */
 
 
-            Debug.WriteLine("PLEASE ENTER CANCER SEQUENCE:             *note format->AAAAVVV {AlphabeticSequence}");
-            Console.WriteLine("PLEASE ENTER CANCER SEQUENCE:            *note format->AAAAVVV {AlphabeticSequence}");
+            Console.WriteLine("ENTER CANCER SEQUENCE:            *note format->AAAAVVV {AlphabeticSequence}");
             var userInput = Console.ReadLine();
             while (!userInput.Equals("q") && userInput != "Q")
             {
@@ -265,7 +298,7 @@ namespace SimpleMultiSequenceLearning
                 }
 
 
-                Console.WriteLine("PLEASE ENTER NEXT SEQUENCE :");
+                Console.WriteLine("ENTER NEXT SEQUENCE :");
                 userInput = Console.ReadLine();
 
             }
