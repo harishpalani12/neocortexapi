@@ -65,7 +65,7 @@ namespace NeoCortexApi.Encoders
         public override int[] Encode(object inputFile)
         {
             this.binarizerParams.InputImagePath = (string)inputFile;
-
+            
             var binarizer = new ImageBinarizer(binarizerParams);
 
             return GetArray<int>(binarizer);

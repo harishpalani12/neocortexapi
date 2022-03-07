@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Globalization;
-using System.Drawing.Imaging;
+using System.Drawing;
 
 using static SimpleMultiSequenceLearning.MultiSequenceLearning;
 
@@ -35,7 +35,11 @@ namespace SimpleMultiSequenceLearning
         /// 
         static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
-        static string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png"); 
+        static string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png");
+
+
+        static string fileAndPath = @"F:\InputFolder\Apple\pic1.png";
+
 
         static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
         /// <summary>
@@ -106,20 +110,24 @@ namespace SimpleMultiSequenceLearning
 
             //RunMultiSequenceLearningExperiment(SequenceDataFile);
 
-            ImageEncoder imageEncoder = new ImageEncoder();
+            string filename = Path.GetFileName(InputApple_1);
+
+            string inputImage = Path.Combine("TestFiles", filename);
+
+            //Image image1 = Image.FromFile(inputImage);
+
+            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
+
+            int[] encodedValue = imageEncoder.Encode(InputApple_1);
             
-            string inputImage = Path.Combine("TestFiles", InputApple_1);
+            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
 
-            // int[] encodedValue = imageEncoder.Encode(inputImage);
+            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
 
-            // imageEncoder.EncodeAndSaveAsImage(inputImage,$"encodedImage_{InputApple_1}");
+            /*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
 
-            imageEncoder.EncodeAndSave(inputImage,$"encodedImage_{Path.GetFileNameWithoutExtension(InputApple_1)}.txt");
-
-/*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
-
-            imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
-*/
+                        imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+            */
 
             Console.WriteLine("EncodeAndSaveAsImage.....");
         }
