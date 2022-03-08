@@ -5,6 +5,8 @@ using NeoCortexApi.Network;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Utility;
 
+using HtmImageEncoder;
+
 using Daenet.ImageBinarizerLib.Entities;
 using Daenet.ImageBinarizerLib;
 
@@ -108,26 +110,27 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
 
-            //RunMultiSequenceLearningExperiment(SequenceDataFile);
+            RunMultiSequenceLearningExperiment(SequenceDataFile);
 
+            //////////////////////////////////////////////////////////////////////////
             string filename = Path.GetFileName(InputApple_1);
 
             string inputImage = Path.Combine("TestFiles", filename);
 
-            //Image image1 = Image.FromFile(inputImage);
-
-            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
-
-            int[] encodedValue = imageEncoder.Encode(InputApple_1);
+         //Image image1 = Image.FromFile(inputImage);
             
-            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
+           ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
 
-            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+           int[] encodedValue = imageEncoder.Encode(InputApple_1);
 
-            /*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+           imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
 
-                        imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
-            */
+           imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+         /*  
+           imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+
+           imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+         */
 
             Console.WriteLine("EncodeAndSaveAsImage.....");
         }

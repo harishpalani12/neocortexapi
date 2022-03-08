@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMultiSequenceLearning
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "..\..\source\NeoCortexUtils\NeoCortexUtils.csproj", "{B73B4F5E-E468-488A-9F82-4FF74E663D0E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "..\..\source\NeoCortexEntities\NeoCortexEntities.csproj", "{AB76C88C-EB5A-41AB-BE6C-C9148AC51469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "..\..\source\NeoCortexEntities\NeoCortexEntities.csproj", "{1425F0F9-4E3F-4EFF-A6CE-3024EF2FA598}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "..\..\source\NeoCortexApi\NeoCortexApi.csproj", "{ABB4C0BE-CB2E-48BD-89BC-55C646D1A8B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "..\..\source\NeoCortexApi\NeoCortexApi.csproj", "{7CD1C08F-5C12-4AF5-868F-E491DD354B57}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageEncoder", "..\..\source\ImageEncoder\ImageEncoder.csproj", "{A39EAB4A-9D3A-49C8-B727-34CC5DA8396F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmImageEncoder", "..\..\source\ImageEncoder\HtmImageEncoder.csproj", "{81549C8C-89FF-43AC-B51D-0F50B867569A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +27,18 @@ Global
 		{B73B4F5E-E468-488A-9F82-4FF74E663D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B73B4F5E-E468-488A-9F82-4FF74E663D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B73B4F5E-E468-488A-9F82-4FF74E663D0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB76C88C-EB5A-41AB-BE6C-C9148AC51469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB76C88C-EB5A-41AB-BE6C-C9148AC51469}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB76C88C-EB5A-41AB-BE6C-C9148AC51469}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB76C88C-EB5A-41AB-BE6C-C9148AC51469}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABB4C0BE-CB2E-48BD-89BC-55C646D1A8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABB4C0BE-CB2E-48BD-89BC-55C646D1A8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABB4C0BE-CB2E-48BD-89BC-55C646D1A8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABB4C0BE-CB2E-48BD-89BC-55C646D1A8B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A39EAB4A-9D3A-49C8-B727-34CC5DA8396F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A39EAB4A-9D3A-49C8-B727-34CC5DA8396F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A39EAB4A-9D3A-49C8-B727-34CC5DA8396F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A39EAB4A-9D3A-49C8-B727-34CC5DA8396F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1425F0F9-4E3F-4EFF-A6CE-3024EF2FA598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1425F0F9-4E3F-4EFF-A6CE-3024EF2FA598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1425F0F9-4E3F-4EFF-A6CE-3024EF2FA598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1425F0F9-4E3F-4EFF-A6CE-3024EF2FA598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD1C08F-5C12-4AF5-868F-E491DD354B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD1C08F-5C12-4AF5-868F-E491DD354B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD1C08F-5C12-4AF5-868F-E491DD354B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD1C08F-5C12-4AF5-868F-E491DD354B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81549C8C-89FF-43AC-B51D-0F50B867569A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81549C8C-89FF-43AC-B51D-0F50B867569A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81549C8C-89FF-43AC-B51D-0F50B867569A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81549C8C-89FF-43AC-B51D-0F50B867569A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<PackageLicenseFile>license.txt</PackageLicenseFile>
 		<IsPackable>true</IsPackable>
 
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -25,6 +24,8 @@
 		<AssemblyVersion>1.0.1</AssemblyVersion>
 
 		<FileVersion>1.0.1</FileVersion>
+
+		<PackageLicenseFile>license.txt</PackageLicenseFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,7 +37,7 @@
 	
 	<ItemGroup>
 		<PackageReference Include="ImageBinarizer" Version="1.5.6" />
-		<PackageReference Include="NeoCortexApi" Version="1.1.2" />
+		<PackageReference Include="NeoCortexApi" Version="1.1.1" />
 	</ItemGroup>
 
 </Project>

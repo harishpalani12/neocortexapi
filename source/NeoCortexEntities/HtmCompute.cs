@@ -434,8 +434,8 @@ namespace NeoCortexApi
             while (true)
             {
                 // Gets number of synapses with permanence value grather than 'SynPermConnected' = Connected Synapses.
-                int numConnected = ArrayUtils.GreaterThanAtIndex(htmConfig.SynPermConnected, permanences, potentialIndexes);
-
+                int numConnected = ArrayUtils.ValueGreaterThanCountAtIndex(htmConfig.SynPermConnected, permanences, potentialIndexes);
+                //:TODO
                 // If enough synapses are connected, all ok.
                 if (numConnected >= htmConfig.StimulusThreshold)
                     return;
