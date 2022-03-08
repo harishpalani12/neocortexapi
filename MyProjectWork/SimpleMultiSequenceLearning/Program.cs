@@ -3,6 +3,14 @@ using NeoCortexApi.Classifiers;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using NeoCortexApi.Encoders;
+using NeoCortexApi.Utility;
+
+using Daenet.ImageBinarizerLib.Entities;
+using Daenet.ImageBinarizerLib;
+
+using Newtonsoft.Json;
+
+using SkiaSharp;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -33,7 +41,8 @@ namespace SimpleMultiSequenceLearning
         //static string InputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Training Files\ImageTrainingFile\InputFolder\Apple\pic1.png");
 
         static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
-
+        
+        static string fileAndPath = @"";
 
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -101,7 +110,29 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
 
-            RunMultiSequenceLearningExperiment(SequenceDataFile);
+            // RunMultiSequenceLearningExperiment(SequenceDataFile);
+
+            //ImageEncoder imageEncoder = new ImageEncoder();
+
+            string filename = Path.GetFileName(InputApple_1);
+
+            string inputImage = Path.Combine("TestFiles", filename);
+
+            //Image image1 = Image.FromFile(inputImage);
+
+            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
+
+            int[] encodedValue = imageEncoder.Encode(InputApple_1);
+
+            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
+
+            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+
+            /*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+                        imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+            */
+
+            Console.WriteLine("EncodeAndSaveAsImage.....");
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)

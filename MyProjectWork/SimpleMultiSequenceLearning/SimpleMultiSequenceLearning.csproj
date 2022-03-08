@@ -8,9 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\NeoCortexApi\source\ImageEncoder\ImageEncoder.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexApi\NeoCortexApi.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexEntities\NeoCortexEntities.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Outputfile\BinarizedImage\Apple\" />
+		<Folder Include="InputFolder\Avocado\" />
+		<Folder Include="InputFolder\Banana\" />
+		<Folder Include="TrainingFiles\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="InputFolder\Apple\pic1.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMultiSequenceLearning", "SimpleMultiSequenceLearning.csproj", "{762AF2D9-2D1D-489C-9320-588C670A60E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMultiSequenceLearning", "SimpleMultiSequenceLearning.csproj", "{762AF2D9-2D1D-489C-9320-588C670A60E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "..\..\source\NeoCortexApi\NeoCortexApi.csproj", "{9404D709-2E5E-4DD8-BB6E-8B43382B8D56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "..\..\source\NeoCortexEntities\NeoCortexEntities.csproj", "{935251C3-8905-4954-9DF8-54DCF8001BE2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "..\..\source\NeoCortexUtils\NeoCortexUtils.csproj", "{E10A6C73-9E53-4973-A245-A7C341458F26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageEncoder", "..\..\..\NeoCortexApi\source\ImageEncoder\ImageEncoder.csproj", "{C7934903-23CA-480C-9281-3439C2AF9F11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E10A6C73-9E53-4973-A245-A7C341458F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E10A6C73-9E53-4973-A245-A7C341458F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E10A6C73-9E53-4973-A245-A7C341458F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7934903-23CA-480C-9281-3439C2AF9F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7934903-23CA-480C-9281-3439C2AF9F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7934903-23CA-480C-9281-3439C2AF9F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7934903-23CA-480C-9281-3439C2AF9F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
