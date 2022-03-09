@@ -150,6 +150,95 @@ namespace SimpleMultiSequenceLearning
             return AlphabetEncoder;
         }
 
+
+        public static List<Dictionary<string, string>> ReadImageDataSets(string dataFilePath)
+        {
+            List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
+
+            var directories = Directory.GetDirectories(dataFilePath).ToList();
+
+            (Dictionary<string, int[]> binaries,Dictionary<string, List<string>> inputsPath ) = imageBinarization(directories, width, height);
+
+
+            int keyForUniqueIndexes = 0;
+
+            if (File.Exists(dataFilePath))
+            {
+                foreach (KeyValuePair<string, List<string>> entry in inputsPath)
+                {
+                    var filePathList = entry.Value;
+                    var numberOfImages = filePathList.Count;
+                }
+                    
+
+                using (StreamReader sr = new StreamReader(dataFilePath))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        var line = sr.ReadLine();
+                        string[] values = line.Split(",");
+
+                        Dictionary<string, string> Sequence = new Dictionary<string, string>();
+
+                        string label = values[1];
+                        string sequenceString = values[0];
+
+                        foreach (var alphabet in sequenceString)
+                        {
+                            keyForUniqueIndexes++;
+                            if (Sequence.ContainsKey(alphabet.ToString()))
+                            {
+                                var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
+                                Sequence.Add(newKey, label);
+                            }
+                            else
+                            {
+                                Sequence.Add(alphabet.ToString(), label);
+                            }
+                        }
+
+                        SequencesCollection.Add(Sequence);
+                    }
+                }
+                return SequencesCollection;
+            }
+            return null;
+
+
+
+
+
+
+
+
+
+
+
+/*
+            //////////////////////////////////////////////////////////////////////////
+            string filename = Path.GetFileName(InputApple_1);
+
+            string inputImage = Path.Combine("TestFiles", filename);
+
+            //Image image1 = Image.FromFile(inputImage);
+
+            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
+
+            int[] encodedValue = imageEncoder.Encode(InputApple_1);
+
+            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
+
+            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+            *//*  
+              imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+
+              imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+            *//*
+
+            Console.WriteLine("EncodeAndSaveAsImage.....");*/
+
+        }
+
         public string EnsureFolderExist(string foldername)
         {
             if (!Directory.Exists(foldername))

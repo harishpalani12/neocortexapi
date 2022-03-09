@@ -37,13 +37,10 @@ namespace SimpleMultiSequenceLearning
         /// 
         static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
-        static string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png");
-
-
-        static string fileAndPath = @"F:\InputFolder\Apple\pic1.png";
-
-
+        static readonly string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png");
+ 
         static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
+        
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
         /// You must start this code in debugger to follow the trace.
@@ -108,31 +105,9 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Variables are being trained Please Wait....");
 
             Console.WriteLine("Training Model In Progress.....");
-            // RunMultiSimpleSequenceLearningExperiment();
+         // RunMultiSimpleSequenceLearningExperiment();
 
-            RunMultiSequenceLearningExperiment(SequenceDataFile);
-
-            //////////////////////////////////////////////////////////////////////////
-            string filename = Path.GetFileName(InputApple_1);
-
-            string inputImage = Path.Combine("TestFiles", filename);
-
-         //Image image1 = Image.FromFile(inputImage);
-            
-           ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
-
-           int[] encodedValue = imageEncoder.Encode(InputApple_1);
-
-           imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
-
-           imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
-         /*  
-           imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
-
-           imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
-         */
-
-            Console.WriteLine("EncodeAndSaveAsImage.....");
+         // RunMultiSequenceLearningExperiment(SequenceDataFile);
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)
