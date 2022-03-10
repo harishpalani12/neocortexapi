@@ -186,7 +186,7 @@ namespace SimpleMultiSequenceLearning
                         imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
 
                         // Prepare input file for test
-                        Outputfilename = Path.GetFileName(directoryEntry);
+                       /* Outputfilename = Path.GetFileName(directoryEntry);
 
                         CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
                         layer1.HtmModules.Add("encoder", imageEncoder);
@@ -195,7 +195,7 @@ namespace SimpleMultiSequenceLearning
                         //Test Compute method
                         var computeResult = layer1.Compute(filename, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
+                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");*/
 
 
 

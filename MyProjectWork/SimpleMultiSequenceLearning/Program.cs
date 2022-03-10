@@ -39,12 +39,18 @@ namespace SimpleMultiSequenceLearning
 
         //static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
-         static string InputApple_1 = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\ImageTrainingFile\InputFolder\Apple\pic1.jpg";
+        //static string InputApple_1 = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\ImageTrainingFile\InputFolder\Apple\pic1.jpg";
         //static string InputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Training Files\ImageTrainingFile\InputFolder\Apple\pic1.png");
 
-        static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
-        
-        static string fileAndPath = @"";
+        //static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Outputfile\BinarizedImage\Apple\Apple_1OutputFile.bmp");
+
+        //static string fileAndPath = @"";
+
+        static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
+
+        static readonly string InputPicPath = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\");
+
+        static readonly string OutputPicPath = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Outputfile\BinarizedImage\");
 
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -114,27 +120,15 @@ namespace SimpleMultiSequenceLearning
 
             //RunMultiSequenceLearningExperiment(SequenceDataFile);
 
-            //ImageEncoder imageEncoder = new ImageEncoder();
+            MyHelperMethod MultiSequenceForImage = new MyHelperMethod();
+            MultiSequenceForImage.BinarizeImage(InputPicPath, OutputPicPath);
 
-            string filename = Path.GetFileName(InputApple_1);
+            int width = 30;
+            int height = 30;
+            //MultiSequenceForImage.LearningInLayer(width, height, OutputPicPath);
 
-            string inputImage = Path.Combine("TestFiles", filename);
 
-            //Image image1 = Image.FromFile(inputImage);
-
-            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
-
-            int[] encodedValue = imageEncoder.Encode(InputApple_1);
-
-            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
-
-            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
-
-            /*            imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
-                        imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
-            */
-
-            Console.WriteLine("EncodeAndSaveAsImage....."); 
+            Console.WriteLine("EncodeAndSaveAsImage.....");
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)
