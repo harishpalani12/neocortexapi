@@ -87,7 +87,9 @@ namespace HtmImageEncoder
             //
             // 1. Initiate the parameters
             this.binarizerParams.InputImagePath = inputFile;
-            this.binarizerParams.OutputImagePath = outputFile;
+            //this.binarizerParams.OutputImagePath = outputFile;
+            this.binarizerParams.OutputImagePath = Path.Join(this.binarizerParams.OutputImagePath, outputFile);
+
             double[,,] binarizedImage = GetPixels();
 
             //
@@ -113,7 +115,7 @@ namespace HtmImageEncoder
                 using (var data = image.Encode(frm, 80))
                 {
                     // save the data to a stream
-                    using (var stream = File.OpenWrite($"{outputFile}"))
+                    using (var stream = File.OpenWrite($"{this.binarizerParams.OutputImagePath}"))
                     {
                         data.SaveTo(stream);
                     }

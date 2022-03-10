@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="BinarizedImage\Apple\" />
+    <Folder Include="BinarizedImage\Avocado\" />
     <Folder Include="InputFolder\Avocado\" />
     <Folder Include="InputFolder\Banana\" />
     <Folder Include="TrainingFiles\" />

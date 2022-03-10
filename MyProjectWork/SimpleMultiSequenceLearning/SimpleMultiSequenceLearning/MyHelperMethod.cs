@@ -15,6 +15,11 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Classifiers;
 using NeoCortexApi.Network;
 
+using HtmImageEncoder;
+
+using Daenet.ImageBinarizerLib.Entities;
+using Daenet.ImageBinarizerLib;
+
 namespace SimpleMultiSequenceLearning
 {
     public class MyHelperMethod
@@ -150,6 +155,60 @@ namespace SimpleMultiSequenceLearning
             return AlphabetEncoder;
         }
 
+        public void BinarizeImage(string InputPath,string OutputPath)
+        {
+            if(Directory.Exists(InputPath))
+            {
+                // For Apple
+                if (Directory.Exists(Path.Join(InputPath, "Apple")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
+
+
+                    foreach(string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath,"Apple", $"BinarizedImage_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = Path.Join(InputPath, "Apple", directoryEntry), OutputImagePath = OutputPath, ImageWidth = 30, ImageHeight = 30 });
+                     
+                        imageEncoder.EncodeAndSaveAsImage(Path.Join(InputPath, "Apple", directoryEntry), Outputfilename, "Png");
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Apple Directory Not Found");
+                }
+
+                // For Avocado
+                if (Directory.Exists(Path.Join(InputPath, "Avocado")))
+                {
+                    Console.WriteLine("Avocado Directory Found");
+                }
+                else
+                {
+                    Console.WriteLine("Avocado Directory Not Found");
+                }
+
+                // For Banana
+                if (Directory.Exists(Path.Join(InputPath, "Banana")))
+                {
+                    Console.WriteLine("Banana Directory Found");
+                }
+                else
+                {
+                    Console.WriteLine("Banana Directory Not Found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please check the Directory Path");
+            }
+
+        }
+
 
         /*public static List<Dictionary<string, string>> ReadImageDataSets(string dataFilePath)
         {
@@ -214,28 +273,28 @@ namespace SimpleMultiSequenceLearning
 
 
 
-/*
-            //////////////////////////////////////////////////////////////////////////
-            string filename = Path.GetFileName(InputApple_1);
+        /*
+                    //////////////////////////////////////////////////////////////////////////
+                    string filename = Path.GetFileName(InputApple_1);
 
-            string inputImage = Path.Combine("TestFiles", filename);
+                    string inputImage = Path.Combine("TestFiles", filename);
 
-            //Image image1 = Image.FromFile(inputImage);
+                    //Image image1 = Image.FromFile(inputImage);
 
-            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
+                    ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 20, ImageHeight = 40 });
 
-            int[] encodedValue = imageEncoder.Encode(InputApple_1);
+                    int[] encodedValue = imageEncoder.Encode(InputApple_1);
 
-            imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
+                    imageEncoder.EncodeAndSaveAsImage(InputApple_1, $"encodedImage_{filename}");
 
-            imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
-            *//*  
-              imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
+                    imageEncoder.EncodeAndSave(InputApple_1, $"encodedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+                    *//*  
+                      imageEncoder.EncodeAndSaveAsImage(InputApple_1, OutputApple_1, "Bmp");
 
-              imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
-            *//*
+                      imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
+                    *//*
 
-            Console.WriteLine("EncodeAndSaveAsImage.....");*/
+                    Console.WriteLine("EncodeAndSaveAsImage.....");*/
 
         //}
 
