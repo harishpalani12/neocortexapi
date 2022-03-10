@@ -164,17 +164,15 @@ namespace SimpleMultiSequenceLearning
                 {
                     string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
 
-
                     foreach(string directoryEntry in directoryEntries)
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath,"Apple", $"BinarizedImage_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath,"Apple", $"BinarizedApple_{Path.GetFileName(filename)}"));
 
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = Path.Join(InputPath, "Apple", directoryEntry), OutputImagePath = OutputPath, ImageWidth = 30, ImageHeight = 30 });
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = 30, ImageHeight = 30 });
                      
-                        imageEncoder.EncodeAndSaveAsImage(Path.Join(InputPath, "Apple", directoryEntry), Outputfilename, "Png");
-
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
                     }
                 }
                 else
@@ -185,7 +183,18 @@ namespace SimpleMultiSequenceLearning
                 // For Avocado
                 if (Directory.Exists(Path.Join(InputPath, "Avocado")))
                 {
-                    Console.WriteLine("Avocado Directory Found");
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Avocado"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"BinarizedAvocado_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = 30, ImageHeight = 30 });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+                    }
                 }
                 else
                 {
@@ -195,7 +204,18 @@ namespace SimpleMultiSequenceLearning
                 // For Banana
                 if (Directory.Exists(Path.Join(InputPath, "Banana")))
                 {
-                    Console.WriteLine("Banana Directory Found");
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Banana"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"BinarizedBanana_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = 30, ImageHeight = 30 });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+                    }
                 }
                 else
                 {
@@ -206,7 +226,6 @@ namespace SimpleMultiSequenceLearning
             {
                 Console.WriteLine("Please check the Directory Path");
             }
-
         }
 
 

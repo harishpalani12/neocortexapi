@@ -29,22 +29,16 @@ namespace SimpleMultiSequenceLearning
 {
     class Program
     {
-
-
         /// <summary>
         /// TRAINING FILE PATH
         /// </summary>
         /// 
         static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
-//        static readonly string InputPicPath  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Avocado\pic1.jpg");
-
         static readonly string InputPicPath = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\");
 
-        static readonly string OutputPicPath = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Avocado");
+        static readonly string OutputPicPath = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\");
 
-
-        static readonly string InputApple_4 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic4.jpg");
 
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -113,29 +107,6 @@ namespace SimpleMultiSequenceLearning
             // RunMultiSimpleSequenceLearningExperiment();
 
             // RunMultiSequenceLearningExperiment(SequenceDataFile);
-
-            //string filename = Path.GetFileName(Path.Join(InputPicPath,"Apple","Pic1.Png"));
-
-          //  string Outputfilename = Path.GetFileName(Path.Join(OutputPicPath, $"BinarizedImage_{Path.GetFileName(filename)}"));
-
-            //ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = Path.Join(InputPicPath, "Apple"), OutputImagePath = Path.Join(OutputPicPath,"Apple"), ImageWidth = 30, ImageHeight = 30});
-
-            //int[] encodedValue = imageEncoder.Encode(InputPicPath);
-
-            //imageEncoder.EncodeAndSaveAsImage(filename, Outputfilename,"Png");
-
-            //imageEncoder.EncodeAndSave(InputPicPath, $"{Path.GetFileNameWithoutExtension(Outputfilename)}.txt");
-
-
-
-            string filename = Path.GetFileName(InputApple_4);
-
-            string inputImage = Path.Combine("TestFiles", filename);
-
-            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = InputApple_4, OutputImagePath = OutputPicPath,  ImageWidth = 30, ImageHeight = 30 });
-
-
-            imageEncoder.EncodeAndSaveAsImage(InputApple_4, $"BinarizedImage_{filename}","Png");
 
             MyHelperMethod binarizeimage = new MyHelperMethod();
             binarizeimage.BinarizeImage(InputPicPath, OutputPicPath);
