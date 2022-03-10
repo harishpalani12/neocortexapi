@@ -37,9 +37,7 @@ namespace SimpleMultiSequenceLearning
         /// 
         static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
 
-        static readonly string InputApple_1  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic1.png");
- 
-        static readonly string OutputApple_1 = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\BinarizedImage\Apple\Apple_1OutputFile.bmp");
+        static readonly string InputApple_4  = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\InputFolder\Apple\pic4.jpg");
         
         /// <summary>
         /// This sample shows a typical experiment code for SP and TM.
@@ -105,9 +103,23 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Variables are being trained Please Wait....");
 
             Console.WriteLine("Training Model In Progress.....");
-         // RunMultiSimpleSequenceLearningExperiment();
+            // RunMultiSimpleSequenceLearningExperiment();
 
-         // RunMultiSequenceLearningExperiment(SequenceDataFile);
+            // RunMultiSequenceLearningExperiment(SequenceDataFile);
+
+            string filename = Path.GetFileName(InputApple_4);
+
+            string inputImage = Path.Combine("TestFiles", filename);
+
+            ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { ImageWidth = 30, ImageHeight = 30});
+
+            int[] encodedValue = imageEncoder.Encode(InputApple_4);
+
+            imageEncoder.EncodeAndSaveAsImage(InputApple_4, $"BinarizedImage_{filename}");
+
+            imageEncoder.EncodeAndSave(InputApple_4, $"BinarizedImage_{Path.GetFileNameWithoutExtension(filename)}.txt");
+
+            Console.WriteLine("EncodeAndSaveAsImage.....");
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)

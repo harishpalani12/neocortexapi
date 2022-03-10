@@ -151,7 +151,7 @@ namespace SimpleMultiSequenceLearning
         }
 
 
-        public static List<Dictionary<string, string>> ReadImageDataSets(string dataFilePath)
+        /*public static List<Dictionary<string, string>> ReadImageDataSets(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
 
@@ -202,7 +202,7 @@ namespace SimpleMultiSequenceLearning
                 }
                 return SequencesCollection;
             }
-            return null;
+            return null;*/
 
 
 
@@ -237,7 +237,7 @@ namespace SimpleMultiSequenceLearning
 
             Console.WriteLine("EncodeAndSaveAsImage.....");*/
 
-        }
+        //}
 
         public string EnsureFolderExist(string foldername)
         {
