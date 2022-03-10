@@ -5,6 +5,7 @@ using NeoCortexApi.Network;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Utility;
 
+using HtmImageEncoder;
 using Daenet.ImageBinarizerLib.Entities;
 using Daenet.ImageBinarizerLib;
 
@@ -18,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Globalization;
 using System.Drawing.Imaging;
+using System.Drawing;
 
 
 using static SimpleMultiSequenceLearning.MultiSequenceLearning;
@@ -32,7 +34,7 @@ namespace SimpleMultiSequenceLearning
         /// TRAINING FILE PATH
         /// </summary>
         /// 
-        static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\Lung_cancer_TrainingFile.csv";
+        //static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\Lung_cancer_TrainingFile.csv";
         //static readonly string SequenceDataFile = @"C:\Users\Harish\source\Harish_Palanivel_Final\MyProjectWork\SimpleMultiSequenceLearning\Training Files\TrainingFile.csv";
 
         //static readonly string SequenceDataFile = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\TrainingFiles\TrainingFile.csv");
@@ -110,7 +112,7 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
 
-            // RunMultiSequenceLearningExperiment(SequenceDataFile);
+            //RunMultiSequenceLearningExperiment(SequenceDataFile);
 
             //ImageEncoder imageEncoder = new ImageEncoder();
 
@@ -132,7 +134,7 @@ namespace SimpleMultiSequenceLearning
                         imageEncoder.EncodeAndSave(InputApple_1, OutputApple_1);
             */
 
-            Console.WriteLine("EncodeAndSaveAsImage.....");
+            Console.WriteLine("EncodeAndSaveAsImage....."); 
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)

@@ -8,16 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="InputFolder\Avocado\**" />
+    <Compile Remove="TrainingFiles\**" />
+    <EmbeddedResource Remove="InputFolder\Avocado\**" />
+    <EmbeddedResource Remove="TrainingFiles\**" />
+    <None Remove="InputFolder\Avocado\**" />
+    <None Remove="TrainingFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\ImageEncoder\HtmImageEncoder.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexApi\NeoCortexApi.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexEntities\NeoCortexEntities.csproj" />
     <ProjectReference Include="..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
   </ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Outputfile\BinarizedImage\Apple\" />
-		<Folder Include="InputFolder\Avocado\" />
+		<Folder Include="InputFolder\Apple\" />
+		<Folder Include="InputFolder\Avacado\" />
 		<Folder Include="InputFolder\Banana\" />
-		<Folder Include="TrainingFiles\" />
+		<Folder Include="Outputfile\BinarizedImage\Apple\" />
 	</ItemGroup>
 
 	<ItemGroup>

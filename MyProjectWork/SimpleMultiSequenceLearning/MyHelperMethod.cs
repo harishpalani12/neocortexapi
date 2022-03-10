@@ -15,6 +15,11 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Classifiers;
 using NeoCortexApi.Network;
 
+using HtmImageEncoder;
+
+using Daenet.ImageBinarizerLib.Entities;
+using Daenet.ImageBinarizerLib;
+
 namespace SimpleMultiSequenceLearning
 {
     public class MyHelperMethod
@@ -149,20 +154,199 @@ namespace SimpleMultiSequenceLearning
                 });
             return AlphabetEncoder;
         }
-    }
 
-    public string EnsureFolderExist(string foldername)
-    {
-        if (!Directory.Exists(foldername))
+        public void BinarizeImage(string InputPath, string OutputPath)
         {
-            Directory.CreateDirectory(foldername);
+            if (Directory.Exists(InputPath))
+            {
+                // Initialize HTMModules 
+                int inputBits = 30 * 30;
+                int numColumns = 1024;
+                HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
+                var mem = new Connections(cfg);
+
+
+                SpatialPoolerMT sp = new SpatialPoolerMT();
+                sp.Init(mem);
+
+
+                // For Apple
+                if (Directory.Exists(Path.Join(InputPath, "Apple")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"BinarizedApple_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = 30, ImageHeight = 30 });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        // Prepare input file for test
+                        Outputfilename = Path.GetFileName(directoryEntry);
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(filename, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
+
+
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Apple Directory Not Found");
+                }
+
+                // For Avocado
+                if (Directory.Exists(Path.Join(InputPath, "Avocado")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Avocado"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"BinarizedAvocado_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = 30, ImageHeight = 30 });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Avocado Directory Not Found");
+                }
+
+                // For Banana
+                if (Directory.Exists(Path.Join(InputPath, "Banana")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Banana"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"BinarizedBanana_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = 30, ImageHeight = 30 });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Banana Directory Not Found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please check the Directory Path");
+            }
         }
 
-        while (!Directory.Exists(foldername))
+        public void LearningInLayer(int width, int height, string FilePath)
         {
-            Thread.Sleep(250);
+            // Initialize Image Encoder
+            ImageEncoder encoder = new ImageEncoder(new BinarizerParams { ImageWidth = width, ImageHeight = height });
+
+            // Initialize HTMModules 
+            int inputBits = width * height;
+            int numColumns = 1024;
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
+            var mem = new Connections(cfg);
+
+            SpatialPoolerMT sp = new SpatialPoolerMT();
+            sp.Init(mem);
+
+            if (Directory.Exists(FilePath))
+            {
+                // For Apple
+                if (Directory.Exists(Path.Join(FilePath, "Apple")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(FilePath, "Apple"));
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        // Prepare input file for test
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", encoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(filename, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Apple Directory Not Found, Apple Sequence Not Learnt");
+                }
+
+                // For Avocado
+                if (Directory.Exists(Path.Join(FilePath, "Avocado")))
+                {
+                    Console.WriteLine("Avocado Directory Found, Avocado Sequence Learnt");
+                }
+                else
+                {
+                    Console.WriteLine("Avocado Directory Not Found, Avocado Sequence Not Learnt");
+                }
+
+                // For Banana
+                if (Directory.Exists(Path.Join(FilePath, "Banana")))
+                {
+                    Console.WriteLine("Banana Directory Found, Banana Sequence Learnt");
+                }
+                else
+                {
+                    Console.WriteLine("Banana Directory Not Found, Banana Sequence Not Learnt");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please check the Directory Path");
+            }
         }
 
-        return foldername;
+
+        public string EnsureFolderExist(string foldername)
+        {
+            if (!Directory.Exists(foldername))
+            {
+                Directory.CreateDirectory(foldername);
+            }
+
+            while (!Directory.Exists(foldername))
+            {
+                Thread.Sleep(250);
+            }
+
+            return foldername;
+        }
+
+        /// <summary>
+        /// Convert int array to string for better representation
+        /// </summary>
+        /// <param name="computeResult"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        private string GetActiveCells(int[] computeResult)
+        {
+            string result = String.Join(",", computeResult);
+            return result;
+        }
     }
 }
