@@ -192,7 +192,7 @@ namespace SimpleMultiSequenceLearning
                         //Test Compute method
                         var computeResult = layer1.Compute(directoryEntry, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}"); 
+                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}"); 
                     }
                     Console.WriteLine("Apple Training Finish");
                 }
@@ -223,7 +223,7 @@ namespace SimpleMultiSequenceLearning
                         //Test Compute method
                         var computeResult = layer1.Compute(directoryEntry, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
+                        Debug.WriteLine($"Active Cells computed from Image - Avocado {filename}: {activeCellList}");
                     }
                     Console.WriteLine("Avocado Training Finish");
                 }
@@ -254,7 +254,7 @@ namespace SimpleMultiSequenceLearning
                         //Test Compute method
                         var computeResult = layer1.Compute(directoryEntry, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
+                        Debug.WriteLine($"Active Cells computed from Image - Banana {filename}: {activeCellList}");
                     }
                     Console.WriteLine("Banana Training Finish");
                 }

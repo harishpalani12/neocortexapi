@@ -109,8 +109,8 @@ namespace SimpleMultiSequenceLearning
             // RunMultiSequenceLearningExperiment(SequenceDataFile);
 
             MyHelperMethod MultiSequenceForImage = new MyHelperMethod();
-            int imageheight = 30;
-            int imagewidth  = 30;
+            int imageheight = 100;
+            int imagewidth  = 100;
             MultiSequenceForImage.BinarizeImageTraining(InputPicPath, OutputPicPath, imageheight, imagewidth);
         }
 
@@ -331,5 +331,9 @@ namespace SimpleMultiSequenceLearning
 
             Console.WriteLine("------------------------End of PredictNextElement ------------------------");
         }
+
+
+
+
     }
 }
