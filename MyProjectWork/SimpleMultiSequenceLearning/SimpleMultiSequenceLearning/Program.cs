@@ -106,7 +106,7 @@ namespace SimpleMultiSequenceLearning
             Console.WriteLine("Training Model In Progress.....");
             // RunMultiSimpleSequenceLearningExperiment();
 
-            // RunMultiSequenceLearningExperiment(SequenceDataFile);
+            //RunMultiSequenceLearningExperiment(SequenceDataFile);
 
             MyHelperMethod MultiSequenceForImage = new MyHelperMethod();
             int imageheight = 100;
@@ -175,7 +175,7 @@ namespace SimpleMultiSequenceLearning
             var trained_Classifier = trained_HTM_model.Values.ElementAt(0);
 
 
-            //var predictor = experiment.Run(sequences);
+            var predictor = experiment.Run(sequences);
 
             Console.WriteLine("Ready to Predict.....");
 
