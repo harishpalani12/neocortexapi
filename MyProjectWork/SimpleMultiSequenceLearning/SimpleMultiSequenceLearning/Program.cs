@@ -109,15 +109,9 @@ namespace SimpleMultiSequenceLearning
             // RunMultiSequenceLearningExperiment(SequenceDataFile);
 
             MyHelperMethod MultiSequenceForImage = new MyHelperMethod();
-            MultiSequenceForImage.BinarizeImage(InputPicPath, OutputPicPath);
-
-            int width = 30;
-            int height = 30;
-            //MultiSequenceForImage.LearningInLayer(width, height, OutputPicPath);
-
-
-
-            Console.WriteLine("EncodeAndSaveAsImage.....");
+            int imageheight = 30;
+            int imagewidth  = 30;
+            MultiSequenceForImage.BinarizeImageTraining(InputPicPath, OutputPicPath, imageheight, imagewidth);
         }
 
         private static void RunMultiSequenceLearningExperiment(string datafilepath)
