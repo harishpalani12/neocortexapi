@@ -177,38 +177,14 @@ namespace SimpleMultiSequenceLearning
         {
             if(Directory.Exists(InputPath))
             {
-
-                // HOMOSTATICPLASTICITY CONTROLLER
-/*                HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
-                {
-                    if (isStable)
-                        // Event should be fired when entering the stable state.
-                        Debug.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
-                    else
-                        // Ideal SP should never enter unstable state after stable state.
-                        Debug.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
-
-                    // We are not learning in instable state.
-                    learn = isInStableState = isStable;
-
-                    // Clear all learned patterns in the classifier.
-                    //cls.ClearState();
-
-                }, numOfCyclesToWaitOnChange: 30);*/
-
-               
-
-
                 // Initialize HTMModules 
                 int inputBits = height * width;
                 int numColumns = 1024;
                 HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
                 var mem = new Connections(cfg);
 
-
                 SpatialPoolerMT sp = new SpatialPoolerMT();
                 sp.Init(mem);
-
 
                 // For Apple
                 if (Directory.Exists(Path.Join(InputPath, "Apple")))
