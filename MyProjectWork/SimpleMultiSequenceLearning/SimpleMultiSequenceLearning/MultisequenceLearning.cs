@@ -77,7 +77,6 @@ namespace SimpleMultiSequenceLearning
             return RunExperiment(inputBits, cfg, encoder, sequences);
         }
 
-        /////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         ///     Run Experiment
         /// </summary>

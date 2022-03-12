@@ -22,11 +22,19 @@ using Daenet.ImageBinarizerLib;
 
 namespace SimpleMultiSequenceLearning
 {
+    /// <summary>
+    /// Helper Method For MultiSequence Learning
+    /// </summary>
     public class MyHelperMethod
     {
         static readonly string[] SequenceClasses = new string[] { "inactive - exp", "mod. active", "very active", "inactive - virtual" };
         static readonly float[][] SequenceClassesOneHotEncoding = new float[][] { new float[] { 0, 0, 0, 1 }, new float[] { 0, 0, 1, 0 }, new float[] { 0, 1, 0, 0 }, new float[] { 1, 0, 0, 0 } };
 
+        /// <summary>
+        ///     Fetch Data Sequence from the File 
+        /// </summary>
+        /// <param name="dataFilePath"></param>
+        /// <returns></returns>
         public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
@@ -109,6 +117,11 @@ namespace SimpleMultiSequenceLearning
             return ListOfEncodedTrainingSDR;
         }
 
+        /// <summary>
+        /// After Alpha Sequence is Learnt, PredictInputSequence will carry out prediction of the Alphabets from the
+        /// Sequence which is read from the sequence (CSV Folder) 
+        /// </summary>
+        /// <param name="list"></param>
         public static List<int[]> PredictInputSequence(string userInput, Boolean EncodeSingleAlphabet)
         {
 
@@ -139,6 +152,11 @@ namespace SimpleMultiSequenceLearning
             return Encoded_Alphabet_SDRs;
         }
 
+
+        /// <summary>
+        ///         FetchAlphabetEncoder 
+        /// </summary>
+        /// <returns> SCALAR ENCODERS</returns>
         public static ScalarEncoder FetchAlphabetEncoder()
         {
             ScalarEncoder AlphabetEncoder = new ScalarEncoder(new Dictionary<string, object>()
@@ -161,7 +179,7 @@ namespace SimpleMultiSequenceLearning
             {
 
                 // HOMOSTATICPLASTICITY CONTROLLER
-                HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
+/*                HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
                 {
                     if (isStable)
                         // Event should be fired when entering the stable state.
@@ -176,7 +194,7 @@ namespace SimpleMultiSequenceLearning
                     // Clear all learned patterns in the classifier.
                     //cls.ClearState();
 
-                }, numOfCyclesToWaitOnChange: 30);
+                }, numOfCyclesToWaitOnChange: 30);*/
 
                
 
@@ -291,20 +309,6 @@ namespace SimpleMultiSequenceLearning
             }
         }
 
-        public string EnsureFolderExist(string foldername)
-        {
-            if (!Directory.Exists(foldername))
-            {
-                Directory.CreateDirectory(foldername);
-            }
-
-            while (!Directory.Exists(foldername))
-            {
-                Thread.Sleep(250);
-            }
-
-            return foldername;
-        }
 
         /// <summary>
         /// Convert int array to string for better representation
