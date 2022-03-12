@@ -101,7 +101,7 @@ namespace SimpleMultiSequenceLearning
                     var elementKey = element.Key;
                     int[] sdr = new int[0];
                     sdr = sdr.Concat(encoder_Alphabets.Encode(char.ToUpper(element.Key.ElementAt(0)) - 64)).ToArray();
-                   
+
                     if (tempDictionary.ContainsKey(elementLabel))
                     {
                         var newKey = elementLabel + "," + keyForUniqueIndex;
@@ -173,9 +173,9 @@ namespace SimpleMultiSequenceLearning
             return AlphabetEncoder;
         }
 
-        public void BinarizeImageTraining(string InputPath,string OutputPath,int height, int width)
+        public void BinarizeImageTraining(string InputPath, string OutputPath, int height, int width)
         {
-            if(Directory.Exists(InputPath))
+            if (Directory.Exists(InputPath))
             {
                 // Initialize HTMModules 
                 int inputBits = height * width;
@@ -191,11 +191,11 @@ namespace SimpleMultiSequenceLearning
                 {
                     string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
 
-                    foreach(string directoryEntry in directoryEntries)
+                    foreach (string directoryEntry in directoryEntries)
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath,"Apple", $"BinarizedApple_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"Binarized_{Path.GetFileName(filename)}"));
 
                         ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = height, ImageHeight = width });
 
@@ -208,7 +208,7 @@ namespace SimpleMultiSequenceLearning
                         //Test Compute method
                         var computeResult = layer1.Compute(directoryEntry, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}"); 
+                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}");
                     }
                     Console.WriteLine("Apple Training Finish");
                 }
@@ -226,7 +226,7 @@ namespace SimpleMultiSequenceLearning
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"BinarizedAvocado_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"Binarized_{Path.GetFileName(filename)}"));
 
                         ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = height, ImageHeight = width });
 
@@ -257,7 +257,7 @@ namespace SimpleMultiSequenceLearning
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"BinarizedBanana_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"Binarized_{Path.GetFileName(filename)}"));
 
                         ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = height, ImageHeight = width });
 
@@ -283,6 +283,56 @@ namespace SimpleMultiSequenceLearning
             {
                 Console.WriteLine("Please check the Directory Path");
             }
+        }
+
+
+        /// <summary>
+        ///     Fetch Data Sequence from the File  IN PROGRESS.......!
+        /// </summary>
+        /// <param name="dataFilePath"></param>
+        /// <returns></returns>
+        public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(string dataFilePath)
+        {
+            //List<Dictionary<string, string>> SequencesCollectedData = new List<Dictionary<string, string>>();
+
+             //List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
+
+             Dictionary<string, List<string>> SequencesCollection = new Dictionary<string, List<string>>();
+
+            int keyForUniqueIndexes = 0;
+
+
+            if (Directory.Exists(dataFilePath))
+            {
+                if (Directory.Exists(Path.Join(dataFilePath, "Apple")))
+                {
+
+                    String directoryEntries = Path.Join(dataFilePath, "Apple");
+                    
+                    List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Apples", Apples);
+                }
+                if (Directory.Exists(Path.Join(dataFilePath, "Avocado")))
+                {
+                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
+
+                    List<string> Avocados = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Avocado", Avocados);
+                }
+                if (Directory.Exists(Path.Join(dataFilePath, "Banana")))
+                {
+                    String directoryEntries = Path.Join(dataFilePath, "Banana");
+
+                    List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Banana", Bananas);
+                }
+            }
+            return null;
+
+
         }
 
 

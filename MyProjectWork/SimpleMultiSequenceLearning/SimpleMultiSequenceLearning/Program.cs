@@ -135,6 +135,8 @@ namespace SimpleMultiSequenceLearning
                 MyHelperMethod MultiSequenceForImage = new MyHelperMethod();
                 int imageheight = 100;
                 int imagewidth = 100;
+
+                var trainingData2 = MyHelperMethod.ReadImageDataSetsFromFolder(InputPicPath);
                 MultiSequenceForImage.BinarizeImageTraining(InputPicPath, OutputPicPath, imageheight, imagewidth);
             }
         }
