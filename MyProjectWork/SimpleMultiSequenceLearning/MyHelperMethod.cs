@@ -22,11 +22,19 @@ using Daenet.ImageBinarizerLib;
 
 namespace SimpleMultiSequenceLearning
 {
+    /// <summary>
+    /// Helper Method For MultiSequence Learning
+    /// </summary>
     public class MyHelperMethod
     {
         static readonly string[] SequenceClasses = new string[] { "inactive - exp", "mod. active", "very active", "inactive - virtual" };
         static readonly float[][] SequenceClassesOneHotEncoding = new float[][] { new float[] { 0, 0, 0, 1 }, new float[] { 0, 0, 1, 0 }, new float[] { 0, 1, 0, 0 }, new float[] { 1, 0, 0, 0 } };
 
+        /// <summary>
+        ///     Fetch Data Sequence from the File 
+        /// </summary>
+        /// <param name="dataFilePath"></param>
+        /// <returns></returns>
         public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
@@ -109,6 +117,11 @@ namespace SimpleMultiSequenceLearning
             return ListOfEncodedTrainingSDR;
         }
 
+        /// <summary>
+        /// After Alpha Sequence is Learnt, PredictInputSequence will carry out prediction of the Alphabets from the
+        /// Sequence which is read from the sequence (CSV Folder) 
+        /// </summary>
+        /// <param name="list"></param>
         public static List<int[]> PredictInputSequence(string userInput, Boolean EncodeSingleAlphabet)
         {
 
@@ -139,6 +152,11 @@ namespace SimpleMultiSequenceLearning
             return Encoded_Alphabet_SDRs;
         }
 
+
+        /// <summary>
+        ///         FetchAlphabetEncoder 
+        /// </summary>
+        /// <returns> SCALAR ENCODERS</returns>
         public static ScalarEncoder FetchAlphabetEncoder()
         {
             ScalarEncoder AlphabetEncoder = new ScalarEncoder(new Dictionary<string, object>()
@@ -155,20 +173,18 @@ namespace SimpleMultiSequenceLearning
             return AlphabetEncoder;
         }
 
-        public void BinarizeImage(string InputPath, string OutputPath)
+        public void BinarizeImageTraining(string InputPath, string OutputPath, int height, int width)
         {
             if (Directory.Exists(InputPath))
             {
                 // Initialize HTMModules 
-                int inputBits = 30 * 30;
+                int inputBits = height * width;
                 int numColumns = 1024;
                 HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
                 var mem = new Connections(cfg);
 
-
                 SpatialPoolerMT sp = new SpatialPoolerMT();
                 sp.Init(mem);
-
 
                 // For Apple
                 if (Directory.Exists(Path.Join(InputPath, "Apple")))
@@ -179,27 +195,22 @@ namespace SimpleMultiSequenceLearning
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"BinarizedApple_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"Binarized_{Path.GetFileName(filename)}"));
 
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = 30, ImageHeight = 30 });
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = height, ImageHeight = width });
 
                         imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
-
-                        // Prepare input file for test
-                        Outputfilename = Path.GetFileName(directoryEntry);
 
                         CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
                         layer1.HtmModules.Add("encoder", imageEncoder);
                         layer1.HtmModules.Add("sp", sp);
 
                         //Test Compute method
-                        var computeResult = layer1.Compute(filename, true) as int[];
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
-
-
-
+                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}");
                     }
+                    Console.WriteLine("Apple Training Finish");
                 }
                 else
                 {
@@ -215,12 +226,22 @@ namespace SimpleMultiSequenceLearning
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"BinarizedAvocado_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"Binarized_{Path.GetFileName(filename)}"));
 
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = 30, ImageHeight = 30 });
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = height, ImageHeight = width });
 
                         imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image - Avocado {filename}: {activeCellList}");
                     }
+                    Console.WriteLine("Avocado Training Finish");
                 }
                 else
                 {
@@ -236,12 +257,22 @@ namespace SimpleMultiSequenceLearning
                     {
                         string filename = Path.GetFileName(directoryEntry);
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"BinarizedBanana_{Path.GetFileName(filename)}"));
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"Binarized_{Path.GetFileName(filename)}"));
 
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = 30, ImageHeight = 30 });
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = height, ImageHeight = width });
 
                         imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image - Banana {filename}: {activeCellList}");
                     }
+                    Console.WriteLine("Banana Training Finish");
                 }
                 else
                 {
@@ -254,88 +285,56 @@ namespace SimpleMultiSequenceLearning
             }
         }
 
-        public void LearningInLayer(int width, int height, string FilePath)
+
+        /// <summary>
+        ///     Fetch Data Sequence from the File  IN PROGRESS.......!
+        /// </summary>
+        /// <param name="dataFilePath"></param>
+        /// <returns></returns>
+        public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(string dataFilePath)
         {
-            // Initialize Image Encoder
-            ImageEncoder encoder = new ImageEncoder(new BinarizerParams { ImageWidth = width, ImageHeight = height });
+            //List<Dictionary<string, string>> SequencesCollectedData = new List<Dictionary<string, string>>();
 
-            // Initialize HTMModules 
-            int inputBits = width * height;
-            int numColumns = 1024;
-            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
-            var mem = new Connections(cfg);
+            //List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
 
-            SpatialPoolerMT sp = new SpatialPoolerMT();
-            sp.Init(mem);
+            Dictionary<string, List<string>> SequencesCollection = new Dictionary<string, List<string>>();
 
-            if (Directory.Exists(FilePath))
+            int keyForUniqueIndexes = 0;
+
+
+            if (Directory.Exists(dataFilePath))
             {
-                // For Apple
-                if (Directory.Exists(Path.Join(FilePath, "Apple")))
+                if (Directory.Exists(Path.Join(dataFilePath, "Apple")))
                 {
-                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(FilePath, "Apple"));
-                    foreach (string directoryEntry in directoryEntries)
-                    {
-                        // Prepare input file for test
-                        string filename = Path.GetFileName(directoryEntry);
 
-                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-                        layer1.HtmModules.Add("encoder", encoder);
-                        layer1.HtmModules.Add("sp", sp);
+                    String directoryEntries = Path.Join(dataFilePath, "Apple");
 
-                        //Test Compute method
-                        var computeResult = layer1.Compute(filename, true) as int[];
-                        var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {filename}: {activeCellList}");
-                    }
+                    List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
 
+                    SequencesCollection.Add("Apples", Apples);
                 }
-                else
+                if (Directory.Exists(Path.Join(dataFilePath, "Avocado")))
                 {
-                    Console.WriteLine("Apple Directory Not Found, Apple Sequence Not Learnt");
-                }
+                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
 
-                // For Avocado
-                if (Directory.Exists(Path.Join(FilePath, "Avocado")))
-                {
-                    Console.WriteLine("Avocado Directory Found, Avocado Sequence Learnt");
-                }
-                else
-                {
-                    Console.WriteLine("Avocado Directory Not Found, Avocado Sequence Not Learnt");
-                }
+                    List<string> Avocados = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
 
-                // For Banana
-                if (Directory.Exists(Path.Join(FilePath, "Banana")))
-                {
-                    Console.WriteLine("Banana Directory Found, Banana Sequence Learnt");
+                    SequencesCollection.Add("Avocado", Avocados);
                 }
-                else
+                if (Directory.Exists(Path.Join(dataFilePath, "Banana")))
                 {
-                    Console.WriteLine("Banana Directory Not Found, Banana Sequence Not Learnt");
+                    String directoryEntries = Path.Join(dataFilePath, "Banana");
+
+                    List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Banana", Bananas);
                 }
             }
-            else
-            {
-                Console.WriteLine("Please check the Directory Path");
-            }
+            return null;
+
+
         }
 
-
-        public string EnsureFolderExist(string foldername)
-        {
-            if (!Directory.Exists(foldername))
-            {
-                Directory.CreateDirectory(foldername);
-            }
-
-            while (!Directory.Exists(foldername))
-            {
-                Thread.Sleep(250);
-            }
-
-            return foldername;
-        }
 
         /// <summary>
         /// Convert int array to string for better representation
