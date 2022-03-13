@@ -7,22 +7,25 @@ Students:
 
 ## 1. Motivation:
 
-In the following experiment, we introduce different types of sequences into the HTM 
+In the following experiment, we introduce different types of sequences into the HTM and Use HTM Image Encoder for Image Sequence Learning.
 
     Experiment 1 – Sequence Learning with Numbers.
     Experiment 2 - Sequence Learning with Alphabets.
     Experiment 3 - Anti Cancer Peptides Sequence Classification.
-    Experiment 4 – Implementing Multi-Image Sequence Learning Using Image Encoder.
+    Experiment 4 – Implementing Multi-Image Sequence Learning Using HTM Image Encoder.
 
 ## 2. Overview:
+
 
 This project references 
 <ul>
     <li>Sequence Learning sample, see [SequenceLearning.cs](https://github.com/ddobric/neocortexapi/tree/master/source/Samples/NeoCortexApiSample). </li>
     <li>Video Learning sample, see [VideoLearning.cs] (https://github.com/ddobric/neocortexapi/blob/SequenceLearning_ToanTruong/Project12_HTMCLAVideoLearning/HTMVideoLearning/HTMVideoLearning/VideoLearning.cs)</li>
+    <li>https://github.com/prajwalpraveen97/neocortexapi/blob/prajwalpraveen97_ML/source/ImageEncoder/ImageEncoder.cs</li>
 </ul>
                         
-    The learning process includes: 
+
+The learning process includes: 
     1. reading sequences.
     2. encoding the data using encoders.
     3. Spatial Pooler Learning with Homeostatic Plasticity Controller until reaching a stable state.
@@ -44,15 +47,15 @@ Experiment 2 - Sequence Learning with Alphabets
 Experiment 3 - Anti Cancer Peptides Sequence Classification
        DataFormat - [Alphabetic Sequence] -> [Sequence Class]
        Sequences  - Multi Sequence - Here Alphabetic Sequence is considered sequence of characters.
-       Example Datarow - AAWKWAWAKKWAKAKKWAKAA, mod. Active
+       Example Datarow - FAKALKALLKALKAL, inactive - exp_8
 
 Experiment 4 – Implementing Multi-Image Sequence Learning Using HTMImageEncoder.
-<TBD>
+<Work In Progress>
 ## 4. Learning Process:
 <ul>
     <li>For all the experiments same configuration has been used.</li>
-   <li>For Experiment 4, We have used Image Encoder and Optimized the code accordingly. </li>
-    <li>Current HTM Configuration:</li>
+    <li>For Experiment 4, We have used HTM Image Encoder and Optimized the code accordingly.</li>
+    <li>Current HTM Configuration For Sequence Learning:</li>
 </ul>
 
 
@@ -215,22 +218,12 @@ we encode data using a scalar encoder for converting alphabet numeric values.
 
 #### Testing Modes:
 
-#### Version 1:
-Explanation:
+#### Explanation:
 (To Be Modified as per our Input)
 Input: FKVKFKVKVK, inactive - exp_44 
 Learning: (F_inactive - exp_44)-(K_inactive - exp_44 )...-(K_inactive - exp_44)
 Prediction: F-> k,... k-> v,...             
 <Output Image To Be Uploaded >
-
-#### Version 2:
-Explanation:
-(To Be Modified as per our Input)
-Input: FKVKFKVKVK, inactive - exp_44
-Learning: (FKVKFKVKVK_inactive - exp_44)
-Note: We are using the whole sequence as a single element and passing it with multiple sequences in a .csv file
-<Output Image To Be Uploaded>
-
 
 
 ## Similar Studies/Research used as References
@@ -250,4 +243,3 @@ Author: Jianhua Diao, Hyunsyug Kang.
 [5] Stock Price Prediction Based on Morphological Similarity Clustering and Hierarchical Temporal 
 Memory
 Author: XINGQI WANG, KAI YANG, TAILIAN LIU
-
