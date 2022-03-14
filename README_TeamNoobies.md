@@ -718,6 +718,42 @@ public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(strin
 
 ```
 
+##### Image Data Sets
+
+1) Apple
+
+
+![image](Images/Apple_1.jpg)   ![image](Images/Apple_2.jpg)             ![image](Images/Apple_3.jpg)        ![image](Images/Apple_4.jpg)
+
+2) Avocado
+
+
+![image](Images/Avocado_1.jpg)   ![image](Images/Avocado_2.jpg)             ![image](Images/Avocado_3.jpg)        ![image](Images/Avocado_4.jpg)
+
+3) Banana
+
+
+![image](Images/Banana_1.jpg)   ![image](Images/Banana_2.jpg)             ![image](Images/Banana_3.jpg)        ![image](Images/Banana_4.jpg)
+
+##### Binarized Image Data Sets
+
+
+1) Apple
+
+
+![image](Images/Binarized_Apple_1.jpg)   ![image](Images/Binarized_Apple_2.jpg)             ![image](Images/Binarized_Apple_3.jpg)        ![image](Images/Binarized_Apple_4.jpg)
+
+2) Avocado
+
+
+![image](Images/Binarized_Avocado_1.jpg)   ![image](Images/Binarized_Avocado_2.jpg)             ![image](Images/Binarized_Avocado_3.jpg)        ![image](Images/Binarized_Avocado_4.jpg)
+
+3) Banana
+
+
+![image](Images/Binarized_Banana_1.jpg)   ![image](Images/Binarized_Banana_2.jpg)             ![image](Images/Binarized_Banana_3.jpg)        ![image](Images/Binarized_Banana_4.jpg)
+
+
 ![image](Images/ConsoleApp5.jpg)
 
  4.Goals Achieved
