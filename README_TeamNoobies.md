@@ -46,7 +46,7 @@ Also, we tried to change Configurations in HTM Prediction Engine.
 
 Example Datarow :
 
-```
+```csharp
 sequences.Add("TwoMultiple", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0 }));
             sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
             sequences.Add("FiveMultiple", new List<double>(new double[] { 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0 }));
@@ -98,17 +98,18 @@ is being modified with the help of Image Encoder.
 
 (i) Input sequence of Numbers to Train Model
 
-`            sequences.Add("TwoMultiple", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0 }));
-            sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
-            sequences.Add("FiveMultiple", new List<double>(new double[] { 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0 }));
-            sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0 }));
-            sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));`
-
+```csharp
+sequences.Add("TwoMultiple", new List<double>(new double[] { 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0 }));
+sequences.Add("ThreeMultiple", new List<double>(new double[] { 3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0 }));
+sequences.Add("FiveMultiple", new List<double>(new double[] { 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0 }));
+sequences.Add("SevenMultiple", new List<double>(new double[] { 7.0, 14.0, 21.0, 28.0, 35.0, 42.0, 49.0 }));
+sequences.Add("ElevenMultiple", new List<double>(new double[] { 11.0, 22.0, 33.0, 44.0 }));
+```
 
 (ii) Set Parameters in HTM Configuration and Train Sequence using Scalar Encoder (Which includes Stablity using HomeostaticPlasticityController)
 
 
-```            
+```csharp            
 HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
 {
                 Random = new ThreadSafeRandom(42),
@@ -138,7 +139,7 @@ HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
 ```
 
 
-```
+```csharp
 EncoderBase encoder = new ScalarEncoder(settings);
 
 RunExperiment(inputBits, cfg, encoder, sequences);
@@ -161,7 +162,7 @@ ILPWKWPWWPWRR,mod. active_42
 FKLAFKLAKKAFL,inactive - exp_43
 FKVKFKVKVK, inactive - exp_44`
 
-```        
+```csharp        
 public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string dataFilePath)
         {
             List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
@@ -205,7 +206,7 @@ public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string d
         }
 ```
 
-```
+```csharp
         public static List<Dictionary<string, int[]>> TrainEncodeSequencesFromCSV(List<Dictionary<string, string>> trainingData)
         {
             List<Dictionary<string, int[]>> ListOfEncodedTrainingSDR = new List<Dictionary<string, int[]>>();
@@ -245,7 +246,7 @@ public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string d
 
 
 
-```
+```csharp
             HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
             {
                 Random = new ThreadSafeRandom(42),
@@ -275,7 +276,7 @@ public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string d
 ```
 
 
-```
+```csharp
 public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
         {
             int inputBits_Alpha = 31;
@@ -549,7 +550,7 @@ public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycl
 
 (i) Input Image Data Sets from Solution Directory Path  and Train Image Data sets  (IN PROGRESS..)
 
-```
+```csharp
   public void BinarizeImageTraining(string InputPath, string OutputPath, int height, int width)
         {
             if (Directory.Exists(InputPath))
