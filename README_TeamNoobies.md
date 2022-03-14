@@ -11,7 +11,7 @@ Group Name: Team Noobies
 
 
 
-**Project Description**-
+**Project Description**
 =============
 
 
