@@ -145,10 +145,10 @@ EncoderBase encoder = new ScalarEncoder(settings);
 RunExperiment(inputBits, cfg, encoder, sequences);
 ```
 
-![image](Images/ConsoleApp1.jpg)
-![image](Images/ConsoleApp2.jpg)
-![image](Images/ConsoleApp3.jpg)
-![image](Images/ConsoleApp4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp1.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp2.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp3.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp4.jpg)
 
 #### 2.Multi Sequence Learning -Alphabets.
 
