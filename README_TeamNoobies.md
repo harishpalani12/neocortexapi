@@ -94,7 +94,7 @@ is being modified with the help of Image Encoder.
  3.Learning Process
 -------------
 
-###### 1.Multi Sequence Learning -Numbers.
+#### 1.Multi Sequence Learning -Numbers.
 
 (i) Input sequence of Numbers to Train Model
 
@@ -144,7 +144,7 @@ EncoderBase encoder = new ScalarEncoder(settings);
 RunExperiment(inputBits, cfg, encoder, sequences);
 ```
 
-###### 1.Multi Sequence Learning -Alphabets.
+#### 2.Multi Sequence Learning -Alphabets.
 
 (i) Input sequence of Alphabets from .csv File to Train Model
 
@@ -241,8 +241,474 @@ public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string d
         }
 ```
 
+(ii) Set Parameters in HTM Configuration and Train Sequence using FetchAlphabetEncoder (Which includes Stablity using HomeostaticPlasticityController)
 
-###### 1.Multi Sequence Learning -Image Data Sets.
+
+
+```
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
+            {
+                Random = new ThreadSafeRandom(42),
+
+                CellsPerColumn = 32,
+                GlobalInhibition = true,
+                LocalAreaDensity = -1,
+                NumActiveColumnsPerInhArea = 0.02 * numColumns_Alpha,
+                PotentialRadius = 65/*(int)(0.15 * inputBits_Alpha)*/,
+                InhibitionRadius = 15,
+
+                MaxBoost = 10.0,
+                DutyCyclePeriod = 25,
+                MinPctOverlapDutyCycles = 0.75,
+                MaxSynapsesPerSegment = 128/*(int)(0.02 * numColumns_Alpha)*/,
+
+                ActivationThreshold = 15,
+                ConnectedPermanence = 0.5,
+
+                // Learning is slower than forgetting in this case.
+                PermanenceDecrement = 0.25,
+                PermanenceIncrement = 0.15,
+
+                // Used by punishing of segments.
+                PredictedSegmentDecrement = 0.1
+            };
+```
+
+
+```
+public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunAlphabetsLearning(List<Dictionary<string, int[]>> Sequences, Boolean classVotingEnabled)
+        {
+            int inputBits_Alpha = 31;
+            int maxCycles = 30;
+            int numColumns_Alpha = 1024;
+
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits_Alpha }, new int[] { numColumns_Alpha })
+            {
+                Random = new ThreadSafeRandom(42),
+
+                CellsPerColumn = 32,
+                GlobalInhibition = true,
+                LocalAreaDensity = -1,
+                NumActiveColumnsPerInhArea = 0.02 * numColumns_Alpha,
+                PotentialRadius = 65/*(int)(0.15 * inputBits_Alpha)*/,
+                InhibitionRadius = 15,
+
+                MaxBoost = 10.0,
+                DutyCyclePeriod = 25,
+                MinPctOverlapDutyCycles = 0.75,
+                MaxSynapsesPerSegment = 128/*(int)(0.02 * numColumns_Alpha)*/,
+
+                ActivationThreshold = 15,
+                ConnectedPermanence = 0.5,
+
+                // Learning is slower than forgetting in this case.
+                PermanenceDecrement = 0.25,
+                PermanenceIncrement = 0.15,
+
+                // Used by punishing of segments.
+                PredictedSegmentDecrement = 0.1
+            };
+
+            //--------- CONNECTIONS
+            var mem = new Connections(cfg);
+
+            // HTM CLASSIFIER
+            HtmClassifier<string, ComputeCycle> cls = new HtmClassifier<string, ComputeCycle>();
+            // CORTEX LAYER
+            CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+
+
+            // HPA IS_IN_STABLE STATE FLAG
+            bool isInStableState = false;
+            // LEARNING ACTIVATION FLAG
+            bool learn = true;
+
+            // NUMBER OF NEW BORN CYCLES
+            int newbornCycle = 0;
+
+            // HOMOSTATICPLASTICITY CONTROLLER
+            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, Sequences.Count, (isStable, numPatterns, actColAvg, seenInputs) =>
+            {
+                if (isStable)
+                    // Event should be fired when entering the stable state.
+                    Debug.WriteLine($"STABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+                else
+                    // Ideal SP should never enter unstable state after stable state.
+                    Debug.WriteLine($"INSTABLE: Patterns: {numPatterns}, Inputs: {seenInputs}, iteration: {seenInputs / numPatterns}");
+
+                // We are not learning in instable state.
+                learn = isInStableState = isStable;
+
+                // Clear all learned patterns in the classifier.
+                //cls.ClearState();
+
+            }, numOfCyclesToWaitOnChange: 30);
+
+            // SPATIAL POOLER initialization with HomoPlassiticityController using connections.
+            SpatialPoolerMT sp = new SpatialPoolerMT(hpa);
+            sp.Init(mem);
+
+            // TEMPORAL MEMORY initialization using connections.
+            TemporalMemory tm = new TemporalMemory();
+            tm.Init(mem);
+
+            // ADDING SPATIAL POOLER TO CORTEX LAYER
+            layer1.HtmModules.Add("sp", sp);
+
+            // CONTRAINER FOR Previous Active Columns
+            int[] prevActiveCols = new int[0];
+
+            // Starting experiment
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            // TRAINING SP till STATBLE STATE IS ACHIEVED
+            while (isInStableState == false) // STABLE CONDITION LOOP ::: LOOP - 0
+            {
+                newbornCycle++;
+                Debug.WriteLine($"-------------- Newborn Cycle {newbornCycle} ---------------");
+
+                foreach (var sequence in Sequences) // FOR EACH SEQUENCE IN SEQUNECS LOOP ::: LOOP - 1
+                {
+                    foreach (var Element in sequence) // FOR EACH dictionary containing single sequence Details LOOP ::: LOOP - 2
+                    {
+                        var observationClass = Element.Key; // OBSERVATION LABEL || SEQUENCE LABEL
+                        var elementSDR = Element.Value; // ALL ELEMENT IN ONE SEQUENCE 
+
+                        Console.WriteLine($"-------------- {observationClass} ---------------");
+                        // CORTEX LAYER OUTPUT with elementSDR as INPUT and LEARN = TRUE
+                        var lyrOut = layer1.Compute(elementSDR, learn);
+
+                        // IF STABLE STATE ACHIEVED BREAK LOOP - 3
+                        if (isInStableState)
+                            break;
+
+                    }
+                    if (isInStableState)
+                        break;
+                }
+            }
+
+            // ADDING TEMPORAL MEMEORY to CORTEX LAYER
+            layer1.HtmModules.Add("tm", tm);
+
+            string lastPredictedValue = "-1";
+            List<string> lastPredictedValueList = new List<string>();
+            double lastCycleAccuracy = 0;
+            double accuracy = 0;
+
+            List<List<string>> possibleSequence = new List<List<string>>();
+            // TRAINING SP+TM TOGETHER
+            foreach (var sequence in Sequences)  // SEQUENCE LOOP
+            {
+                int SequencesMatchCount = 0; // NUMBER OF MATCHES
+
+                double SaturatedAccuracyCount = 0;
+
+                for (int i = 0; i < maxCycles; i++) // MAXCYCLE LOOP 
+                {
+                    /*var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>.ClassifierResult>>();*/
+
+
+                    //:TODO .Classifier
+
+                    var ElementWisePrediction = new List<List<HtmClassifier<string, ComputeCycle>>>();
+                    List<string> ElementWiseClasses = new List<string>();
+
+                    // ELEMENT IN SEQUENCE MATCHES COUNT
+                    int ElementMatches = 0;
+
+                    foreach (var Elements in sequence) // SEQUENCE DICTIONARY LOOP
+                    {
+                        // OBSERVATION LABEl
+                        var observationLabel = Elements.Key;
+                        // ELEMENT SDR LIST FOR A SINGLE SEQUENCE
+                        var ElementSdr = Elements.Value;
+
+                        List<Cell> actCells = new List<Cell>();
+                        var lyrOut = new ComputeCycle();
+
+                        lyrOut = layer1.Compute(ElementSdr, learn) as ComputeCycle;
+                        Debug.WriteLine(string.Join(',', lyrOut.ActivColumnIndicies));
+
+                        // Active Cells
+                        actCells = (lyrOut.ActiveCells.Count == lyrOut.WinnerCells.Count) ? lyrOut.ActiveCells : lyrOut.WinnerCells;
+
+                        cls.Learn(observationLabel, actCells.ToArray());
+
+                        // CLASS VOTING IS USED FOR SEQUENCE CLASSIFICATION EXPERIMENT i.e CANCER SEQUENCE CLASSIFICATION EXPERIMENT
+                        if (!classVotingEnabled)
+                        {
+
+                            if (lastPredictedValue == observationLabel && lastPredictedValue != "")
+                            {
+                                ElementMatches++;
+                                Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
+                            }
+                        }
+                        else
+                        {
+                            if (lastPredictedValueList.Contains(observationLabel))
+                            {
+                                ElementMatches++;
+                                lastPredictedValueList.Clear();
+                                Debug.WriteLine($"Match. Actual value: {observationLabel} - Predicted value: {lastPredictedValue}");
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"Mismatch! Actual value: {observationLabel} - Predicted values: {lastPredictedValue}");
+                            }
+                        }
+                        Debug.WriteLine($"Col  SDR: {Helpers.StringifyVector(lyrOut.ActivColumnIndicies)}");
+                        Debug.WriteLine($"Cell SDR: {Helpers.StringifyVector(actCells.Select(c => c.Index).ToArray())}");
+
+                        if (learn == false)
+                            Debug.WriteLine($"Inference mode");
+                        if (lyrOut.PredictiveCells.Count > 0)
+                        {
+                            var predictedInputValue = cls.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
+
+                            Debug.WriteLine($"Current Input: {observationLabel}");
+                            Debug.WriteLine("The predictions with similarity greater than 50% are");
+
+                            foreach (var t in predictedInputValue)
+                            {
+
+
+                                if (t.Similarity >= (double)50.00)
+                                {
+                                    Debug.WriteLine($"Predicted Input: {string.Join(", ", t.PredictedInput)},\tSimilarity Percentage: {string.Join(", ", t.Similarity)}, \tNumber of Same Bits: {string.Join(", ", t.NumOfSameBits)}");
+                                }
+
+                                if (classVotingEnabled)
+                                {
+                                    lastPredictedValueList.Add(t.PredictedInput);
+                                }
+
+                            }
+
+                            if (!classVotingEnabled)
+                            {
+                                lastPredictedValue = predictedInputValue.First().PredictedInput;
+                            }
+                        }
+                    }
+                    accuracy = ((double)ElementMatches / (sequence.Count)) * 100;
+                    Debug.WriteLine($"Cycle : {i} \t Accuracy:{accuracy}");
+
+                    if (accuracy == 100)
+                    {
+                        SequencesMatchCount++;
+                        if (SequencesMatchCount >= 30)
+                        {
+                            break;
+                        }
+                    }
+                    else if (lastCycleAccuracy == accuracy && accuracy != 0)
+                    {
+                        SaturatedAccuracyCount++;
+                        if (SaturatedAccuracyCount >= 20 && lastCycleAccuracy > 70)
+                        {
+                            Debug.WriteLine($"NO FURTHER ACCURACY CAN BE ACHIEVED");
+                            Debug.WriteLine($"Saturated Accuracy : {lastCycleAccuracy} \t Number of times repeated {SaturatedAccuracyCount}");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        SaturatedAccuracyCount = 0;
+                        SequencesMatchCount = 0;
+                        lastCycleAccuracy = accuracy;
+                    }
+                    lastPredictedValueList.Clear();
+                }
+
+                tm.Reset(mem);
+                learn = true;
+
+
+            }
+            sw.Stop();
+
+            //****************DISPLAY STATUS OF EXPERIMENT
+            Debug.WriteLine("-------------------TRAINING END------------------------");
+            Debug.WriteLine("-----------------TRAINING END------------------------");
+            var returnDictionary = new Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>>();
+            returnDictionary.Add(layer1, cls);
+            return returnDictionary;
+        }
+```
+
+
+
+#### 3.Multi Sequence Learning -Image Data Sets.
+
+(i) Input Image Data Sets from Solution Directory Path  and Train Image Data sets  (IN PROGRESS..)
+
+```
+  public void BinarizeImageTraining(string InputPath, string OutputPath, int height, int width)
+        {
+            if (Directory.Exists(InputPath))
+            {
+                // Initialize HTMModules 
+                int inputBits = height * width;
+                int numColumns = 1024;
+                HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
+                var mem = new Connections(cfg);
+
+                SpatialPoolerMT sp = new SpatialPoolerMT();
+                sp.Init(mem);
+
+                // For Apple
+                if (Directory.Exists(Path.Join(InputPath, "Apple")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"Binarized_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = height, ImageHeight = width });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}");
+                    }
+                    Console.WriteLine("Apple Training Finish");
+                }
+                else
+                {
+                    Console.WriteLine("Apple Directory Not Found");
+                }
+
+                // For Avocado
+                if (Directory.Exists(Path.Join(InputPath, "Avocado")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Avocado"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"Binarized_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = height, ImageHeight = width });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image - Avocado {filename}: {activeCellList}");
+                    }
+                    Console.WriteLine("Avocado Training Finish");
+                }
+                else
+                {
+                    Console.WriteLine("Avocado Directory Not Found");
+                }
+
+                // For Banana
+                if (Directory.Exists(Path.Join(InputPath, "Banana")))
+                {
+                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Banana"));
+
+                    foreach (string directoryEntry in directoryEntries)
+                    {
+                        string filename = Path.GetFileName(directoryEntry);
+
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"Binarized_{Path.GetFileName(filename)}"));
+
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = height, ImageHeight = width });
+
+                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+
+                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
+                        layer1.HtmModules.Add("encoder", imageEncoder);
+                        layer1.HtmModules.Add("sp", sp);
+
+                        //Test Compute method
+                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var activeCellList = GetActiveCells(computeResult);
+                        Debug.WriteLine($"Active Cells computed from Image - Banana {filename}: {activeCellList}");
+                    }
+                    Console.WriteLine("Banana Training Finish");
+                }
+                else
+                {
+                    Console.WriteLine("Banana Directory Not Found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please check the Directory Path");
+            }
+        }
+```
+
+```
+public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(string dataFilePath)
+        {
+            //List<Dictionary<string, string>> SequencesCollectedData = new List<Dictionary<string, string>>();
+
+             //List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
+
+             Dictionary<string, List<string>> SequencesCollection = new Dictionary<string, List<string>>();
+
+            int keyForUniqueIndexes = 0;
+
+
+            if (Directory.Exists(dataFilePath))
+            {
+                if (Directory.Exists(Path.Join(dataFilePath, "Apple")))
+                {
+
+                    String directoryEntries = Path.Join(dataFilePath, "Apple");
+                    
+                    List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Apples", Apples);
+                }
+                if (Directory.Exists(Path.Join(dataFilePath, "Avocado")))
+                {
+                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
+
+                    List<string> Avocados = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Avocado", Avocados);
+                }
+                if (Directory.Exists(Path.Join(dataFilePath, "Banana")))
+                {
+                    String directoryEntries = Path.Join(dataFilePath, "Banana");
+
+                    List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+
+                    SequencesCollection.Add("Banana", Bananas);
+                }
+            }
+            return null;
+
+
+        }
+
+```
 
 
  4.Goals Achieved
