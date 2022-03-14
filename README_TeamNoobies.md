@@ -145,6 +145,11 @@ EncoderBase encoder = new ScalarEncoder(settings);
 RunExperiment(inputBits, cfg, encoder, sequences);
 ```
 
+![image](Images/ConsoleApp1.jpg)
+![image](Images/ConsoleApp2.jpg)
+![image](Images/ConsoleApp3.jpg)
+![image](Images/ConsoleApp4.jpg)
+
 #### 2.Multi Sequence Learning -Alphabets.
 
 (i) Input sequence of Alphabets from .csv File to Train Model
@@ -544,7 +549,9 @@ public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycl
         }
 ```
 
-
+![image](Images/ConsoleApp6.jpg)
+![image](Images/ConsoleApp7.jpg)
+![image](Images/ConsoleApp8.jpg)
 
 #### 3.Multi Sequence Learning -Image Data Sets.
 
@@ -711,6 +718,7 @@ public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(strin
 
 ```
 
+![image](Images/ConsoleApp5.jpg)
 
  4.Goals Achieved
 -------------
