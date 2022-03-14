@@ -1,4 +1,4 @@
-### 25. Multi-Sequence/Image Learning Project (WS21/22) Project - Team Noobies
+# 25. Multi-Sequence/Image Learning Project (WS21/22) Project - Team Noobies
 
 
 Group Name: Team Noobies
@@ -89,7 +89,7 @@ is being modified with the help of Image Encoder.
 ###### **[Image Data Sets] -> [Image Data Set Class] Sequences - Multi Sequence**
 
 
- Learning Process
+ 3.Learning Process
 -------------
 
 ###### 1.Multi Sequence Learning -Numbers.
@@ -138,10 +138,70 @@ is being modified with the help of Image Encoder.
 
 RunExperiment(inputBits, cfg, encoder, sequences);`
 
+###### 1.Multi Sequence Learning -Alphabets.
 
-(iii)
+(i) Input sequence of Alphabets from .csv File to Train Model
 
- Goals Achieved
+`FAKALKALLKALKAL,inactive - exp_8
+FAKKLAKKLKKLAKKLAKKWKL,mod. active_18
+FAKIIAKIAKIAKKIL,inactive - exp_10
+FAKKALKALKKL,inactive - exp_11
+FAKKFAKKFKKFAKKFAKFAFAF,mod. active_12
+FAKKLAKKLAKLL,mod. active_16
+FAKKLAKKLKKLAKKLAK,inactive - exp_17
+GLFDIIKKIAESF,mod. active_28
+GLFDIVKKIAGHIAGSI,inactive - exp_29
+ILPWKWPWWPWRR,mod. active_42
+FKLAFKLAKKAFL,inactive - exp_43
+FKVKFKVKVK, inactive - exp_44`
+
+`        public static List<Dictionary<string, string>> ReadSequencesDataFromCSV(string dataFilePath)
+        {
+            List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
+
+            int keyForUniqueIndexes = 0;
+
+            if (File.Exists(dataFilePath))
+            {
+                using (StreamReader sr = new StreamReader(dataFilePath))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        var line = sr.ReadLine();
+                        string[] values = line.Split(",");
+
+                        Dictionary<string, string> Sequence = new Dictionary<string, string>();
+
+                        string label = values[1];
+                        string sequenceString = values[0];
+
+                        foreach (var alphabet in sequenceString)
+                        {
+                            keyForUniqueIndexes++;
+                            if (Sequence.ContainsKey(alphabet.ToString()))
+                            {
+                                var newKey = alphabet.ToString() + "," + keyForUniqueIndexes;
+                                Sequence.Add(newKey, label);
+                            }
+                            else
+                            {
+                                Sequence.Add(alphabet.ToString(), label);
+                            }
+                        }
+
+                        SequencesCollection.Add(Sequence);
+                    }
+                }
+                return SequencesCollection;
+            }
+            return null;
+        }`
+
+
+###### 1.Multi Sequence Learning -Image Data Sets.
+
+
+ 4.Goals Achieved
 -------------
 
 1. Analyse and Improve Multi-Sequence Learning - Numbers
@@ -150,7 +210,7 @@ RunExperiment(inputBits, cfg, encoder, sequences);`
 4. Train Image Data sets using Multi-Sequence Learning making use of HTM prediction Engine and Image Encoder (without checking the stability)
 
 
- In-Progress
+ 5.In-Progress
 -------------
 
  Team is Working on :
@@ -161,7 +221,7 @@ RunExperiment(inputBits, cfg, encoder, sequences);`
 4. Documentation Work
 
 
-References
+6.References
 -------------
 
 
