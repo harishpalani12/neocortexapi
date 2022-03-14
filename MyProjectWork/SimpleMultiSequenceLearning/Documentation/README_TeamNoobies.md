@@ -549,9 +549,9 @@ public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycl
         }
 ```
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/ConsoleApp6.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/ConsoleApp7.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/ConsoleApp8.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp6.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp7.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp8.jpg)
 
 #### 3.Multi Sequence Learning -Image Data Sets.
 
@@ -723,17 +723,17 @@ public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(strin
 1) Apple
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Apple_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Apple_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Apple_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Apple_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Apple_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Apple_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Apple_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Apple_4.jpg)
 
 2) Avocado
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Images/Avocado_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Avocado_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Avocado_3.jpg)        ![image](Images/Avocado_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Avocado_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Avocado_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Avocado_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Avocado_4.jpg)
 
 3) Banana
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Banana_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Banana_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Banana_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Banana_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Banana_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Banana_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Banana_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Banana_4.jpg)
 
 ##### Binarized Image Data Sets
 
@@ -741,20 +741,20 @@ public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(strin
 1) Apple
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Apple_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Apple_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Apple_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Apple_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Apple_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Apple_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Apple_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Apple_4.jpg)
 
 2) Avocado
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Avocado_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Avocado_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Avocado_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Avocado_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Avocado_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Avocado_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Avocado_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Avocado_4.jpg)
 
 3) Banana
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Banana_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Banana_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Banana_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/Binarized_Banana_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Banana_1.jpg)   ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Banana_2.jpg)             ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Banana_3.jpg)        ![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/Binarized_Banana_4.jpg)
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/ec2fd9304ed90cba3e22187b7a2762c099da686d/Images/ConsoleApp5.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Images/ConsoleApp5.jpg)
 
  4.Goals Achieved
 -------------
