@@ -291,7 +291,7 @@ namespace SimpleMultiSequenceLearning
         /// </summary>
         /// <param name="dataFilePath"></param>
         /// <returns></returns>
-        public static List<Dictionary<string, string>> ReadImageDataSetsFromFolder(string dataFilePath)
+        public static Dictionary<string, List<string>> ReadImageDataSetsFromFolder(string dataFilePath)
         {
             //List<Dictionary<string, string>> SequencesCollectedData = new List<Dictionary<string, string>>();
 
@@ -307,28 +307,34 @@ namespace SimpleMultiSequenceLearning
                 if (Directory.Exists(Path.Join(dataFilePath, "Apple")))
                 {
 
-                    String directoryEntries = Path.Join(dataFilePath, "Apple");
+                    /*  String directoryEntries = Path.Join(dataFilePath, "Apple");
 
-                    List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Apples", Apples);
+                      List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+                      SequencesCollection.Add("Apples", Apples);*/
+                }
+                foreach (var path in Directory.GetDirectories(dataFilePath))
+                {
+                    string label = Path.GetFileNameWithoutExtension(path);
+                    List<string> list = new List<string>();
+                    foreach (var file in Directory.GetFiles(path))
+                    {
+                        list.Add(file);
+                    }
+                    SequencesCollection.Add(label, list);
                 }
                 if (Directory.Exists(Path.Join(dataFilePath, "Avocado")))
                 {
-                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
-
-                    List<string> Avocados = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Avocado", Avocados);
+                    /*                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
+                                        List<string > Avocados = Directory.GetFiles(directoryEntries).ToList();//EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+                                        SequencesCollection.Add("Avocado", Avocados);*/
                 }
                 if (Directory.Exists(Path.Join(dataFilePath, "Banana")))
                 {
-                    String directoryEntries = Path.Join(dataFilePath, "Banana");
-
-                    List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Banana", Bananas);
+                    /*                    String directoryEntries = Path.Join(dataFilePath, "Banana");
+                                        List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
+                                        SequencesCollection.Add("Banana", Bananas);*/
                 }
+                return SequencesCollection;
             }
             return null;
 
