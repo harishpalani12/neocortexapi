@@ -186,97 +186,32 @@ namespace SimpleMultiSequenceLearning
                 SpatialPoolerMT sp = new SpatialPoolerMT();
                 sp.Init(mem);
 
-                // For Apple
-                if (Directory.Exists(Path.Join(InputPath, "Apple")))
+                var trainingImageData2 = MyHelperMethod.ReadImageDataSetsFromFolder(InputPath);
+
+                foreach (var path in Directory.GetDirectories(InputPath))
                 {
-                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
+                    string label = Path.GetFileNameWithoutExtension(path);
 
-                    foreach (string directoryEntry in directoryEntries)
+                    foreach (var file in Directory.GetFiles(path))
                     {
-                        string filename = Path.GetFileName(directoryEntry);
+                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, label, $"Binarized_{Path.GetFileName(file)}"));
+                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = file, OutputImagePath = Path.Join(OutputPath, label), ImageWidth = height, ImageHeight = width });
 
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Apple", $"Binarized_{Path.GetFileName(filename)}"));
-
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = height, ImageHeight = width });
-
-                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
+                        imageEncoder.EncodeAndSaveAsImage(file, Outputfilename, "Png");
 
                         CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
                         layer1.HtmModules.Add("encoder", imageEncoder);
                         layer1.HtmModules.Add("sp", sp);
 
                         //Test Compute method
-                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
+                        var computeResult = layer1.Compute(file, true) as int[];
                         var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image - Apple {filename}: {activeCellList}");
+                        Debug.WriteLine($"Active Cells computed from Image {label}: {activeCellList}");
+
+                        MultiSequenceLearning experiment = new MultiSequenceLearning();
+
+                        var trained_HTM_modelImage = experiment.RunImageLearning(height, width, trainingImageData2, true, imageEncoder);
                     }
-                    Console.WriteLine("Apple Training Finish");
-                }
-                else
-                {
-                    Console.WriteLine("Apple Directory Not Found");
-                }
-
-                // For Avocado
-                if (Directory.Exists(Path.Join(InputPath, "Avocado")))
-                {
-                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Avocado"));
-
-                    foreach (string directoryEntry in directoryEntries)
-                    {
-                        string filename = Path.GetFileName(directoryEntry);
-
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Avocado", $"Binarized_{Path.GetFileName(filename)}"));
-
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Avocado"), ImageWidth = height, ImageHeight = width });
-
-                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
-
-                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-                        layer1.HtmModules.Add("encoder", imageEncoder);
-                        layer1.HtmModules.Add("sp", sp);
-
-                        //Test Compute method
-                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
-                        var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image - Avocado {filename}: {activeCellList}");
-                    }
-                    Console.WriteLine("Avocado Training Finish");
-                }
-                else
-                {
-                    Console.WriteLine("Avocado Directory Not Found");
-                }
-
-                // For Banana
-                if (Directory.Exists(Path.Join(InputPath, "Banana")))
-                {
-                    string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Banana"));
-
-                    foreach (string directoryEntry in directoryEntries)
-                    {
-                        string filename = Path.GetFileName(directoryEntry);
-
-                        string Outputfilename = Path.GetFileName(Path.Join(OutputPath, "Banana", $"Binarized_{Path.GetFileName(filename)}"));
-
-                        ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = directoryEntry, OutputImagePath = Path.Join(OutputPath, "Banana"), ImageWidth = height, ImageHeight = width });
-
-                        imageEncoder.EncodeAndSaveAsImage(directoryEntry, Outputfilename, "Png");
-
-                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-                        layer1.HtmModules.Add("encoder", imageEncoder);
-                        layer1.HtmModules.Add("sp", sp);
-
-                        //Test Compute method
-                        var computeResult = layer1.Compute(directoryEntry, true) as int[];
-                        var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image - Banana {filename}: {activeCellList}");
-                    }
-                    Console.WriteLine("Banana Training Finish");
-                }
-                else
-                {
-                    Console.WriteLine("Banana Directory Not Found");
                 }
             }
             else
