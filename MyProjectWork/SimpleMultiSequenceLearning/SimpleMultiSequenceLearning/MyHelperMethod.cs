@@ -186,7 +186,23 @@ namespace SimpleMultiSequenceLearning
                 SpatialPoolerMT sp = new SpatialPoolerMT();
                 sp.Init(mem);
 
-                // For Apple
+
+                foreach (var path in Directory.GetDirectories(InputPath))
+                {
+                    string label = Path.GetFileNameWithoutExtension(path);
+
+                    string Outputfilename = Path.GetFileName(Path.Join(OutputPath, label, $"Binarized_{Path.GetFileName(label)}"));
+
+                    foreach (var file in Directory.GetFiles(path))
+                    {
+                        //ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = file, OutputImagePath = Path.Join(OutputPath, "Apple"), ImageWidth = height, ImageHeight = width });
+
+                        //imageEncoder.EncodeAndSaveAsImage(file, Outputfilename, "Png");
+
+                    }
+
+                }
+/*                // For Apple
                 if (Directory.Exists(Path.Join(InputPath, "Apple")))
                 {
                     string[] directoryEntries = System.IO.Directory.GetFileSystemEntries(Path.Join(InputPath, "Apple"));
@@ -277,7 +293,7 @@ namespace SimpleMultiSequenceLearning
                 else
                 {
                     Console.WriteLine("Banana Directory Not Found");
-                }
+                }*/
             }
             else
             {
@@ -287,65 +303,29 @@ namespace SimpleMultiSequenceLearning
 
 
         /// <summary>
-        ///     Fetch Data Sequence from the File  IN PROGRESS.......!
+        ///     Fetch Data Sequence from the File 
         /// </summary>
         /// <param name="dataFilePath"></param>
         /// <returns></returns>
         public static Dictionary<string, List<string>> ReadImageDataSetsFromFolder(string dataFilePath)
         {
-            //List<Dictionary<string, string>> SequencesCollectedData = new List<Dictionary<string, string>>();
-
-            //List<Dictionary<string, string>> SequencesCollection = new List<Dictionary<string, string>>();
-
             Dictionary<string, List<string>> SequencesCollection = new Dictionary<string, List<string>>();
-
-            int keyForUniqueIndexes = 0;
-
 
             if (Directory.Exists(dataFilePath))
             {
-                if (Directory.Exists(Path.Join(dataFilePath, "Apple")))
-                {
-
-                  /*  String directoryEntries = Path.Join(dataFilePath, "Apple");
-                    
-                    List<string> Apples = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Apples", Apples);*/
-                }
-                foreach(var path in Directory.GetDirectories(dataFilePath))
+                foreach (var path in Directory.GetDirectories(dataFilePath))
                 {
                     string label = Path.GetFileNameWithoutExtension(path);
                     List<string> list = new List<string>();
-                    foreach(var file in Directory.GetFiles(path))
+                    foreach (var file in Directory.GetFiles(path))
                     {
                         list.Add(file);
                     }
                     SequencesCollection.Add(label, list);
                 }
-                if (Directory.Exists(Path.Join(dataFilePath, "Avocado")))
-                {
-/*                    String directoryEntries = Path.Join(dataFilePath, "Avocado");
-
-                    List<string > Avocados = Directory.GetFiles(directoryEntries).ToList();//EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Avocado", Avocados);*/
-                }
-                if (Directory.Exists(Path.Join(dataFilePath, "Banana")))
-                {
-/*                    String directoryEntries = Path.Join(dataFilePath, "Banana");
-
-                    List<string> Bananas = Directory.EnumerateFiles(directoryEntries).Select(d => new DirectoryInfo(d).Name).ToList();
-
-                    SequencesCollection.Add("Banana", Bananas);*/
-                }
-                return SequencesCollection;
             }
-            return null;
-
-
+            return SequencesCollection;
         }
-
 
         /// <summary>
         /// Convert int array to string for better representation
