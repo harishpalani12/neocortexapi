@@ -186,6 +186,7 @@ namespace SimpleMultiSequenceLearning
                 SpatialPoolerMT sp = new SpatialPoolerMT();
                 sp.Init(mem);
 
+                var trainingImageData2 = MyHelperMethod.ReadImageDataSetsFromFolder(InputPath);
 
                 foreach (var path in Directory.GetDirectories(InputPath))
                 {
@@ -207,8 +208,10 @@ namespace SimpleMultiSequenceLearning
                         var activeCellList = GetActiveCells(computeResult);
                         Debug.WriteLine($"Active Cells computed from Image {label}: {activeCellList}");
 
+                        MultiSequenceLearning experiment = new MultiSequenceLearning();
+                       
+                        var trained_HTM_modelImage = experiment.RunImageLearning(height, width, trainingImageData2, true, imageEncoder);
                     }
-
                 }
             }
             else
