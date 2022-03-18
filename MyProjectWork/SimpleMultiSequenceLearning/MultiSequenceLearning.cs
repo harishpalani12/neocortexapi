@@ -644,14 +644,14 @@ namespace SimpleMultiSequenceLearning
 
 
         /// <summary>
-        ///     RunImageLearning  In Progresss.......
+        ///     RunImageLearning
         /// </summary>
         /// <param name="height">Height of the Image Data</param>
         /// <param name="width">Width of Image</param>
         /// <param name="sequences">Data Sequences</param>
         //      public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunImageLearning(List<Dictionary<string, string>> FilePath, Boolean classVotingEnabled, int height, int width)
-        // private HtmPredictionEngine RunImageLearning(int height,int width,Dictionary<string, List<double>> sequences)
-             public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunImageLearning(int height, int width, Dictionary<string, List<string>> Sequences, Boolean classVotingEnabled, EncoderBase encoder)
+        //private HtmPredictionEngine RunImageLearning(int height, int width, Dictionary<string, List<string>> Sequences, Boolean classVotingEnabled)
+        public Dictionary<CortexLayer<object, object>, HtmClassifier<string, ComputeCycle>> RunImageLearning(int height, int width, Dictionary<string, List<string>> Sequences, Boolean classVotingEnabled, EncoderBase encoder)
         {
             // Initialize HTMModules 
             int inputBits = height * width;

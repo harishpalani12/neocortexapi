@@ -1,27 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	  <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPublishable>True</IsPublishable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="InputFolder\Avocado\**" />
-    <Compile Remove="TrainingFiles\**" />
-    <EmbeddedResource Remove="InputFolder\Avocado\**" />
-    <EmbeddedResource Remove="TrainingFiles\**" />
-    <None Remove="InputFolder\Avocado\**" />
-    <None Remove="TrainingFiles\**" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\source\ImageEncoder\HtmImageEncoder.csproj" />
-    <ProjectReference Include="..\..\source\NeoCortexApi\NeoCortexApi.csproj" />
-    <ProjectReference Include="..\..\source\NeoCortexEntities\NeoCortexEntities.csproj" />
-    <ProjectReference Include="..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
-  </ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="Outputfile\BinarizedImage\Apple\" />
@@ -32,8 +19,20 @@
 		<Folder Include="TrainingFiles\" />
 	</ItemGroup>
 
+
+
 	<ItemGroup>
-		<None Update="InputFolder\Apple\pic1.png">
+	  <ProjectReference Include="..\..\source\ImageEncoder\HtmImageEncoder.csproj" />
+	  <ProjectReference Include="..\..\source\NeoCortexApi\NeoCortexApi.csproj" />
+	  <ProjectReference Include="..\..\source\NeoCortexEntities\NeoCortexEntities.csproj" />
+	  <ProjectReference Include="..\..\source\NeoCortexUtils\NeoCortexUtils.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="InputFolder\Apple\Apple_1.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="TrainingFiles\TrainingFile.csv">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
