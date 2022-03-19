@@ -20,6 +20,14 @@ using HtmImageEncoder;
 using Daenet.ImageBinarizerLib.Entities;
 using Daenet.ImageBinarizerLib;
 
+using Newtonsoft.Json;
+
+using SkiaSharp;
+
+using static SimpleMultiSequenceLearning.MultiSequenceLearning;
+
+
+
 namespace SimpleMultiSequenceLearning
 {
     public class HelperMethod_Images
@@ -66,6 +74,14 @@ namespace SimpleMultiSequenceLearning
 
                 var trainingImageData2 = HelperMethod_Images.ReadImageDataSetsFromFolder(InputPath);
 
+                Multiseq_Image multiseq_Image = new Multiseq_Image();
+                var trained_HTM_modelImage = multiseq_Image.RunImage(trainingImageData2,height,width);
+
+                /*
+                trained_HTM_modelImage.Reset();
+                trained_HTM_modelImage.Predict(trained_HTM_modelImage,);
+                */
+
                 foreach (var path in Directory.GetDirectories(InputPath))
                 {
                     string label = Path.GetFileNameWithoutExtension(path);
@@ -89,7 +105,7 @@ namespace SimpleMultiSequenceLearning
 
                         MultiSequenceLearning experiment = new MultiSequenceLearning();
 
-                        var trained_HTM_modelImage = experiment.RunImageLearning(height, width, trainingImageData2, true, imageEncoder);
+                        //var trained_HTM_modelImage = experiment.RunImageLearning(height, width, trainingImageData2, true, imageEncoder);
                     }
                 }
             }
@@ -109,6 +125,34 @@ namespace SimpleMultiSequenceLearning
         {
             string result = String.Join(",", computeResult);
             return result;
+        }
+
+        /// <summary>
+        /// After Number Sequence is Learnt, PredictNextElement will carry out prediction of the elements from the
+        /// Sequence which is input from the user 
+        /// </summary>
+        /// <param name="list"></param>
+        public static void PredictImage(HtmPredictionEngine predictor, double[] list)
+        {
+            Console.WriteLine("-------------------Start of PredictNextElement Function------------------------");
+
+            foreach (var item in list)
+            {
+                var res = predictor.Predict(item);
+                if (res.Count > 0)
+                {
+                    foreach (var pred in res)
+                    {
+                        Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
+                    }
+                    var tokens = res.First().PredictedInput.Split('_');
+                    var tokens2 = res.First().PredictedInput.Split('-');
+                    Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}\n");
+                }
+                else
+                    Console.WriteLine("Invalid Match..... \n");
+            }
+            Console.WriteLine("------------------------End of PredictNextElement ------------------------");
         }
 
 

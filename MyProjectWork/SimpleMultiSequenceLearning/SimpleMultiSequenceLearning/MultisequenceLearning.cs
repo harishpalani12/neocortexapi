@@ -740,7 +740,7 @@ namespace SimpleMultiSequenceLearning
 
                         var computeResult = layer1.Compute(Imagesets, true) as int[];
                         var activeCellList = GetActiveCellsImages(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {observationClass}: {activeCellList}");
+                        Console.WriteLine($"Active Cells computed from Image {observationClass}: {activeCellList}");
 
 
                     }

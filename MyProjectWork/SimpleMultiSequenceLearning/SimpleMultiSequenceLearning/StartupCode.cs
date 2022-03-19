@@ -126,8 +126,8 @@ namespace SimpleMultiSequenceLearning
 
                         HelperMethod_Images MultiSequenceForImage = new HelperMethod_Images();
 
-                        int height = 100;
-                        int width = 100;
+                        int height = 40;
+                        int width = 40;
 
                         MultiSequenceForImage.MultiSequenceLearning_Images(InputPicPath, OutputPicPath, height, width);
                     }
