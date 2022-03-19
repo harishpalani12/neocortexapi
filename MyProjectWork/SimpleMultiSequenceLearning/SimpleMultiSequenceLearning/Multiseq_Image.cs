@@ -304,7 +304,7 @@ namespace SimpleMultiSequenceLearning
                 var tm = this.Layer.HtmModules.FirstOrDefault(m => m.Value is TemporalMemory);
                 ((TemporalMemory)tm.Value).Reset(this.Connections);
             }
-            public List<ClassifierResult<string>> Predict(double input)
+            public List<ClassifierResult<string>> Predict(string input)
             {
                 var lyrOut = this.Layer.Compute(input, false) as ComputeCycle;
 
