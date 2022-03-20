@@ -79,26 +79,26 @@ namespace SimpleMultiSequenceLearning
                 Multiseq_Image multiseq_Image = new Multiseq_Image();
                 var trained_HTM_modelImage = multiseq_Image.RunImage(trainingImageData2,height,width);
 
-                
-               trained_HTM_modelImage.Reset();
+
+                trained_HTM_modelImage.Reset();
                 var res = trained_HTM_modelImage.Predict(TestingImage);
 
+                 
+                 if (res.Count > 0)
+                 {
+                     foreach (var pred in res)
+                     {
+                         Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
+                     }
+                     var tokens = res.First().PredictedInput.Split('_');
+                     var tokens2 = res.First().PredictedInput.Split('-');
+                     Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 3]}\n");
+                 }
+                 else
+                     Console.WriteLine("Invalid Match..... \n");
+               
 
-                if (res.Count > 0)
-                {
-                    foreach (var pred in res)
-                    {
-                        Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
-                    }
-                    var tokens = res.First().PredictedInput.Split('_');
-                    var tokens2 = res.First().PredictedInput.Split('-');
-                    Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}\n");
-                }
-                else
-                    Console.WriteLine("Invalid Match..... \n");
-          
-
-            foreach (var path in Directory.GetDirectories(InputPath))
+                foreach (var path in Directory.GetDirectories(InputPath))
                 {
                     string label = Path.GetFileNameWithoutExtension(path);
 
