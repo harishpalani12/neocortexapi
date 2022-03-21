@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMultiSequenceLearning", "SimpleMultiSequenceLearning.csproj", "{762AF2D9-2D1D-489C-9320-588C670A60E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9000F596-9D66-4AE3-8D24-87A55250A055}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "..\..\NeoCortexApi\NeoCortexApi.csproj", "{A4C86001-D0BA-4EF3-A827-4F990458B4C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "..\..\NeoCortexEntities\NeoCortexEntities.csproj", "{F468BE44-139C-49B6-B11C-CE04D05CADA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmImageEncoder", "..\..\ImageEncoder\HtmImageEncoder.csproj", "{4B6EC7AC-57D1-4F5B-A787-D7E3D5D336EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "..\..\NeoCortexUtils\NeoCortexUtils.csproj", "{38F37C15-47DC-4368-B7F1-702EFA3D516F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{762AF2D9-2D1D-489C-9320-588C670A60E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{762AF2D9-2D1D-489C-9320-588C670A60E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{762AF2D9-2D1D-489C-9320-588C670A60E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{762AF2D9-2D1D-489C-9320-588C670A60E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4C86001-D0BA-4EF3-A827-4F990458B4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4C86001-D0BA-4EF3-A827-4F990458B4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4C86001-D0BA-4EF3-A827-4F990458B4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4C86001-D0BA-4EF3-A827-4F990458B4C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F468BE44-139C-49B6-B11C-CE04D05CADA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F468BE44-139C-49B6-B11C-CE04D05CADA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F468BE44-139C-49B6-B11C-CE04D05CADA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F468BE44-139C-49B6-B11C-CE04D05CADA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B6EC7AC-57D1-4F5B-A787-D7E3D5D336EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B6EC7AC-57D1-4F5B-A787-D7E3D5D336EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B6EC7AC-57D1-4F5B-A787-D7E3D5D336EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B6EC7AC-57D1-4F5B-A787-D7E3D5D336EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F37C15-47DC-4368-B7F1-702EFA3D516F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F37C15-47DC-4368-B7F1-702EFA3D516F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F37C15-47DC-4368-B7F1-702EFA3D516F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F37C15-47DC-4368-B7F1-702EFA3D516F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18FE30C6-8FA7-4A54-8F32-C39C7D40443A}
+	EndGlobalSection
+EndGlobal
