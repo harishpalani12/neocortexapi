@@ -28,7 +28,7 @@ namespace SimpleMultiSequenceLearning
     /// <summary>
     /// Implements an experiment that demonstrates how to learn sequences.
     /// </summary>
-    public class Multiseq_Image
+    public class Multiseq_ImageLearning
     {
         /// <summary>
         /// Runs the learning of sequences.
