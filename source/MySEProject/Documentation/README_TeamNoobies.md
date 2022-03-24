@@ -89,20 +89,20 @@ Code is developed to binarize the image data sets and store in the local directo
 is being modified with the help of Image Encoder.
 
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Apple/Apple_1.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Apple/Apple_2.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Apple/Apple_3.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Apple/Apple_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Apple/Apple_1.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Apple/Apple_2.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Apple/Apple_3.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Apple/Apple_4.jpg)
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Avocado/Avocado_1.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Avocado/Avocado_2.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Avocado/Avocado_3.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Avocado/Avocado_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Avocado/Avocado_1.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Avocado/Avocado_2.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Avocado/Avocado_3.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Avocado/Avocado_4.jpg)
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Banana/Banana_1.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Banana/Banana_2.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Banana/Banana_3.jpg)
-![image](https://github.com/harishpalani12/neocortexapi/blob/529f885e33b012b8b3e99f4604cf79cb89212083/Banana/Banana_4.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Banana/Banana_1.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Banana/Banana_2.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Banana/Banana_3.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/9145886b5abdb7e2b88029d45d7ebdb053a6b33c/source/MySEProject/SimpleMultiSequenceLearning/InputFolder/Banana/Banana_4.jpg)
 
 
 
