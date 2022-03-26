@@ -57,46 +57,14 @@ namespace SimpleMultiSequenceLearning
             return SequencesCollection;
         }
 
-
-
         public void BinarizeImageTraining(string InputPath, string OutputPath, int height, int width)
         {
             if (Directory.Exists(InputPath))
             {
-                // Initialize HTMModules 
-                int inputBits = height * width;
-                int numColumns = 1024;
-                HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns });
-                var mem = new Connections(cfg);
-
-                SpatialPoolerMT sp = new SpatialPoolerMT();
-                sp.Init(mem);
-
                 var trainingImageData2 = HelperMethod_Images.ReadImageDataSetsFromFolder(InputPath);
 
-                string TestingImage = Path.GetFullPath(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Testing Files\Apple_2.jpg");
-
-                Multiseq_Image multiseq_Image = new Multiseq_Image();
+                Multiseq_ImageLearning multiseq_Image = new Multiseq_ImageLearning();
                 var trained_HTM_modelImage = multiseq_Image.RunImage(trainingImageData2, height, width);
-
-
-                trained_HTM_modelImage.Reset();
-                var res = trained_HTM_modelImage.Predict(TestingImage);
-
-
-                if (res.Count > 0)
-                {
-                    foreach (var pred in res)
-                    {
-                        Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
-                    }
-                    var tokens = res.First().PredictedInput.Split('_');
-                    var tokens2 = res.First().PredictedInput.Split('-');
-                    //Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 3]}\n");
-                }
-                else
-                    Console.WriteLine("Invalid Match..... \n");
-
 
                 foreach (var path in Directory.GetDirectories(InputPath))
                 {
@@ -108,21 +76,45 @@ namespace SimpleMultiSequenceLearning
                         ImageEncoder imageEncoder = new ImageEncoder(new BinarizerParams { InputImagePath = file, OutputImagePath = Path.Join(OutputPath, label), ImageWidth = height, ImageHeight = width });
 
                         imageEncoder.EncodeAndSaveAsImage(file, Outputfilename, "Png");
-                        /*
-                        CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-                        layer1.HtmModules.Add("encoder", imageEncoder);
-                        layer1.HtmModules.Add("sp", sp);
-                        //Test Compute method
-                        var computeResult = layer1.Compute(file, true) as int[];
-                        var activeCellList = GetActiveCells(computeResult);
-                        Debug.WriteLine($"Active Cells computed from Image {label}: {activeCellList}");
-                        */
 
                         MultiSequenceLearning experiment = new MultiSequenceLearning();
-
-                        //var trained_HTM_modelImage = experiment.RunImageLearning(height, width, trainingImageData2, true, imageEncoder);
                     }
                 }
+
+                Console.WriteLine("Input an Image Here.....(Drag and Drop image here) \n");
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                string TestingImage = (Console.ReadLine().Trim('"'));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+
+                if (TestingImage != null)
+                {
+                    trained_HTM_modelImage.Reset();
+                    var res = trained_HTM_modelImage.Predict(TestingImage);
+
+                    if (res.Count > 0)
+                    {
+                        foreach (var pred in res)
+                        {
+                            Debug.WriteLine($"PredictedInput = {pred.PredictedInput} <---> Similarity = {pred.Similarity}\n");
+                        }
+                        var tokens = res.First().PredictedInput.Split('_');
+                        var tokens2 = res.First().PredictedInput.Split('-');
+                        Console.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 3]}\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Match..... \n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Invalid Input \n");
+                }
+
+
             }
             else
             {
