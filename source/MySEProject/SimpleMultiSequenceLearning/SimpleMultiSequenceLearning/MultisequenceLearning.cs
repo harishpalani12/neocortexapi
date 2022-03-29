@@ -283,38 +283,33 @@ namespace SimpleMultiSequenceLearning
                     // The first element (a single element) in the sequence cannot be predicted
                     double maxPossibleAccuraccy = (double)((double)sequenceKeyPair.Value.Count - 1) / (double)sequenceKeyPair.Value.Count * 100.0;
 
-                    double accuracy = (double)matches / (double)sequenceKeyPair.Value.Count * 100.0;
+                    double accuracy = ((double)matches / (double)sequenceKeyPair.Value.Count) * 100.0;
 
                     Debug.WriteLine($"Cycle: {cycle}\tMatches={matches} of {sequenceKeyPair.Value.Count}\t {accuracy}%");
 
                     path = System.AppDomain.CurrentDomain.BaseDirectory + "\\Training Logs\\" + filename;
+
+                    using (StreamWriter swOutput = File.AppendText(path))
+                    {
+                        swOutput.WriteLine($"Cycle: {cycle}\tMatches={matches} of {sequenceKeyPair.Value.Count}\t {accuracy}% | Label : {sequenceKeyPair.Key}");
+                    }
 
                     if (accuracy >= maxPossibleAccuraccy)
                     {
                         maxMatchCnt++;
                         Debug.WriteLine($"100% accuracy reached {maxMatchCnt} times.");
 
-
-                        if ((maxMatchCnt % 5) == 0)
+                        if (maxMatchCnt == 80)
                         {
                             sw.Stop();
                             Debug.WriteLine($"Sequence learned. The algorithm is in the stable state with accuracy {accuracy} of maximum possible {maxMatchCnt}. Elapsed sequence {sequenceKeyPair.Key} learning time: {sw.Elapsed}.");
                             using (StreamWriter swOutput = File.AppendText(path))
                             {
-                                swOutput.WriteLine($"Cycles :{maxMatchCnt}  | Accuracy :{accuracy} | Label : {sequenceKeyPair.Key} ");
+                                swOutput.WriteLine($"Cycle: {cycle}\tMatches={matches} of {sequenceKeyPair.Value.Count}\t {accuracy}% | Label : {sequenceKeyPair.Key}");
                             }
-                            
-                            if (maxMatchCnt == 80)
-                            {
-                                sw.Stop();
-                                Debug.WriteLine($"Sequence learned. The algorithm is in the stable state with accuracy {accuracy} of maximum possible {maxMatchCnt}. Elapsed sequence {sequenceKeyPair.Key} learning time: {sw.Elapsed}.");
-                                using (StreamWriter swOutput = File.AppendText(path))
-                                {
-                                    swOutput.WriteLine($"Cycles :{maxMatchCnt}  | Accuracy :{accuracy} | Label : {sequenceKeyPair.Key}");
-                                }
-                                break;
-                            }
+                            break;
                         }
+
                     }
                     else if (maxMatchCnt > 0)
                     {
