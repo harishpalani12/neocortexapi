@@ -156,11 +156,11 @@ Prediction of Image algorithm was developed, and the input image was predicted b
 
 (i) Figure Shows the training accuracy for a sequence of alphabets (Anticancer Peptide Sequence).
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/66d9d6a8a9f00c3d3f88b1acd65af026bd4ce9d8/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Prediction%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/1827c9e27dcccdb5d8242989b911945711b36da5/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Training%20Accuracy%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
 
 (ii) Figure Shows the prediction for a particular sequence that is entered by the user.
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/1827c9e27dcccdb5d8242989b911945711b36da5/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Prediction%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/66d9d6a8a9f00c3d3f88b1acd65af026bd4ce9d8/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Prediction%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
 
 #### 3.Multi Sequence Learning -Image Data Sets.
 
