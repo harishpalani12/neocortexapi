@@ -2,9 +2,9 @@
 
 
  **Team Members**
-- Harish Palanivel, 1392283 (harish.palanivel@stud.fra-uas.de)
-- Gaurav Honnavara Manjunath, 1384178 (gaurav.honnavaramanjunath@stud.fra-uas.de)
-- Athkar Praveen Prajwal, 1394663 (praveen.athkar@stud.fra-uas.de)
+- Harish Palanivel (harish.palanivel@stud.fra-uas.de)
+- Gaurav Honnavara Manjunath (gaurav.honnavaramanjunath@stud.fra-uas.de)
+- Athkar Praveen Prajwal (praveen.athkar@stud.fra-uas.de)
 
 **Project Description**
 =============
@@ -155,7 +155,7 @@ Prediction of Image algorithm was developed, and the input image was predicted b
 
 (ii) Figure Shows the prediction for a particular sequence that is entered by the user.
 
-![image](https://github.com/harishpalani12/neocortexapi/blob/1827c9e27dcccdb5d8242989b911945711b36da5/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Prediction%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
+![image](https://github.com/harishpalani12/neocortexapi/blob/66d9d6a8a9f00c3d3f88b1acd65af026bd4ce9d8/source/MySEProject/SimpleMultiSequenceLearning/Documentation/Images/Prediction%20%E2%80%93%20Sequence%20of%20Alphabets.jpg)
 
 #### 3.Multi Sequence Learning -Image Data Sets.
 
